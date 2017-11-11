@@ -59,7 +59,7 @@ gameEngine.dungeon ={
         this.link.animations.add("collect", [12, 13], 2, false);
         
         //Enemy Provisional startup
-        this.enemy = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, 500, 740, this);
+        this.enemy = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, 500, 500, this);
         this.game.add.existing(this.enemy);
 
     },
