@@ -14,6 +14,7 @@ gameEngine.dungeon ={
         this.load.tilemap('dungeon', 'tilemaps/dungeon.json',null,Phaser.Tilemap.TILED_JSON);
         this.load.image('dungeonTileset', 'img/dungeonTileset.png');
         this.load.spritesheet('link', 'img/zelda-sprites-link.png', 16, 16);
+        this.load.spritesheet('enemies','img/enemiesTileset.png', 16, 16);
         
         //Load input
         InputManager.keyRight = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
@@ -57,6 +58,9 @@ gameEngine.dungeon ={
         this.link.animations.add("move_right", [6, 7], 10, true);
         this.link.animations.add("collect", [12, 13], 2, false);
         
+        //Enemy Provisional startup
+        this.enemy = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, 500, 740, this);
+        this.game.add.existing(this.enemy);
 
     },
     update:function(){

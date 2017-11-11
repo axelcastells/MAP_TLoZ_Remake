@@ -16,6 +16,13 @@ var InputManager = {
     B: null    
 };
 
+var SYSTEM_CONSTANTS = {
+    ENEMY_TYPES: {
+        OCTOROK: 0,
+        ZORA: 1
+    }
+};
+
 //Create the game canvas
 gameEngine.game = new Phaser.Game(ConfigOptions.screenW, ConfigOptions.screenH, Phaser.AUTO,null,this,false,false);
 
