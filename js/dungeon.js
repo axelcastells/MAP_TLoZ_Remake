@@ -42,28 +42,29 @@ gameEngine.dungeon ={
         this.map.createLayer('decorative');
         
         this.mapCollisions = this.map.createLayer('collisions');
-        this.map.setCollisionBetween(1,178,true,'collisions');
+        this.map.setCollisionBetween(178,178,true,'collisions');
         
         this.map.createLayer('interactables');
-        
-        //Link creation
-        this.link = this.game.add.sprite(500, 740, 'link');
-        this.link.anchor.setTo(0.5);
-        this.game.physics.arcade.enable(this.link);
-        this.link.body.setSize(24, 24, 0, 0);
-        
-        //Link basic movement animations
-        this.link.animations.add("move_down", [0, 1], 10, true);
-        this.link.animations.add("move_left", [2, 3], 10, true);
-        this.link.animations.add("move_up", [4, 5], 10, true);
-        this.link.animations.add("move_right", [6, 7], 10, true);
-        this.link.animations.add("collect", [12, 13], 2, false);
         
         //Teleports startup
         this.tp = new gameEngine.teleport_prefab(this.game, 224, 672, 500, 740, 0, this);
         this.game.add.existing(this.tp);
         this.tp2 = new gameEngine.teleport_prefab(this.game, 336, 672, 500, 740, 0, this);
         this.game.add.existing(this.tp2);
+        
+        //Link creation
+        this.link = this.game.add.sprite(500, 740, 'link');
+        this.link.anchor.setTo(0.5);
+        this.game.physics.arcade.enable(this.link);
+        this.link.body.setSize(14, 14, 0, 0);
+        
+        //Link basic movement animations
+        this.link.animations.add("move_down", [0, 1], 10, true);
+        this.link.animations.add("move_left", [2, 3], 10, true);
+        this.link.animations.add("move_up", [4, 5], 10, true);
+        this.link.animations.add("move_right", [6, 7], 10, true);
+        this.link.animations.add("collect", [12, 13], 2, false);        
+
         
         //Enemy Provisional startup
         this.enemy = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, 500, 500, this);
@@ -73,7 +74,7 @@ gameEngine.dungeon ={
     update:function(){
         //collision with the map
         this.game.physics.arcade.collide(this.link, this.walls);
-        //this.game.physics.arcade.collide(this.link, this.mapCollisions);
+        this.game.physics.arcade.collide(this.link, this.mapCollisions);
         
         if(InputManager.keyLeft.isDown) {
             this.link.body.velocity.x = - ConfigOptions.linkSpeed;
