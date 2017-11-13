@@ -58,6 +58,12 @@ gameEngine.dungeon ={
         this.link.animations.add("move_right", [6, 7], 10, true);
         this.link.animations.add("collect", [12, 13], 2, false);
         
+        //Teleports startup
+        this.tp = new gameEngine.teleport_prefab(this.game, 224, 672, 500, 740, 0, this);
+        this.game.add.existing(this.tp);
+        this.tp2 = new gameEngine.teleport_prefab(this.game, 336, 672, 500, 740, 0, this);
+        this.game.add.existing(this.tp2);
+        
         //Enemy Provisional startup
         this.enemy = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, 500, 500, this);
         this.game.add.existing(this.enemy);
@@ -66,7 +72,7 @@ gameEngine.dungeon ={
     update:function(){
         //collision with the map
         this.game.physics.arcade.collide(this.link, this.walls);
-        this.game.physics.arcade.collide(this.link, this.mapCollisions);
+        //this.game.physics.arcade.collide(this.link, this.mapCollisions);
         
         if(InputManager.keyLeft.isDown) {
             this.link.body.velocity.x = - ConfigOptions.linkSpeed;
