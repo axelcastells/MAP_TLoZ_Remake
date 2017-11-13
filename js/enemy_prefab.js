@@ -2,6 +2,13 @@ var gameEngine = gameEngine || {};
 
 gameEngine.enemy_prefab = function(game,type,x,y,level){
     this.type = type;
+    this.game = game;
+    this.counter = 0;
+    this.updateCounter = function(){this.counter-=0.1}
+    
+    this.timer = this.game.time.create(false);
+    this.timer.loop(100, this.updateCounter, this);
+    this.timer.start();
     
     this.states;
     this.currentState;
@@ -12,8 +19,8 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
         {
             case SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK:
             {
-                this.states = {WALK: 0, SHOOT: 1};
-                this.state = this.states.WALK;
+                this.states = {INIT: 0, WALK: 1, CHARGE: 2, SHOOT: 3};
+                this.currentState = this.states.INIT;
                 
                 this.animations.add('walk_down',[2,3],10,true);
                 this.animations.add('walk_left',[0,1],10,true);
@@ -31,8 +38,6 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
 
             }break;
         }
-    
-    //this.animations.add('walk_down',[0,1,2,3],10,true);
 
     
     this.anchor.setTo(.5);
@@ -46,12 +51,40 @@ gameEngine.enemy_prefab.prototype = Object.create(Phaser.Sprite.prototype);
 gameEngine.enemy_prefab.prototype.constructor = gameEngine.enemy_prefab;
 
 gameEngine.enemy_prefab.prototype.update = function(){
-    //(this.game.physics.arcade.collide(this,this.level.walls);   
     switch(this.type)
     {
         case SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK:
         {
-            
+            switch(this.currentState)
+            {
+                case this.states.INIT:
+                {
+                    this.counter = Math.random()*4;
+                    
+                    this.currentState = this.states.WALK;
+                }break;
+                case this.states.WALK:
+                {
+                    if(this.counter <= 0)
+                    {
+                        this.counter = 0.3;
+                        this.currentState = this.states.CHARGE;
+                    }
+                }break;
+                case this.states.CHARGE:
+                {
+                    this.scale.setTo(1.5);
+                    if(this.counter <= 0)
+                    {
+                        this.currentState = this.states.SHOOT;
+                    }
+                }break;
+                case this.states.SHOOT:
+                {
+                    this.scale.setTo(1);
+                    this.currentState = this.states.INIT;
+                }break;
+            }
         }break;
         case SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA:
         {
@@ -62,25 +95,7 @@ gameEngine.enemy_prefab.prototype.update = function(){
             
         }break;
     }
-    /*
-    if(this.body.blocked.right || this.body.blocked.left){
-        this.direction *=-1;
-        this.scale.x = this.direction;        
-    }
     
-    this.body.velocity.x = this.speed*this.direction;
-    
-    this.game.physics.arcade.collide(this,this.level.hero,
-    function(enemy,hero){
-        if(enemy.body.touching.up && hero.body.touching.down){
-            hero.body.velocity.y = - ConfigOptions.linkSpeed;
-            enemy.kill();
-        } else{
-            //enemy.level.camera.shake(0.05,500);
-            //hero.reset(65,100);
-            enemy.level.hit();
-        }
-    });
-    */
+    console.log(this.counter);
     
 };

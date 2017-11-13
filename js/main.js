@@ -20,6 +20,10 @@ var SYSTEM_CONSTANTS = {
     ENEMY_TYPES: {
         OCTOROK: 0,
         ZORA: 1
+    },
+    PROJECTILE_TYPES: {
+        ROCK: 0,
+        FIREBALL: 1
     }
 };
 
