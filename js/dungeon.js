@@ -15,6 +15,7 @@ gameEngine.dungeon ={
         this.load.image('dungeonTileset', 'img/dungeonTileset.png');
         this.load.spritesheet('link', 'img/zelda-sprites-link.png', 16, 16);
         this.load.spritesheet('enemies','img/enemiesTileset.png', 16, 16);
+        this.load.spritesheet('teleport','img/teleport_tiles.png',16,16);
         
         //Load input
         InputManager.keyRight = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);

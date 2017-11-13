@@ -4,10 +4,10 @@ var dX, dY;
 
 gameEngine.teleport_prefab = function(game, x,y, _dX, _dY, tpType, level){
     if(tpType == 0){
-        Phaser.Sprite.call(this,game,x,y,'link');
+        Phaser.Sprite.call(this,game,x,y,'teleport',0);
     }
     else if(tpType == 1){
-        //Phaser.Sprite.call(this.game.x,y,'black');
+        Phaser.Sprite.call(this,game,x,y,'teleport',1);
     }
     this.anchor.setTo(.5);
     game.physics.arcade.enable(this);
