@@ -4,6 +4,9 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
     this.type = type;
     this.game = game;
     this.counter = 0;
+    this.speed = 100;
+    this.direction = SYSTEM_CONSTANTS.DIRECTIONS.DOWN;
+    
     this.updateCounter = function(){this.counter-=0.1}
     
     this.timer = this.game.time.create(false);
@@ -55,36 +58,75 @@ gameEngine.enemy_prefab.prototype.update = function(){
     {
         case SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK:
         {
+            this.game.physics.arcade.collide(this, this.level.walls);
+            this.game.physics.arcade.collide(this, this.level.mapCollisions);
+            
             switch(this.currentState)
             {
                 case this.states.INIT:
                 {
-                    this.counter = Math.random()*4;
+                    this.counter = Math.random()*2;
+                    
+                    this.body.velocity.x = Math.round((Math.random()*2)-1);
+                    if(this.body.velocity.x == 0){
+                        this.body.velocity.y = Math.round((Math.random()*2)-1);
+                    }
+                    else this.body.velocity.y = 0;
+                    
+                    if(this.body.velocity.x == 0 && this.body.velocity.y == 0)
+                    {
+
+                    }
+                    else{
+                        this.direction.x = this.body.velocity.x;
+                        this.direction.y = this.body.velocity.y;
+                    }
+                    
+                    if(this.body.velocity.x == -1 && this.body.velocity.y == 0)
+                        this.animations.play("walk_left");
+                    else if(this.body.velocity.x == 1 && this.body.velocity.y == 0)
+                        this.animations.play("walk_right");
+                    else if(this.body.velocity.x == 0 && this.body.velocity.y == -1)
+                        this.animations.play("walk_up");
+                    else if(this.body.velocity.x == 0 && this.body.velocity.y == 1)
+                        this.animations.play("walk_down");
+                    
+                    this.body.velocity.x *= this.speed;
+                    this.body.velocity.y *= this.speed;
                     
                     this.currentState = this.states.WALK;
                 }break;
                 case this.states.WALK:
-                {
+                {                
                     if(this.counter <= 0)
                     {
                         this.counter = 0.3;
+                        
+                        this.animations.currentAnim.restart();
+                        this.animations.currentAnim.stop();
+                        
                         this.currentState = this.states.CHARGE;
                     }
                 }break;
                 case this.states.CHARGE:
                 {
-                    this.scale.setTo(1.5);
+                    this.body.velocity.x = 0;
+                    this.body.velocity.y = 0;
+                    
+                    //this.scale.setTo(1.5);
                     if(this.counter <= 0)
                     {
+                        this.animations.currentAnim.restart();
+                        
                         this.currentState = this.states.SHOOT;
                     }
                 }break;
                 case this.states.SHOOT:
                 {
-                    this.bullet = new gameEngine.projectile_prefab(this.game, SYSTEM_CONSTANTS.PROJECTILE_TYPES.ROCK, 500, 500, this.level);
+                    this.bullet = new gameEngine.projectile_prefab(this.game, SYSTEM_CONSTANTS.PROJECTILE_TYPES.ROCK, this.body.position.x, this.body.position.y, this.direction, this.level);
                     this.game.add.existing(this.bullet);
-                    
-                    this.scale.setTo(1);
+
+                    //this.scale.setTo(1);
                     this.currentState = this.states.INIT;
                 }break;
             }
