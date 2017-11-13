@@ -23,7 +23,8 @@ var SYSTEM_CONSTANTS = {
     },
     PROJECTILE_TYPES: {
         ROCK: 0,
-        FIREBALL: 1
+        FIREBALL: 1,
+        SWORD: 2
     }
 };
 

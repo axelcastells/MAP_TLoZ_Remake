@@ -99,6 +99,6 @@ gameEngine.enemy_prefab.prototype.update = function(){
         }break;
     }
     
-    console.log(this.counter);
+    //console.log(this.counter);
     
 };
