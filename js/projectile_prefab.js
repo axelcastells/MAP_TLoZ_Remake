@@ -39,5 +39,38 @@ gameEngine.projectile_prefab.prototype.constructor = gameEngine.projectile_prefa
 
 gameEngine.projectile_prefab.prototype.update = function(){
     
+        /*this.game.physics.arcade.overlap(this, this.level.link, 
+            function(projectile, link){
+            
+                var destroy = false;
+
+                if(projectile.body.velocity.x == 0){
+                   if(projectile.body.velocity.y > 0 && link.facingDirection == "up"){
+                       destroy = true;
+                   } else if(projectile.body.velocity.y < 0 && link.facingDirection == "down") {
+                       destroy = true;
+                   }
+                }
+                else if(projectile.body.velocity.y == 0){
+                   if(projectile.body.velocity.x > 0 && link.facingDirection == "left"){
+                       destroy = true;
+                   } else if(projectile.body.velocity.x < 0 && link.facingDirection == "right") {
+                       destroy = true;
+                   }
+                } 
+
+                if(destroy){
+                    projectile.destroy();
+                } else {
+                    //link loses hp
+                }
+            }
+        );
+    
+    this.game.physics.arcade.overlap(this, this.level.walls, 
+            function(projectile, walls){
+                projectile.destroy();
+            }
+    );*/
     
 };

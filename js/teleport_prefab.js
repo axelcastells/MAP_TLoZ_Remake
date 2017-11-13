@@ -12,7 +12,7 @@ gameEngine.teleport_prefab = function(game, x,y, _dX, _dY, tpType, level){
     this.anchor.setTo(.5);
     game.physics.arcade.enable(this);
     
-    this.body.setSize(5, 5, 0, 0);
+    //this.body.setSize(5, 5, 0, 0);
     
     this.level = level;
     dX = _dX;

@@ -6,6 +6,8 @@ gameEngine.dungeon ={
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;  
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
+        this.scale.setGameSize(400, 400);
+        this.game.world.setBounds(0, 0, 2000, 2000);
         
         //Activate physics
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -16,6 +18,7 @@ gameEngine.dungeon ={
         this.load.spritesheet('link', 'img/link_movement.png', 32, 32);
         this.load.spritesheet('enemies','img/enemiesTileset.png', 16, 16);
         this.load.spritesheet('teleport','img/teleport_tiles.png',16,16);
+        this.load.image('hitbox', 'img/collider.png', 32, 32);
         
         //Load input
         InputManager.keyRight = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
@@ -57,7 +60,7 @@ gameEngine.dungeon ={
         //Link variables
         this.link.facingDirection = "down";
         this.link.attacking = false;
-        this.link.attackTime = 0.4; // in ms
+        this.link.attackTime = 0.4; // in seconds
         this.link.attackTimeCounter = 0;
         //Link physics setup
         this.link.anchor.setTo(0.5);
@@ -86,13 +89,22 @@ gameEngine.dungeon ={
         //Enemy Provisional startup
         this.enemy = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, 500, 500, this);
         this.game.add.existing(this.enemy);
-
+        
+        this.hitbox = new gameEngine.hitbox_prefab(this.game, this.link, false, 500, 600, 70, 50, 16, 0);
+        this.game.add.existing(this.hitbox);
+        
+        this.game.camera.follow(this.link, Phaser.Camera.FOLLOW_PLATAFORMER);
 
     },
     update:function(){
+
+        
         this.game.debug.body(this.link);
         this.game.debug.body(this.tp);
         this.game.debug.body(this.tp2);
+        if(this.hitbox.active){
+            this.game.debug.body(this.hitbox);
+        }
         //collision with the map
         this.game.physics.arcade.collide(this.link, this.walls);
         this.game.physics.arcade.collide(this.link, this.mapCollisions);
@@ -103,7 +115,24 @@ gameEngine.dungeon ={
                 this.link.attackTimeCounter = 0;
                 this.link.animations.play("attack_" + this.link.facingDirection);
                 this.link.attacking = true;
-            }        
+                this.hitbox.active = true;
+                this.hitbox.x = this.link.x;
+                this.hitbox.y = this.link.y;
+                switch(this.link.facingDirection){
+                    case "right":
+                            this.hitbox.body.setSize(15, 5, 17, 15);
+                    break;
+                    case "left":
+                            this.hitbox.body.setSize(15, 5, -2, 15);
+                    break;
+                    case "up":
+                            this.hitbox.body.setSize(5, 15, 12, 0);
+                    break;
+                    case "down":
+                            this.hitbox.body.setSize(5, 15, 13, 17);
+                    break;
+                }
+            }
             else if(InputManager.keyLeft.isDown) {
                 this.link.body.velocity.x = - ConfigOptions.linkSpeed;
                 this.link.animations.play("move_left");
@@ -141,10 +170,12 @@ gameEngine.dungeon ={
             if(this.link.attackTimeCounter > this.link.attackTime){
                 this.link.attacking = false;
                 this.link.animations.play("move_" + this.link.facingDirection);
+                this.hitbox.active = false;
                 this.link.attackTimeCounter = 0;
                }
             this.link.attackTimeCounter += this.game.time.physicsElapsed;
-            console.log(this.link.attackTimeCounter)
+            console.log(this.hitbox.x + " - " + this.hitbox.y);
+            
         }
     }    
 
