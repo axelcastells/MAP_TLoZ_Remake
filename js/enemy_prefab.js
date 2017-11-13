@@ -81,6 +81,9 @@ gameEngine.enemy_prefab.prototype.update = function(){
                 }break;
                 case this.states.SHOOT:
                 {
+                    this.bullet = new gameEngine.projectile_prefab(this.game, SYSTEM_CONSTANTS.PROJECTILE_TYPES.ROCK, 500, 500, this.level);
+                    this.game.add.existing(this.bullet);
+                    
                     this.scale.setTo(1);
                     this.currentState = this.states.INIT;
                 }break;
