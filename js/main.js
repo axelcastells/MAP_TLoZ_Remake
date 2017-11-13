@@ -25,6 +25,12 @@ var SYSTEM_CONSTANTS = {
         ROCK: 0,
         FIREBALL: 1,
         SWORD: 2
+    },
+    DIRECTIONS: {
+        UP: new Phaser.Point(0,-1),
+        DOWN: new Phaser.Point(0,1),
+        LEFT: new Phaser.Point(-1,0),
+        RIGHT: new Phaser.Point(1,0)
     }
 };
 
