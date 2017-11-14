@@ -62,6 +62,7 @@ gameEngine.dungeon ={
         this.link.attacking = false;
         this.link.attackTime = 0.4; // in seconds
         this.link.attackTimeCounter = 0;
+        this.link.swordThrown = false;
         //Link physics setup
         this.link.anchor.setTo(0.5);
         this.game.physics.arcade.enable(this.link);
@@ -93,7 +94,7 @@ gameEngine.dungeon ={
         this.enemy2 = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA, this.link.position.x + 80, this.link.position.y, this);
         this.game.add.existing(this.enemy2);
         
-        this.hitbox = new gameEngine.hitbox_prefab(this.game, this.link, false, 500, 600, 70, 50, 16, 0);
+        this.hitbox = new gameEngine.hitbox_prefab(this.game, this.link, false, 500, 600, 70, 50, 16, 0, this);
         this.game.add.existing(this.hitbox);
         
         this.game.camera.follow(this.link, Phaser.Camera.FOLLOW_PLATAFORMER);
@@ -174,11 +175,12 @@ gameEngine.dungeon ={
                 this.link.attacking = false;
                 this.link.animations.play("move_" + this.link.facingDirection);
                 this.hitbox.active = false;
+                this.link.swordThrown = false;
                 this.link.attackTimeCounter = 0;
-               }
+            } else if (!this.link.swordThrown && this.link.attackTimeCounter > this.link.attackTime / 2) {
+                this.link.swordThrown = true;
+            }
             this.link.attackTimeCounter += this.game.time.physicsElapsed;
-            console.log(this.hitbox.x + " - " + this.hitbox.y);
-            
         }
     }    
 
