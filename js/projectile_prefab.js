@@ -1,23 +1,27 @@
 var gameEngine = gameEngine || {};
 
 gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
-    this.type = type;
+    
     this.game = game;
     
-    this.speed = 500;
+    
     
     Phaser.Sprite.call(this,game,x,y,'enemies');
     
-    switch(this.type)
+    switch(type)
         {
             case SYSTEM_CONSTANTS.PROJECTILE_TYPES.ROCK:
-            {                
+            {        
+                this.type = type;
+                this.speed = 500;
                 this.animations.add('shoot',[34],1,true);
                 
                 this.animations.play('shoot');
             }break;
             case SYSTEM_CONSTANTS.PROJECTILE_TYPES.FIREBALL:
             {
+                this.type = type;
+                this.speed = 50;
                 this.animations.add('shoot',[32,33],10,true);
                 
                 this.animations.play('shoot');
@@ -36,7 +40,8 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
     
     this.body.velocity.x += direction.x * this.speed;
     this.body.velocity.y += direction.y * this.speed;
-
+    
+    //console.log(this.body.velocity);
 };
 
 gameEngine.projectile_prefab.prototype = Object.create(Phaser.Sprite.prototype);
@@ -44,43 +49,17 @@ gameEngine.projectile_prefab.prototype.constructor = gameEngine.projectile_prefa
 
 gameEngine.projectile_prefab.prototype.update = function(){
 
-    
-        /*this.game.physics.arcade.overlap(this, this.level.link, 
-            function(projectile, link){
-            
-                var destroy = false;
-
-                if(projectile.body.velocity.x == 0){
-                   if(projectile.body.velocity.y > 0 && link.facingDirection == "up"){
-                       destroy = true;
-                   } else if(projectile.body.velocity.y < 0 && link.facingDirection == "down") {
-                       destroy = true;
-                   }
-                }
-                else if(projectile.body.velocity.y == 0){
-                   if(projectile.body.velocity.x > 0 && link.facingDirection == "left"){
-                       destroy = true;
-                   } else if(projectile.body.velocity.x < 0 && link.facingDirection == "right") {
-                       destroy = true;
-                   }
-                } 
-
-                if(destroy){
-                    projectile.destroy();
-                } else {
-                    //link loses hp
-                }
-            }
-        );
-    
-    this.game.physics.arcade.overlap(this, this.level.walls, 
-            function(projectile, walls){
-                projectile.destroy();
-            }
-    );*/
-
-    this.game.physics.arcade.collide(this, this.level.walls);
+    this.game.physics.arcade.collide(this, this.level.walls, function(bullet,link){
+    if(bullet.body.touching){
+        bullet.kill();
+    }});
     this.game.physics.arcade.collide(this, this.level.mapCollisions);
-
     
+    this.game.physics.arcade.collide(this,this.level.link,
+    function(bullet,link){
+    if(bullet.body.touching){
+        console.log("Bullet Collision!");
+        bullet.kill();
+    }});
+
 };

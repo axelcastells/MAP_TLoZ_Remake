@@ -87,8 +87,11 @@ gameEngine.dungeon ={
 
         
         //Enemy Provisional startup
-        this.enemy = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, 500, 500, this);
+        this.enemy = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, this.link.position.x + 80, this.link.position.y, this);
         this.game.add.existing(this.enemy);
+        
+        this.enemy2 = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA, this.link.position.x + 80, this.link.position.y, this);
+        this.game.add.existing(this.enemy2);
         
         this.hitbox = new gameEngine.hitbox_prefab(this.game, this.link, false, 500, 600, 70, 50, 16, 0);
         this.game.add.existing(this.hitbox);
