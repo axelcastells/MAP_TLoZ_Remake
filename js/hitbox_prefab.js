@@ -2,7 +2,7 @@ var gameEngine = gameEngine || {};
 
 var parent;
 var active;
-var level
+var level;
 
 gameEngine.hitbox_prefab = function(game, parent, startActive, pos_x, pos_y, size_x, size_y, offset_x, offset_y, level){
     Phaser.Sprite.call(this, game, pos_x, pos_y,'hitbox',0);
@@ -23,4 +23,7 @@ gameEngine.hitbox_prefab.prototype.update = function(){
     this.game.physics.arcade.collide(this, this.level.enemy, function(hibox,enemy){
         enemy.reset(550, 800)
     });
+    this.x = this.level.link.x;
+    this.y = this.level.link.y;
+    
 };

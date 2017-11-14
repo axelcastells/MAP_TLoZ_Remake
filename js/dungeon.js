@@ -120,8 +120,6 @@ gameEngine.dungeon ={
                 this.link.animations.play("attack_" + this.link.facingDirection);
                 this.link.attacking = true;
                 this.hitbox.active = true;
-                this.hitbox.x = this.link.x;
-                this.hitbox.y = this.link.y;
                 switch(this.link.facingDirection){
                     case "right":
                             this.hitbox.body.setSize(15, 5, 17, 15);
