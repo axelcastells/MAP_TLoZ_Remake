@@ -56,35 +56,14 @@ gameEngine.dungeon ={
         this.game.add.existing(this.tp2);
         
         //Link creation
-        this.link = this.game.add.sprite(500, 740, 'link');
-        //Link variables
-        this.link.facingDirection = "down";
-        this.link.attacking = false;
-        this.link.attackTime = 0.4; // in seconds
-        this.link.attackTimeCounter = 0;
-        this.link.swordThrown = false;
-        //Link physics setup
-        this.link.anchor.setTo(0.5);
-        this.game.physics.arcade.enable(this.link);
-        this.link.body.setSize(10, 10, 11, 11);
-        
-        //Link basic movement animations
-        this.link.animations.add("move_down", [0, 1], 10, true);
-        this.link.animations.add("move_left", [2, 3], 10, true);
-        this.link.animations.add("move_up", [4, 5], 10, true);
-        this.link.animations.add("move_right", [6, 7], 10, true);
-        this.link.animations.add("attack_down", [8, 14], 60, false);
-        this.link.animations.add("attack_left", [9, 15], 60, false);
-        this.link.animations.add("attack_up", [10, 16], 60, false);
-        this.link.animations.add("attack_right", [11, 17], 60, false);
-        this.link.animations.add("collect", [12, 13], 2, false);
+        this.link = new gameEngine.link_prefab(this.game, 550, 740, this);
+        this.game.add.existing(this.link);
         
         //Teleports startup
         this.tp = new gameEngine.teleport_prefab(this.game, 224, 672, 500, 740, 0, this);
         this.game.add.existing(this.tp);
         this.tp2 = new gameEngine.teleport_prefab(this.game, 336, 672, 500, 740, 0, this);
-        this.game.add.existing(this.tp2);
-        this.link.animations.add("collect", [12, 13], 2, false);        
+        this.game.add.existing(this.tp2);       
 
         
         //Enemy Provisional startup
@@ -109,77 +88,5 @@ gameEngine.dungeon ={
         if(this.hitbox.active){
             this.game.debug.body(this.hitbox);
         }
-        //collision with the map
-        this.game.physics.arcade.collide(this.link, this.walls);
-        this.game.physics.arcade.collide(this.link, this.mapCollisions);
-        if(!this.link.attacking){
-            if(InputManager.A.isDown && InputManager.A.downDuration(this.link.attackTime)){
-                this.link.body.velocity.x = 0;
-                this.link.body.velocity.y = 0;
-                this.link.attackTimeCounter = 0;
-                this.link.animations.play("attack_" + this.link.facingDirection);
-                this.link.attacking = true;
-                this.hitbox.active = true;
-                switch(this.link.facingDirection){
-                    case "right":
-                            this.hitbox.body.setSize(15, 5, 17, 15);
-                    break;
-                    case "left":
-                            this.hitbox.body.setSize(15, 5, -2, 15);
-                    break;
-                    case "up":
-                            this.hitbox.body.setSize(5, 15, 12, 0);
-                    break;
-                    case "down":
-                            this.hitbox.body.setSize(5, 15, 13, 17);
-                    break;
-                }
-            }
-            else if(InputManager.keyLeft.isDown) {
-                this.link.body.velocity.x = - ConfigOptions.linkSpeed;
-                this.link.animations.play("move_left");
-                this.link.body.velocity.y = 0;
-                this.link.facingDirection = "left";
-            }
-            else if(InputManager.keyRight.isDown) {
-                this.link.body.velocity.x = ConfigOptions.linkSpeed;
-                this.link.animations.play("move_right");
-                this.link.body.velocity.y = 0;
-                this.link.facingDirection = "right";
-            }
-            else if(InputManager.keyDown.isDown) {
-                this.link.body.velocity.y = ConfigOptions.linkSpeed;
-                this.link.animations.play("move_down");
-                this.link.body.velocity.x = 0;
-                this.link.facingDirection = "down";
-            }
-            else if(InputManager.keyUp.isDown) {
-                this.link.body.velocity.y = - ConfigOptions.linkSpeed;
-                this.link.animations.play("move_up");
-                this.link.body.velocity.x = 0;
-                this.link.facingDirection = "up";
-            }
-            else {
-                this.link.body.velocity.x = 0;
-                this.link.body.velocity.y = 0;
-                this.link.animations.stop();
-            }  
-            if(InputManager.B.isDown){
-                this.link.animations.play("collect");
-            }
-            
-        } else {
-            if(this.link.attackTimeCounter > this.link.attackTime){
-                this.link.attacking = false;
-                this.link.animations.play("move_" + this.link.facingDirection);
-                this.hitbox.active = false;
-                this.link.swordThrown = false;
-                this.link.attackTimeCounter = 0;
-            } else if (!this.link.swordThrown && this.link.attackTimeCounter > this.link.attackTime / 2) {
-                this.link.swordThrown = true;
-            }
-            this.link.attackTimeCounter += this.game.time.physicsElapsed;
-        }
-    }    
-
+    }
 }
