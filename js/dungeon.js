@@ -7,27 +7,7 @@ gameEngine.dungeon ={
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
         this.scale.setGameSize(400, 400);
-        this.game.world.setBounds(0, 0, 2000, 2000);
-        
-        //Activate physics
-        this.game.physics.startSystem(Phaser.Physics.ARCADE);
-        
-        //Image Loading
-        this.load.tilemap('dungeon', 'tilemaps/dungeon.json',null,Phaser.Tilemap.TILED_JSON);
-        this.load.image('dungeonTileset', 'img/dungeonTileset.png');
-        this.load.spritesheet('link', 'img/link_movement.png', 32, 32);
-        this.load.spritesheet('enemies','img/enemiesTileset.png', 16, 16);
-        this.load.spritesheet('teleport','img/teleport_tiles.png',16,16);
-        this.load.image('hitbox', 'img/collider.png', 32, 32);
-        
-        //Load input
-        InputManager.keyRight = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-        InputManager.keyLeft = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-        InputManager.keyUp = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.UP);
-        InputManager.keyDown = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-        InputManager.space = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        InputManager.A = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.A);
-        InputManager.B = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.B);
+        this.game.world.setBounds(0, 0, 2000, 2000);        
     },
     create:function(){
 

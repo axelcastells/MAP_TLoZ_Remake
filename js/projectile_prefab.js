@@ -52,17 +52,21 @@ gameEngine.projectile_prefab.prototype.constructor = gameEngine.projectile_prefa
 gameEngine.projectile_prefab.prototype.update = function(){
 
     this.game.physics.arcade.collide(this, this.level.walls, function(bullet,link){
-    if(bullet.body.touching){
-        bullet.kill();
+        if(bullet.body.touching){
+            bullet.kill();
     }});
     
-    this.game.physics.arcade.collide(this, this.level.mapCollisions);
+    this.game.physics.arcade.collide(this, this.level.mapCollisions,  function(bullet,link) {
+        if(bullet.body.touching){
+            bullet.kill();
+    }});
     
     if(this.projectileType != SYSTEM_CONSTANTS.PROJECTILE_TYPES.SWORD){
         this.game.physics.arcade.collide(this,this.level.link,
         function(bullet,link){
         if(bullet.body.touching){
-
+            console.log("Bullet Collision!");
+            
             if(link.body.touching.down && link.facingDirection == "down" && !link.attacking){
                 console.log("bullet blocked down");
             } else if (link.body.touching.up && link.facingDirection == "up" && !link.attacking){
@@ -74,9 +78,11 @@ gameEngine.projectile_prefab.prototype.update = function(){
             else if (link.body.touching.left && link.facingDirection == "left" && !link.attacking){
                 console.log("bullet blocked left");
             } else {
-                link.reset(500, 740);
+                console.log("bullet not blocked");
+                link.life -= 1;
+                console.log(link.life);
             }
-            console.log("Bullet Collision!");
+
             bullet.kill();
         }});
     } else {

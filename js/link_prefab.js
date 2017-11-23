@@ -19,7 +19,7 @@ gameEngine.link_prefab = function(game, pos_x, pos_y, level){
     this.animations.add("collect", [12, 13], 2, false);
     
     this.level = level;
-    this.life = 3;
+    this.life = 6;
     this.level;
     this.facingDirection = "down";
     this.attacking = false;
@@ -102,7 +102,7 @@ gameEngine.link_prefab.prototype.update = function(){
                 this.level.hitbox.active = false;
                 this.swordThrown = false;
                 this.attackTimeCounter = 0;
-            } else if (!this.swordThrown && this.attackTimeCounter > this.attackTime / 2) {
+            } else if (!this.swordThrown && this.attackTimeCounter > this.attackTime / 4) {
                 this.swordThrown = true;
             }
             this.attackTimeCounter += this.level.game.time.physicsElapsed;

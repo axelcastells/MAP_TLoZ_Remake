@@ -2,18 +2,9 @@ var gameEngine = gameEngine || {};
 
 gameEngine.main_menu ={
     preload:function(){
-        
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;  
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
-        
-        
-        this.load.image('mainMenu', 'img/mainMenu.jpg');
-        this.load.image('playButton', 'img/play_button.png');
-        this.load.image('creditsButton', 'img/credits_button.png');
-        this.load.image('loginButton', 'img/login_button.png');
-        
-
     },
     create:function(){
         
@@ -39,9 +30,7 @@ gameEngine.main_menu ={
         this.startButton.anchor.setTo(0.5);
         this.startButton.scale.setTo(10);
         this.startButton.onInputOver.add(this.overFeedback, this);
-        this.startButton.onInputOut.add(this.leaveFeedback, this);
-        
-        
+        this.startButton.onInputOut.add(this.leaveFeedback, this); 
         
     },
     update:function(){
@@ -49,7 +38,7 @@ gameEngine.main_menu ={
         
     },
     loadGame:function(){
-        this.game.state.start("dungeon");
+        this.game.state.start("overworld");
     },
     credits:function(){
         this.game.state.start("credits");

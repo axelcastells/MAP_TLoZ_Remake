@@ -43,5 +43,6 @@ gameEngine.game.state.add('dungeon',gameEngine.dungeon);
 gameEngine.game.state.add('main_menu',gameEngine.main_menu);
 gameEngine.game.state.add('credits',gameEngine.credits);
 gameEngine.game.state.add('login',gameEngine.login);
-gameEngine.game.state.start('main_menu');
+gameEngine.game.state.add('loading_scene',gameEngine.loading_scene);
+gameEngine.game.state.start('loading_scene');
 
