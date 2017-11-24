@@ -9,6 +9,7 @@ gameEngine.overworld ={
         this.game.world.setBounds(0, 0, 2000, 2000); 
         this.actualCellX = 2;
         this.actualCellY = 3;
+        this.cameraMoving = false;
     },
     create:function(){
         this.game.stage.backgroundColor = "#489ad8";
@@ -31,6 +32,10 @@ gameEngine.overworld ={
         this.game.camera.y = this.link.y - this.worldCellSize / 2;
         //this.game.camera.follow(this.link, Phaser.Camera.FOLLOW_PLATAFORMER);
         
+        //Camera reference point
+        this.newCameraPosition = this.game.add.sprite(this.game.camera.x + this.worldCellSize /2,this.game.camera.y + this.worldCellSize /2, '', 0);
+        this.newCameraPosition.anchor.setTo(.5);
+        
         //Enemy creation
         this.enemy = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, this.link.position.x + 32, this.link.position.y, this);
         this.game.add.existing(this.enemy);
@@ -41,30 +46,50 @@ gameEngine.overworld ={
         if(this.hitbox.active){
             this.game.debug.body(this.hitbox);
         }
+        
         this.smoothCamera();
+
+        
     },
     smoothCamera:function(){
+                
         if( this.math.difference(this.link.x, this.game.camera.x + this.worldCellSize / 2) > this.worldCellSize / 2 ){
             console.log("detected link cell change in X");
+            console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
             if (this.link.x - this.game.camera.x < 0){
-                this.game.camera.x -= this.worldCellSize;
+                this.newCameraPosition.x -= this.worldCellSize;
+                this.game.camera.follow(this.newCameraPosition, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+                //this.game.camera.x -= this.worldCellSize;
                 this.actualCellX -= 1;
+                this.cameraMoving = true;
             }
             else if(this.link.x - this.game.camera.x > this.worldCellSize){
-                this.game.camera.x += this.worldCellSize;
+                this.newCameraPosition.x += this.worldCellSize;
+                this.game.camera.follow(this.newCameraPosition, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+                //this.game.camera.x += this.worldCellSize;
                 this.actualCellX += 1;
+                this.cameraMoving = true;
             }
+            console.log("New camera position: " + this.newCameraPosition.x + " " + this.newCameraPosition.y);
         }
         else if( this.math.difference(this.link.y, this.game.camera.y + this.worldCellSize / 2) > this.worldCellSize / 2 ){
             console.log("detected link cell change in Y");
+            console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
             if (this.link.y - this.game.camera.y < 0){
-                this.game.camera.y -= this.worldCellSize;
+                this.newCameraPosition.y -= this.worldCellSize;
+                this.game.camera.follow(this.newCameraPosition, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+                //this.game.camera.y -= this.worldCellSize;
                 this.actualCellY -= 1;
+                this.cameraMoving = true;
             }
             else if(this.link.y - this.game.camera.y > this.worldCellSize){
-                this.game.camera.y += this.worldCellSize;
-                this.actualCellX -= 1;
+                this.newCameraPosition.y += this.worldCellSize;
+                this.game.camera.follow(this.newCameraPosition, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+                //this.game.camera.y += this.worldCellSize;
+                this.actualCellY += 1;
+                this.cameraMoving = true;
             }
+            console.log("New camera position: " + this.newCameraPosition.x + " " + this.newCameraPosition.y);
         }
     }
 
