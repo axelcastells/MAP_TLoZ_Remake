@@ -9,12 +9,13 @@ gameEngine.teleport_prefab = function(game, x,y, _dX, _dY, tpType, level){
     else if(tpType == 1){
         Phaser.Sprite.call(this,game,x,y,'teleport',1);
     }
-    this.anchor.setTo(.5);
+    //this.anchor.setTo(.5);
     game.physics.arcade.enable(this);
     
     //this.body.setSize(5, 5, 0, 0);
     
     this.level = level;
+    this.game = game;
     dX = _dX;
     dY = _dY;
     
@@ -26,6 +27,16 @@ gameEngine.teleport_prefab.prototype.constructor = gameEngine.teleport_prefab;
 gameEngine.teleport_prefab.prototype.update = function(){
     
     this.game.physics.arcade.overlap(this, this.level.link, function(teleport, link){
+        link.level.camera.fade(0x000000,10);
+        this.timer = link.level.game.time.create(true);
         link.reset(dX, dY);
+        this.timer.add(800,function(){            
+            link.level.camera.resetFX();
+        }, this);
+        this.timer.start();
+        
+        //link.level.camera.onFadeComplete.add(, this);
+            
+
     })
 };

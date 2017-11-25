@@ -12,9 +12,11 @@ gameEngine.loading_scene ={
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         
         //Tilemap loading
+        
         //dungeon
         this.load.tilemap('dungeon', 'tilemaps/dungeon.json',null,Phaser.Tilemap.TILED_JSON);
         this.load.image('dungeonTileset', 'img/dungeonTileset.png');
+        
         //overworld
         this.load.tilemap('overworld', 'tilemaps/overworld.json',null,Phaser.Tilemap.TILED_JSON);
         this.load.image('overworld', 'img/overworld.png');
