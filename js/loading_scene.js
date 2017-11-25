@@ -30,6 +30,7 @@ gameEngine.loading_scene ={
         this.load.image('playButton', 'img/play_button.png');
         this.load.image('creditsButton', 'img/credits_button.png');
         this.load.image('loginButton', 'img/login_button.png');
+        this.load.image('backButton', 'img/back_button.png');
         
         //Load input
         InputManager.keyRight = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
@@ -40,7 +41,11 @@ gameEngine.loading_scene ={
         InputManager.A = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.A);
         InputManager.B = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.B);
         
+        //Bitmap text loading
+        this.load.bitmapFont('font_white', 'font/zeldaBitmapFont_0.png', 'font/zeldaBitmapFont.fnt');   
+        this.load.bitmapFont('font_black', 'font/zeldaBitmapFontBlack_0.png', 'font/zeldaBitmapFontBlack.fnt');   
         //Audio loading
+        
         
     },
     create:function(){
