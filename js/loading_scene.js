@@ -27,6 +27,7 @@ gameEngine.loading_scene ={
         this.load.spritesheet('enemies','img/enemiesTileset.png', 16, 16);
         this.load.spritesheet('teleport','img/teleport_tiles.png',16,16);
         this.load.image('hitbox', 'img/collider.png', 32, 32);
+        this.load.image('black', 'img/black.png', 32, 32);
         
         //Main menu image loading
         this.load.image('mainMenu', 'img/mainMenu.jpg');
@@ -50,6 +51,7 @@ gameEngine.loading_scene ={
         InputManager.space = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         InputManager.A = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.A);
         InputManager.B = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.B);
+        InputManager.ESC = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         
         //Bitmap text loading
         this.load.bitmapFont('font_white', 'font/zeldaBitmapFont_0.png', 'font/zeldaBitmapFont.fnt');   

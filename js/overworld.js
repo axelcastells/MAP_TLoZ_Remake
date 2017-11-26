@@ -9,8 +9,7 @@ gameEngine.overworld ={
         this.game.world.setBounds(0, 0, 2000, 2000); 
         this.actualCellX = 2;
         this.actualCellY = 3;
-        this.newPositionFound = false;
-        
+        this.newPositionFound = false;   
     },
     create:function(){
         this.game.stage.backgroundColor = "#489ad8";
@@ -21,7 +20,8 @@ gameEngine.overworld ={
         
         this.mapCollisions = this.map.createLayer('overworld');
         this.map.setCollisionBetween(1,31,true,'overworld');
-                
+               
+
         //Link creation
         this.link = new gameEngine.link_prefab(this.game, this.worldCellSize / 2 + this.worldCellSize * this.actualCellX  , this.worldCellSize / 2 + this.worldCellSize * this.actualCellY, this);
         this.game.add.existing(this.link);
@@ -50,16 +50,20 @@ gameEngine.overworld ={
         this.game.add.existing(this.enemy);
         
         this.createHud();
+        
+        this.pause = new gameEngine.pauseMenu_prefab(this.game, this);
+        this.game.add.existing(this.pause);
 
     },
     update:function(){
+        
         this.game.debug.body(this.link);
         if(this.hitbox.active){
             this.game.debug.body(this.hitbox);
         }
         
         this.smoothCamera();
-
+        
         
     },
     smoothCamera:function(){

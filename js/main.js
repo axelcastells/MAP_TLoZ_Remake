@@ -13,7 +13,8 @@ var InputManager = {
     keyUp: null,
     space: null,
     A: null,
-    B: null    
+    B: null,
+    ESC: null
 };
 
 var SYSTEM_CONSTANTS = {
