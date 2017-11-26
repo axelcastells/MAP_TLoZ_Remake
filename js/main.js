@@ -36,7 +36,6 @@ var SYSTEM_CONSTANTS = {
 
 //Create the game canvas
 gameEngine.game = new Phaser.Game(ConfigOptions.screenW, ConfigOptions.screenH, Phaser.AUTO,null,this,false,false);
-
 //Set up the game scenes
 gameEngine.game.state.add('overworld',gameEngine.overworld);
 gameEngine.game.state.add('dungeon',gameEngine.dungeon);
