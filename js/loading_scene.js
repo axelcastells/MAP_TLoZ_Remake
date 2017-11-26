@@ -34,6 +34,13 @@ gameEngine.loading_scene ={
         this.load.image('loginButton', 'img/login_button.png');
         this.load.image('backButton', 'img/back_button.png');
         
+        //Hud image loading
+        this.load.image('letter', 'img/zelda-sprites-letter.png');
+        this.load.image('key', 'img/zelda-sprites-key.png');
+        this.load.spritesheet('health', 'img/healthbar.png', 23, 8);
+        this.load.spritesheet('buttonA', 'img/item_button_a.png', 38, 60);
+        this.load.image('buttonB', 'img/item_button_b.png');
+        
         //Load input
         InputManager.keyRight = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
         InputManager.keyLeft = gameEngine.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);

@@ -49,27 +49,7 @@ gameEngine.overworld ={
         this.enemy = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, this.link.position.x + 32, this.link.position.y, this);
         this.game.add.existing(this.enemy);
         
-        //Hud creation
-        this.hudCounter = new gameEngine.HUD_counter_prefab(this.game, this.worldCellSize - 21, 10, 'link', 5, this);
-        this.hudCounter.fixedToCamera = true;
-        this.game.add.existing(this.hudCounter);
-        
-        this.hudCounter2 = new gameEngine.HUD_counter_prefab(this.game, this.worldCellSize - 21, 28, 'link', 5, this);
-        this.hudCounter2.fixedToCamera = true;
-        this.game.add.existing(this.hudCounter2);
-        
-        this.hudItem = new gameEngine.HUD_item_prefab(this.game, this.worldCellSize - 10, this.worldCellSize - 10, 'link', this);
-        this.hudItem.fixedToCamera = true;
-        this.game.add.existing(this.hudItem);
-        
-        this.hudItem2 = new gameEngine.HUD_item_prefab(this.game, this.worldCellSize - 28, this.worldCellSize - 10, 'link', this);
-        this.hudItem2.fixedToCamera = true;
-        this.game.add.existing(this.hudItem2);
-        
-        this.hudHealth = new gameEngine.HUD_health_prefab(this.game, 10, 10,  this);
-        this.hudHealth.fixedToCamera = true;
-        this.game.add.existing(this.hudHealth);
-        
+        this.createHud();
 
     },
     update:function(){
@@ -87,7 +67,7 @@ gameEngine.overworld ={
         if( this.math.difference(this.link.x, this.game.camera.x + this.worldCellSize / 2) > this.worldCellSize / 2 && this.newPositionFound == false){
             
             console.log("detected link cell change in X");
-            console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
+            //console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
             
             this.link.body.velocity.x = 0;
             this.link.body.velocity.y = 0;
@@ -97,7 +77,7 @@ gameEngine.overworld ={
                 this.newCameraPositionX -= this.worldCellSize;                
                 this.actualCellX -= 1;
                 this.newPositionFound = true;
-                console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
+                //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
             }
             
             else if(this.link.x - this.game.camera.x > this.worldCellSize - 1){
@@ -105,14 +85,14 @@ gameEngine.overworld ={
                 this.newCameraPositionX += this.worldCellSize;
                 this.actualCellX += 1;
                 this.newPositionFound = true;
-                console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
+                //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
             }
         }
         
         else if( this.math.difference(this.link.y, this.game.camera.y + this.worldCellSize / 2) > this.worldCellSize / 2 && this.newPositionFound == false){
             
             console.log("detected link cell change in Y");
-            console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
+            //console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
             
             this.link.body.velocity.x = 0;
             this.link.body.velocity.y = 0;
@@ -122,14 +102,14 @@ gameEngine.overworld ={
                 this.newCameraPositionY -= this.worldCellSize;
                 this.actualCellY -= 1;
                 this.newPositionFound = true;
-                console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
+                //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
             }
             else if(this.link.y - this.game.camera.y > this.worldCellSize - 1){
                 
                 this.newCameraPositionY += this.worldCellSize;
                 this.actualCellY += 1;
                 this.newPositionFound = true;
-                console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
+                //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
             }
         }
         
@@ -151,12 +131,35 @@ gameEngine.overworld ={
             }
         }
         
-        console.log("New Position: " + this.newCameraPositionX + " " + this.newCameraPositionY + " Old Position: " + this.game.camera.x + " " + this.game.camera.y);
+        //console.log("New Position: " + this.newCameraPositionX + " " + this.newCameraPositionY + " Old Position: " + this.game.camera.x + " " + this.game.camera.y);
         
         if(this.newCameraPositionX == this.game.camera.position.x && this.newCameraPositionY == this.game.camera.position.y){
             this.newPositionFound = false;
-            console.log('New Position set to false');
+            //console.log('New Position set to false');
         }
+    },
+    
+    createHud:function(){
+        //Hud creation
+        this.hudCounter = new gameEngine.HUD_counter_prefab(this.game, this.worldCellSize - 21, 10, 'letter', this.link.lettersCounter, this);
+        this.hudCounter.fixedToCamera = true;
+        this.game.add.existing(this.hudCounter);
+        
+        this.hudCounter2 = new gameEngine.HUD_counter_prefab(this.game, this.worldCellSize - 21, 28, 'key', this.link.keysCounter, this);
+        this.hudCounter2.fixedToCamera = true;
+        this.game.add.existing(this.hudCounter2);
+        
+        this.hudItem = new gameEngine.HUD_item_prefab(this.game, this.worldCellSize - 10, this.worldCellSize - 20, 'buttonB', this);
+        this.hudItem.fixedToCamera = true;
+        this.game.add.existing(this.hudItem);
+        
+        this.hudItem2 = new gameEngine.HUD_item_prefab(this.game, this.worldCellSize - 32, this.worldCellSize - 20, 'buttonA', this);
+        this.hudItem2.fixedToCamera = true;
+        this.game.add.existing(this.hudItem2);
+        
+        this.hudHealth = new gameEngine.HUD_health_prefab(this.game, 10, 10, this.link.life,  this);
+        this.hudHealth.fixedToCamera = true;
+        this.game.add.existing(this.hudHealth);
     }
 
 }

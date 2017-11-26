@@ -26,6 +26,11 @@ gameEngine.link_prefab = function(game, pos_x, pos_y, level){
     this.attackTime = 0.4; // in seconds
     this.attackTimeCounter = 0;
     this.swordThrown = false;
+    
+    //Items carried
+    this.keysCounter = 0;
+    this.lettersCounter = 0;
+    this.hasMasterSword = false;
 };
 
 gameEngine.link_prefab.prototype = Object.create(Phaser.Sprite.prototype);
