@@ -11,7 +11,8 @@ gameEngine.loading_scene ={
         //Physics startup
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         
-        //Tilemap loading
+        //PhaserInput loading
+        this.game.add.plugin(PhaserInput.Plugin);
         
         //dungeon
         this.load.tilemap('dungeon', 'tilemaps/dungeon.json',null,Phaser.Tilemap.TILED_JSON);
