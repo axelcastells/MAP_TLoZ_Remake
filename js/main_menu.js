@@ -7,7 +7,7 @@ gameEngine.main_menu ={
         this.scale.pageAlignVertically = true;
     },
     create:function(){
-        
+        console.log("osea hola???");
         this.game.stage.backgroundColor = "#489ad8";
         this.BGimage = this.game.add.image(0, 0, 'mainMenu');
         this.BGimage.height = this.game.height;
@@ -26,11 +26,11 @@ gameEngine.main_menu ={
         this.creditsButton.onInputOver.add(this.overFeedback, this);
         this.creditsButton.onInputOut.add(this.leaveFeedback, this);
         
-        this.startButton = this.game.add.button(this.game.world.centerX + 200, this.game.world.centerY + 200, 'loginButton', this.login, this, 2, 1, 0);
-        this.startButton.anchor.setTo(0.5);
-        this.startButton.scale.setTo(10);
-        this.startButton.onInputOver.add(this.overFeedback, this);
-        this.startButton.onInputOut.add(this.leaveFeedback, this); 
+        this.loginButton = this.game.add.button(this.game.world.centerX + 200, this.game.world.centerY + 200, 'loginButton', this.login, this, 2, 1, 0);
+        this.loginButton.anchor.setTo(0.5);
+        this.loginButton.scale.setTo(10);
+        this.loginButton.onInputOver.add(this.overFeedback, this);
+        this.loginButton.onInputOut.add(this.leaveFeedback, this); 
         
     },
     update:function(){

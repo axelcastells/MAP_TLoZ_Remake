@@ -8,7 +8,10 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
     this.direction = SYSTEM_CONSTANTS.DIRECTIONS.DOWN;
     this.hp;
     
-    this.updateCounter = function(){this.counter-=0.1}
+    this.updateCounter = function(){
+        if(!level.pause.paused)
+            this.counter-=0.1; 
+    }
     
     this.timer = this.game.time.create(false);
     this.timer.loop(100, this.updateCounter, this);
@@ -91,189 +94,203 @@ gameEngine.enemy_prefab.prototype = Object.create(Phaser.Sprite.prototype);
 gameEngine.enemy_prefab.prototype.constructor = gameEngine.enemy_prefab;
 
 gameEngine.enemy_prefab.prototype.update = function(){
-    switch(this.type)
+    if(this.level.pause.paused){
+        this.animations.stop();
+        this.body.velocity.x = 0;
+        this.body.velocity.y = 0;
+    }
+    else
     {
-        case SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK:
+        switch(this.type)
         {
-            this.game.physics.arcade.collide(this, this.level.walls);
-            this.game.physics.arcade.collide(this, this.level.mapCollisions);
-            
-            switch(this.currentState)
+            case SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK:
             {
-                case this.states.INIT:
-                {
-                    this.counter = Math.random()*2;
-                    
-                    this.body.velocity.x = Math.round((Math.random()*2)-1);
-                    if(this.body.velocity.x == 0){
-                        this.body.velocity.y = Math.round((Math.random()*2)-1);
-                    }
-                    else this.body.velocity.y = 0;
-                    
-                    if(this.body.velocity.x == 0 && this.body.velocity.y == 0)
-                    {
+                this.game.physics.arcade.collide(this, this.level.walls);
+                this.game.physics.arcade.collide(this, this.level.mapCollisions);
 
-                    }
-                    else{
-                        this.direction.x = this.body.velocity.x;
-                        this.direction.y = this.body.velocity.y;
-                    }
-                    
-                    if(this.body.velocity.x == -1 && this.body.velocity.y == 0)
-                        this.animations.play("walk_left");
-                    else if(this.body.velocity.x == 1 && this.body.velocity.y == 0)
-                        this.animations.play("walk_right");
-                    else if(this.body.velocity.x == 0 && this.body.velocity.y == -1)
-                        this.animations.play("walk_up");
-                    else if(this.body.velocity.x == 0 && this.body.velocity.y == 1)
-                        this.animations.play("walk_down");
-                    
-                    this.body.velocity.x *= this.speed;
-                    this.body.velocity.y *= this.speed;
-                    
-                    this.currentState = this.states.WALK;
-                }break;
-                case this.states.WALK:
-                {                
-                    if(this.counter <= 0)
-                    {
-                        this.counter = 0.3;
-                        
-                        this.animations.currentAnim.restart();
-                        this.animations.currentAnim.stop();
-                        
-                        this.currentState = this.states.CHARGE;
-                    }
-                }break;
-                case this.states.CHARGE:
+                switch(this.currentState)
                 {
-                    this.body.velocity.x = 0;
-                    this.body.velocity.y = 0;
-                    
-                    //this.scale.setTo(1.5);
-                    if(this.counter <= 0)
+                    case this.states.INIT:
+                    {
+                        this.counter = Math.random()*2;
+
+                        this.body.velocity.x = Math.round((Math.random()*2)-1);
+                        if(this.body.velocity.x == 0){
+                            this.body.velocity.y = Math.round((Math.random()*2)-1);
+                        }
+                        else this.body.velocity.y = 0;
+
+                        if(this.body.velocity.x == 0 && this.body.velocity.y == 0)
+                        {
+
+                        }
+                        else{
+                            this.direction.x = this.body.velocity.x;
+                            this.direction.y = this.body.velocity.y;
+                        }
+
+                        if(this.body.velocity.x == -1 && this.body.velocity.y == 0)
+                            this.animations.play("walk_left");
+                        else if(this.body.velocity.x == 1 && this.body.velocity.y == 0)
+                            this.animations.play("walk_right");
+                        else if(this.body.velocity.x == 0 && this.body.velocity.y == -1)
+                            this.animations.play("walk_up");
+                        else if(this.body.velocity.x == 0 && this.body.velocity.y == 1)
+                            this.animations.play("walk_down");
+
+                        this.body.velocity.x *= this.speed;
+                        this.body.velocity.y *= this.speed;
+
+                        this.currentState = this.states.WALK;
+                    }break;
+                    case this.states.WALK:
+                    {                
+                        if(this.counter <= 0)
+                        {
+                            this.counter = 0.3;
+
+                            this.animations.currentAnim.restart();
+                            this.animations.currentAnim.stop();
+
+                            this.currentState = this.states.CHARGE;
+                        }
+                    }break;
+                    case this.states.CHARGE:
+                    {
+                        this.body.velocity.x = 0;
+                        this.body.velocity.y = 0;
+
+                        //this.scale.setTo(1.5);
+                        if(this.counter <= 0)
+                        {
+                            this.animations.currentAnim.restart();
+
+                            this.currentState = this.states.SHOOT;
+                        }
+                    }break;
+                    case this.states.SHOOT:
                     {
                         this.animations.currentAnim.restart();
-                        
-                        this.currentState = this.states.SHOOT;
+                        this.bullet = new gameEngine.projectile_prefab(this.game, SYSTEM_CONSTANTS.PROJECTILE_TYPES.ROCK, this.body.position.x, this.body.position.y, this.direction, this.level);
+                        this.game.add.existing(this.bullet);
+                        this.currentState = this.states.INIT;
                     }
-                }break;
+                }break;/*
                 case this.states.SHOOT:
                 {
-                    this.bullet = new gameEngine.projectile_prefab(this.game, SYSTEM_CONSTANTS.PROJECTILE_TYPES.ROCK, this.body.position.x, this.body.position.y, this.direction, this.level);
-                    this.game.add.existing(this.bullet);
+
 
                     //this.scale.setTo(1);
                     this.currentState = this.states.INIT;
-                }break;
-            }           
-        }break;
-        case SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA:
-        {
-            //console.log(this.currentState);
-            switch(this.currentState)
+                }break;*/
+            }break;
+            case SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA:
             {
-                case this.states.INIT:
+                //console.log(this.currentState);
+                switch(this.currentState)
                 {
-                    this.position.x = this.level.link.position.x + ((Math.random()*100) - 50);
-                    this.position.y = this.level.link.position.y + ((Math.random()*100) - 50);
-                    
-                    this.currentState = this.states.HIDDEN;
-                }break;
-                case this.states.HIDDEN:
-                {                    
-                    if(this.counter <= 0)
+                    case this.states.INIT:
                     {
-                        this.animations.play("emerging");
-                        this.currentState = this.states.EMERGING;
-                    }
-                }break;
-                case this.states.EMERGING:
-                {
-                    if(!this.animations.currentAnim.isPlaying)
-                    {
-                       
-                        this.counter = 2;
-                        
-                        if(this.position.y <= this.level.link.position.y)
+                        this.position.x = this.level.link.position.x + ((Math.random()*100) - 50);
+                        this.position.y = this.level.link.position.y + ((Math.random()*100) - 50);
+
+                        this.currentState = this.states.HIDDEN;
+                    }break;
+                    case this.states.HIDDEN:
+                    {                    
+                        if(this.counter <= 0)
                         {
-                            this.animations.play("emerged_down");
+                            this.animations.play("emerging");
+                            this.currentState = this.states.EMERGING;
                         }
-                        else{
-                            this.animations.play("emerged_up");
-                        }
-                        
-                        this.currentState = this.states.EMERGED;
-
-                    }
-                    
-                }break;
-                case this.states.EMERGED:
-                {
-                    if(this.counter <= 0){
-                        this.counter = 2;
-                        
-                        this.direction = new Phaser.Point(this.level.link.position.x - this.position.x, this.level.link.position.y - this.position.y);
-                        this.direction = Phaser.Point.normalize(this.direction);
-                        
-                        //console.log(this.direction);
-                        
-                        this.bullet = new gameEngine.projectile_prefab(this.game, SYSTEM_CONSTANTS.PROJECTILE_TYPES.FIREBALL, this.body.position.x, this.body.position.y, this.direction, this.level);
-                        this.game.add.existing(this.bullet);
-                        
-                        this.currentState = this.states.ATTACK;
-                    }
-                }break;
-                case this.states.ATTACK:
-                {
-                    if(this.counter <= 0){
-                        this.currentState = this.states.INIT;
-                    }
-                }break;
-            }
-        }break;
-        case SYSTEM_CONSTANTS.ENEMY_TYPES.TEKTITE:
-        {
-            //console.log(this.currentState);
-            switch(this.currentState)
-            {
-                case this.states.INIT:
-                {
-                    this.counter = 3;
-                    this.currentState = this.states.PREJUMP;
-                }break;
-                case this.states.PREJUMP:
-                {
-                    if(this.counter <= 0)
+                    }break;
+                    case this.states.EMERGING:
                     {
-                        this.game.physics.arcade.gravity.y = 9.8;
-                        this.body.velocity.y = -((Math.random()*40)-10);
-                        this.body.velocity.x = ((Math.random()*14)-7);
-                        this.counter = 2;
-                        this.currentState = this.states.JUMP;  
-                    }
+                        if(!this.animations.currentAnim.isPlaying)
+                        {
 
-                }break;
-                case this.states.JUMP:
+                            this.counter = 2;
+
+                            if(this.position.y <= this.level.link.position.y)
+                            {
+                                this.animations.play("emerged_down");
+                            }
+                            else{
+                                this.animations.play("emerged_up");
+                            }
+
+                            this.currentState = this.states.EMERGED;
+
+                        }
+
+                    }break;
+                    case this.states.EMERGED:
+                    {
+                        if(this.counter <= 0){
+                            this.counter = 2;
+
+                            this.direction = new Phaser.Point(this.level.link.position.x - this.position.x, this.level.link.position.y - this.position.y);
+                            this.direction = Phaser.Point.normalize(this.direction);
+
+                            //console.log(this.direction);
+
+                            this.bullet = new gameEngine.projectile_prefab(this.game, SYSTEM_CONSTANTS.PROJECTILE_TYPES.FIREBALL, this.body.position.x, this.body.position.y, this.direction, this.level);
+                            this.game.add.existing(this.bullet);
+
+                            this.currentState = this.states.ATTACK;
+                        }
+                    }break;
+                    case this.states.ATTACK:
+                    {
+                        if(this.counter <= 0){
+                            this.currentState = this.states.INIT;
+                        }
+                    }break;
+                }
+            }break;
+            case SYSTEM_CONSTANTS.ENEMY_TYPES.TEKTITE:
+            {
+                //console.log(this.currentState);
+                switch(this.currentState)
                 {
-                    if(this.counter <= 0)
-                        this.currentState = this.states.LANDED;
-                }break;
-                case this.states.LANDED:
-                {
-                    this.game.physics.arcade.gravity.y = 0;
-                    this.body.velocity.y = 0;
-                        this.body.velocity.x = 0;
-                    this.currentState = this.states.INIT;
-                }break;
+                    case this.states.INIT:
+                    {
+                        this.counter = 3;
+                        this.currentState = this.states.PREJUMP;
+                    }break;
+                    case this.states.PREJUMP:
+                    {
+                        if(this.counter <= 0)
+                        {
+                            this.game.physics.arcade.gravity.y = 9.8;
+                            this.body.velocity.y = -((Math.random()*40)-10);
+                            this.body.velocity.x = ((Math.random()*14)-7);
+                            this.counter = 2;
+                            this.currentState = this.states.JUMP;  
+                        }
+
+                    }break;
+                    case this.states.JUMP:
+                    {
+                        if(this.counter <= 0)
+                            this.currentState = this.states.LANDED;
+                    }break;
+                    case this.states.LANDED:
+                    {
+                        this.game.physics.arcade.gravity.y = 0;
+                        this.body.velocity.y = 0;
+                            this.body.velocity.x = 0;
+                        this.currentState = this.states.INIT;
+                    }break;
+                    
+                }
+
+            }break;
+            default:
+            {
                 
-            }
-
-        }break;
-        default:
-        {
-            
-        }break;
+            }break;
+        }
     }
 
     this.game.physics.arcade.overlap(this,this.level.link,
@@ -289,5 +306,4 @@ gameEngine.enemy_prefab.prototype.update = function(){
     });
     
     //console.log(this.counter);
-    
 };

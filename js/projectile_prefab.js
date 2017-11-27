@@ -43,6 +43,7 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
     this.body.velocity.x += direction.x * this.speed;
     this.body.velocity.y += direction.y * this.speed;
     
+    this.direction = direction;
     //console.log(this.body.velocity);
 };
 
@@ -50,7 +51,13 @@ gameEngine.projectile_prefab.prototype = Object.create(Phaser.Sprite.prototype);
 gameEngine.projectile_prefab.prototype.constructor = gameEngine.projectile_prefab;
 
 gameEngine.projectile_prefab.prototype.update = function(){
-
+    if(this.level.pause.paused){
+            this.body.velocity.x = 0;
+            this.body.velocity.y = 0;
+    } else {
+            this.body.velocity.x = this.direction.x * this.speed;
+            this.body.velocity.y = this.direction.y * this.speed;
+    }
     this.game.physics.arcade.collide(this, this.level.walls, function(bullet,link){
         if(bullet.body.touching){
             bullet.kill();

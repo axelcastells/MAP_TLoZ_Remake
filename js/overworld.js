@@ -20,8 +20,18 @@ gameEngine.overworld ={
         
         this.mapCollisions = this.map.createLayer('overworld');
         this.map.setCollisionBetween(1,31,true,'overworld');
-               
-
+                               
+        //Teleport creation
+        this.tp = new gameEngine.teleport_prefab(this.game, 27 * 16, 16 * 16, 7 * 16, 24 * 16, 1, this);
+        this.game.add.existing(this.tp);
+        
+        //Door creation
+        this.door = new gameEngine.door_prefab(this.game, 39 * 16, 7 * 16, 'statue', this);
+        this.game.add.existing(this.door);
+        
+        //this.tp2 = new gameEngine.teleport_prefab(this.game, 336, 672, 500, 740, 0, this);
+        //this.game.add.existing(this.tp2);     
+        
         //Link creation
         this.link = new gameEngine.link_prefab(this.game, this.worldCellSize / 2 + this.worldCellSize * this.actualCellX  , this.worldCellSize / 2 + this.worldCellSize * this.actualCellY, this);
         this.game.add.existing(this.link);
@@ -38,13 +48,6 @@ gameEngine.overworld ={
         this.newCameraPositionX = this.game.camera.x;
         this.newCameraPositionY = this.game.camera.y;
         
-        //Teleport creation
-        this.tp = new gameEngine.teleport_prefab(this.game, 27 * 16, 16 * 16, 7 * 16, 24 * 16, 1, this);
-        this.game.add.existing(this.tp);
-        
-        //this.tp2 = new gameEngine.teleport_prefab(this.game, 336, 672, 500, 740, 0, this);
-        //this.game.add.existing(this.tp2);     
-        
         //Enemy creation
         //this.enemy = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, this.link.position.x + 32, this.link.position.y, this);
         //this.game.add.existing(this.enemy);
@@ -52,10 +55,12 @@ gameEngine.overworld ={
         this.enemyTektite = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.TEKTITE, this.link.position.x + 32, this.link.position.y, this);
         this.game.add.existing(this.enemyTektite);
         
+
+        
+        //HUD creation
         this.createHud();
         
         this.pause = new gameEngine.pauseMenu_prefab(this.game, this);
-        this.game.add.existing(this.pause);
 
     },
     update:function(){
