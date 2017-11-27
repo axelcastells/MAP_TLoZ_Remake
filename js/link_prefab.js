@@ -134,7 +134,7 @@ gameEngine.link_prefab.prototype.update = function(){
                     default:
                         break;
                 }
-                this.sword = new gameEngine.projectile_prefab(this.game, SYSTEM_CONSTANTS.PROJECTILE_TYPES.SWORD, this.body.position.x + 8, this.body.position.y + 8, this.direction, this.level);
+                this.sword = new gameEngine.projectile_prefab(this.game, SYSTEM_CONSTANTS.PROJECTILE_TYPES.SWORD, this.body.position.x + 4, this.body.position.y + 7, this.direction, this.level);
                 this.game.add.existing(this.sword);
             }
             this.attackTimeCounter += this.level.game.time.physicsElapsed;

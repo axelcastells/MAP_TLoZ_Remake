@@ -114,9 +114,7 @@ gameEngine.projectile_prefab.prototype.update = function(){
             } else {
                 console.log("bullet not blocked");
                 link.recieveDamage(1);
-                console.log(link.life);
             }
-
             bullet.kill();
         }});
     } else {
