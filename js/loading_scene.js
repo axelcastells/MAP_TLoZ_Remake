@@ -30,6 +30,8 @@ gameEngine.loading_scene ={
         this.load.image('hitbox', 'img/collider.png', 32, 32);
         this.load.image('black', 'img/black.png', 32, 32);
         this.load.image('sword', 'img/sword.png', 7, 16);
+        this.load.image('master_sword', 'img/master_sword.png', 7, 16);
+        this.load.image('heart', 'img/heart.png', 7, 8);
         
         //Main menu image and button image loading
         this.load.image('mainMenu', 'img/mainMenu.jpg');

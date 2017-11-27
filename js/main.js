@@ -26,13 +26,20 @@ var SYSTEM_CONSTANTS = {
     PROJECTILE_TYPES: {
         ROCK: 0,
         FIREBALL: 1,
-        SWORD: 2
+        SWORD: 2,
+        MASTER_SWORD: 3
     },
     DIRECTIONS: {
         UP: new Phaser.Point(0,-1),
         DOWN: new Phaser.Point(0,1),
         LEFT: new Phaser.Point(-1,0),
         RIGHT: new Phaser.Point(1,0)
+    },
+    PICKUPS:{
+        SWORD: 0,
+        MASTER_SWORD: 1,
+        HEART: 2, 
+        KEY: 3
     }
 };
 

@@ -38,7 +38,13 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
             {    
                 Phaser.Sprite.call(this,game,x,y,'sword');
                 this.type = type;
-                this.speed = 150;
+                this.speed = 250;
+            }break;
+            case SYSTEM_CONSTANTS.PROJECTILE_TYPES.MASTER_SWORD:
+            {    
+                Phaser.Sprite.call(this,game,x,y,'master_sword');
+                this.type = type;
+                this.speed = 320;
             }break;
             default:
             {
@@ -91,7 +97,7 @@ gameEngine.projectile_prefab.prototype.update = function(){
             bullet.kill();
     }});
     
-    if(this.type != SYSTEM_CONSTANTS.PROJECTILE_TYPES.SWORD){
+    if(this.type != SYSTEM_CONSTANTS.PROJECTILE_TYPES.SWORD && this.type != SYSTEM_CONSTANTS.PROJECTILE_TYPES.MASTER_SWORD){
         this.game.physics.arcade.collide(this,this.level.link,
         function(bullet,link){
         if(bullet.body.touching){

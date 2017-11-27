@@ -63,6 +63,15 @@ gameEngine.overworld ={
         this.createHud();
         
         this.pause = new gameEngine.pauseMenu_prefab(this.game, this);
+        
+        this.pickup = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.HEART, this.worldCellSize / 2 + this.worldCellSize * this.actualCellX + 70, this.worldCellSize / 2 + this.worldCellSize * this.actualCellY, this);
+        this.game.add.existing(this.pickup);
+        
+        this.pickup2 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.SWORD, this.worldCellSize / 2 + this.worldCellSize * this.actualCellX + 70, this.worldCellSize / 2 + this.worldCellSize * this.actualCellY + 70, this);
+        this.game.add.existing(this.pickup2);
+        
+        this.pickup3 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.MASTER_SWORD, this.worldCellSize / 2 + this.worldCellSize * this.actualCellX - 70, this.worldCellSize / 2 + this.worldCellSize * this.actualCellY + 70, this);
+        this.game.add.existing(this.pickup3);
 
     },
     update:function(){
