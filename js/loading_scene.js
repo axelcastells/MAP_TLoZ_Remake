@@ -21,6 +21,7 @@ gameEngine.loading_scene ={
         //overworld
         this.load.tilemap('overworld', 'tilemaps/overworld.json',null,Phaser.Tilemap.TILED_JSON);
         this.load.image('overworld', 'img/overworld.png');
+        this.load.image('statue', 'img/statue.png');
         
         //Images loading
         this.load.spritesheet('link', 'img/link_movement.png', 32, 32);
