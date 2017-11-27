@@ -66,6 +66,7 @@ gameEngine.pauseMenu_prefab.prototype.backToMenu = function(button){
         this.paused = false;
         this.resumeButton.visible = false;
         this.exitButton.visible = false;
+        gameEngine.overworld.backgroundMusic.stop();
         this.game.state.start("main_menu");
 };
 gameEngine.pauseMenu_prefab.prototype.resume = function(button){

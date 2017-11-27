@@ -19,6 +19,9 @@ gameEngine.teleport_prefab = function(game, x,y, _dX, _dY, tpType, level){
     dX = _dX;
     dY = _dY;
     
+    //Audio creation
+    this.teleportSound = this.level.add.audio('teleportSound');
+    
 };
 
 gameEngine.teleport_prefab.prototype = Object.create(Phaser.Sprite.prototype);
@@ -27,6 +30,7 @@ gameEngine.teleport_prefab.prototype.constructor = gameEngine.teleport_prefab;
 gameEngine.teleport_prefab.prototype.update = function(){
     
     this.game.physics.arcade.overlap(this, this.level.link, function(teleport, link){
+        teleport.teleportSound.play();
         link.level.camera.fade(0x000000,10);
         this.timer = link.level.game.time.create(true);
         link.reset(dX, dY);

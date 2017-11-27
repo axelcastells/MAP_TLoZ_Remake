@@ -30,7 +30,15 @@ gameEngine.main_menu ={
         this.loginButton.anchor.setTo(0.5);
         this.loginButton.scale.setTo(10);
         this.loginButton.onInputOver.add(this.overFeedback, this);
-        this.loginButton.onInputOut.add(this.leaveFeedback, this); 
+        this.loginButton.onInputOut.add(this.leaveFeedback, this);
+        
+        //Intro music
+        if(gameEngine.startIntroOnce == false){
+            this.introMusic = this.add.audio('intro', 1, true, true);
+            this.introMusic.play();
+            gameEngine.startIntroOnce = true;
+        }
+        
         
     },
     update:function(){
@@ -39,6 +47,8 @@ gameEngine.main_menu ={
     },
     loadGame:function(){
         this.game.state.start("overworld");
+        gameEngine.startIntroOnce = false;
+        this.introMusic.stop();
     },
     credits:function(){
         this.game.state.start("credits");

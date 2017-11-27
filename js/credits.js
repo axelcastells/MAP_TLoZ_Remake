@@ -36,7 +36,7 @@ gameEngine.credits ={
         //Resources part
         this.game.add.bitmapText(100, 630, 'font_white', 'Resources', 95);
         this.game.add.bitmapText(160, 730, 'font_white', 'Image - Spriters Resource', 70);
-        this.game.add.bitmapText(160, 800, 'font_white', 'Sound - 420 Blaze It', 70);
+        this.game.add.bitmapText(160, 800, 'font_white', 'Sound - LoZ Sound Effects by HelpTheWretched', 70);
         this.game.add.bitmapText(160, 870, 'font_white', 'Font - Return of Ganon by Codeman38', 70);
         
         //Tools used part

@@ -59,8 +59,17 @@ gameEngine.loading_scene ={
         //Bitmap text loading
         this.load.bitmapFont('font_white', 'font/zeldaBitmapFont_0.png', 'font/zeldaBitmapFont.fnt');   
         this.load.bitmapFont('font_black', 'font/zeldaBitmapFontBlack_0.png', 'font/zeldaBitmapFontBlack.fnt');   
-        //Audio loading
         
+        //Audio loading
+        gameEngine.startIntroOnce = false;
+        this.load.audio('intro','audio/introMusic.mp3');
+        this.load.audio('overworldMusic','audio/overworldMusic.mp3');
+        this.load.audio('linkAttack', 'audio/linkAttack.wav');
+        this.load.audio('linkShield', 'audio/linkShield.wav');
+        this.load.audio('hit', 'audio/enemyHit.wav');
+        this.load.audio('enemyShot', 'audio/enemyShot.wav');
+        this.load.audio('teleportSound', 'audio/teleport.wav');
+        //this.load.audio('explosion','sounds/explosion.wav');
         
     },
     create:function(){

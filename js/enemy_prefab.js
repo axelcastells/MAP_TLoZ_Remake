@@ -63,6 +63,9 @@ console.log(this.type);
     this.level = level;
     this.game.physics.arcade.enable(this);
     
+    //Load audios
+    this.enemyHitSound = this.level.add.audio('hit');
+    
 };
 
 gameEngine.enemy_prefab.prototype = Object.create(Phaser.Sprite.prototype);

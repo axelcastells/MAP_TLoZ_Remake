@@ -17,7 +17,7 @@ gameEngine.link_prefab = function(game, pos_x, pos_y, level){
     this.animations.add("attack_up", [10, 16], 60, false);
     this.animations.add("attack_right", [11, 17], 60, false);
     this.animations.add("collect", [12, 13], 2, false);
-    
+        
     this.level = level;
     this.life = 6;
     this.level;
@@ -26,6 +26,10 @@ gameEngine.link_prefab = function(game, pos_x, pos_y, level){
     this.attackTime = 0.4; // in seconds
     this.attackTimeCounter = 0;
     this.swordThrown = false;
+    
+    //Load audios
+    this.linkAttackSound = this.level.add.audio('linkAttack');
+    this.linkShieldSound = this.level.add.audio('linkShield');
     
     //Items carried
     this.keysCounter = 0;
@@ -54,6 +58,7 @@ gameEngine.link_prefab.prototype.update = function(){
                 this.body.velocity.y = 0;
                 this.attackTimeCounter = 0;
                 this.animations.play("attack_" + this.facingDirection);
+                this.linkAttackSound.play();
                 this.attacking = true;
                 this.level.hitbox.active = true;
                 switch(this.facingDirection){

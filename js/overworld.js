@@ -22,7 +22,7 @@ gameEngine.overworld ={
         this.map.setCollisionBetween(1,31,true,'overworld');
                                
         //Teleport creation
-        this.tp = new gameEngine.teleport_prefab(this.game, 27 * 16, 16 * 16, 7 * 16, 24 * 16, 1, this);
+        this.tp = new gameEngine.teleport_prefab(this.game, 27 * 16, 16 * 16, 7 * 16 + 8, 25 * 16 + 8, 1, this);
         this.game.add.existing(this.tp);
         
         //Door creation
@@ -52,7 +52,9 @@ gameEngine.overworld ={
         this.enemy = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, this.link.position.x + 32, this.link.position.y, this);
         this.game.add.existing(this.enemy);
         
-
+        //Audio creation
+        this.backgroundMusic = this.add.audio('overworldMusic', 1, true, true);
+        this.backgroundMusic.play();
         
         //HUD creation
         this.createHud();

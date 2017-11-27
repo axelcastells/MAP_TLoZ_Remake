@@ -21,6 +21,7 @@ gameEngine.hitbox_prefab.prototype.constructor = gameEngine.hitbox_prefab;
 gameEngine.hitbox_prefab.prototype.update = function(){
     //Set enemy colliding functions here
     this.game.physics.arcade.collide(this, this.level.enemy, function(hibox,enemy){
+        enemy.enemyHitSound.play();
         enemy.reset(550, 800)
     });
     this.x = this.level.link.x;

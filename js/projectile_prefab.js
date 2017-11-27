@@ -7,6 +7,9 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
     this.game = game;
     this.projectileTYpe = type;
     
+    this.level = level;
+    
+    this.enemyShotSound = this.level.add.audio('enemyShot');
     
     Phaser.Sprite.call(this,game,x,y,'enemies');
     
@@ -17,7 +20,7 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
                 this.type = type;
                 this.speed = 500;
                 this.animations.add('shoot',[34],1,true);
-                
+                //this.enemyShotSound.play();
                 this.animations.play('shoot');
             }break;
             case SYSTEM_CONSTANTS.PROJECTILE_TYPES.FIREBALL:
@@ -25,7 +28,7 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
                 this.type = type;
                 this.speed = 50;
                 this.animations.add('shoot',[32,33],10,true);
-                
+                this.enemyShotSound.play();
                 this.animations.play('shoot');
             }break;
             default:
@@ -36,8 +39,7 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
 
     
     this.anchor.setTo(.5);
-
-    this.level = level;
+    
     this.game.physics.arcade.enable(this);
     
     this.body.velocity.x += direction.x * this.speed;
@@ -76,14 +78,18 @@ gameEngine.projectile_prefab.prototype.update = function(){
             
             if(link.body.touching.down && link.facingDirection == "down" && !link.attacking){
                 console.log("bullet blocked down");
+                link.linkShieldSound.play();
             } else if (link.body.touching.up && link.facingDirection == "up" && !link.attacking){
                 console.log("bullet blocked up");
+                link.linkShieldSound.play();
             }
             else if (link.body.touching.right && link.facingDirection == "right" && !link.attacking){
                 console.log("bullet blocked right");
+                link.linkShieldSound.play();
             }
             else if (link.body.touching.left && link.facingDirection == "left" && !link.attacking){
                 console.log("bullet blocked left");
+                link.linkShieldSound.play();
             } else {
                 console.log("bullet not blocked");
                 link.life -= 1;
