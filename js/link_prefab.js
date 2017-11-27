@@ -25,6 +25,7 @@ gameEngine.link_prefab = function(game, pos_x, pos_y, level){
     this.attacking = false;
     this.attackTime = 0.4; // in seconds
     this.attackTimeCounter = 0;
+    this.attackPower = 1;
     this.swordThrown = false;
     
     //Items carried

@@ -46,8 +46,11 @@ gameEngine.overworld ={
         //this.game.add.existing(this.tp2);     
         
         //Enemy creation
-        this.enemy = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, this.link.position.x + 32, this.link.position.y, this);
-        this.game.add.existing(this.enemy);
+        //this.enemy = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, this.link.position.x + 32, this.link.position.y, this);
+        //this.game.add.existing(this.enemy);
+
+        this.enemyTektite = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.TEKTITE, this.link.position.x + 32, this.link.position.y, this);
+        this.game.add.existing(this.enemyTektite);
         
         this.createHud();
         

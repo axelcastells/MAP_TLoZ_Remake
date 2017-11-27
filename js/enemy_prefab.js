@@ -6,6 +6,7 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
     this.counter = 0;
     this.speed = 100;
     this.direction = SYSTEM_CONSTANTS.DIRECTIONS.DOWN;
+    this.hp;
     
     this.updateCounter = function(){this.counter-=0.1}
     
@@ -15,9 +16,15 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
     
     this.states;
     this.currentState;
+
+    this.GetDMG = function(dmg){
+        this.hp -= dmg;
+        if(this.hp <= 0)
+            this.destroy();
+    }
     
     Phaser.Sprite.call(this,game,x,y,'enemies');
-console.log(this.type);
+    console.log(this.type);
     switch(type)
         {
             case SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK:
@@ -33,6 +40,8 @@ console.log(this.type);
                 this.animations.add('walk_up',[6,7],10,true);
                 
                 this.animations.play('walk_down');
+
+                this.hp = 1;
             }break;
             case SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA:
             {
@@ -47,6 +56,21 @@ console.log(this.type);
                 this.animations.add('emerged_up',[19],1,true);
                 
                 this.animations.play('hidden');
+
+                this.hp = 1;
+            }break;
+            case SYSTEM_CONSTANTS.ENEMY_TYPES.TEKTITE:
+            {
+                this.type = type;
+                console.log("Created Tektite");
+                this.states = {INIT: 0, PREJUMP: 1, JUMP: 2, LANDED: 3};
+                this.currentState = this.states.INIT;
+                
+                this.animations.add('iddle',[24,25],1,true);
+                
+                this.animations.play('iddle');
+
+                this.hp = 1;
             }break;
             default:
             {
@@ -59,6 +83,7 @@ console.log(this.type);
 
     this.level = level;
     this.game.physics.arcade.enable(this);
+    
     
 };
 
@@ -141,19 +166,7 @@ gameEngine.enemy_prefab.prototype.update = function(){
                     //this.scale.setTo(1);
                     this.currentState = this.states.INIT;
                 }break;
-            }
-            
-            this.game.physics.arcade.collide(this,this.level.link,
-            function(enemy,link){
-            if(enemy.body.touching){
-                console.log("Enemy Collision!");
-                //enemy.kill();
-            } else{
-
-                //enemy.level.hit();
-            }
-    });
-            
+            }           
         }break;
         case SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA:
         {
@@ -219,11 +232,61 @@ gameEngine.enemy_prefab.prototype.update = function(){
                 }break;
             }
         }break;
+        case SYSTEM_CONSTANTS.ENEMY_TYPES.TEKTITE:
+        {
+            //console.log(this.currentState);
+            switch(this.currentState)
+            {
+                case this.states.INIT:
+                {
+                    this.counter = 3;
+                    this.currentState = this.states.PREJUMP;
+                }break;
+                case this.states.PREJUMP:
+                {
+                    if(this.counter <= 0)
+                    {
+                        this.game.physics.arcade.gravity.y = 9.8;
+                        this.body.velocity.y = -((Math.random()*40)-10);
+                        this.body.velocity.x = ((Math.random()*14)-7);
+                        this.counter = 2;
+                        this.currentState = this.states.JUMP;  
+                    }
+
+                }break;
+                case this.states.JUMP:
+                {
+                    if(this.counter <= 0)
+                        this.currentState = this.states.LANDED;
+                }break;
+                case this.states.LANDED:
+                {
+                    this.game.physics.arcade.gravity.y = 0;
+                    this.body.velocity.y = 0;
+                        this.body.velocity.x = 0;
+                    this.currentState = this.states.INIT;
+                }break;
+                
+            }
+
+        }break;
         default:
         {
             
         }break;
     }
+
+    this.game.physics.arcade.overlap(this,this.level.link,
+        function(enemy,link){
+            if(enemy.body.touching && link.attacking){
+                console.log("Enemy Collision!");
+                enemy.GetDMG(link.attackPower);
+                //enemy.kill();
+            } else{
+                
+                //enemy.level.hit();
+            }
+    });
     
     //console.log(this.counter);
     
