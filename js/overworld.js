@@ -58,7 +58,6 @@ gameEngine.overworld ={
         this.createHud();
         
         this.pause = new gameEngine.pauseMenu_prefab(this.game, this);
-        this.game.add.existing(this.pause);
 
     },
     update:function(){
