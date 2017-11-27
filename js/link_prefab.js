@@ -43,8 +43,12 @@ gameEngine.link_prefab.prototype.update = function(){
     this.game.physics.arcade.collide(this, this.level.walls);
     this.game.physics.arcade.collide(this, this.level.mapCollisions);
     //Update
-    
-     if(!this.attacking){
+     if(this.level.pause.paused){
+        this.body.velocity.x = 0;
+        this.body.velocity.y = 0;
+        this.animations.stop();
+     }
+     else if(!this.attacking){
             if(InputManager.A.isDown && InputManager.A.downDuration(this.attackTime)){
                 this.body.velocity.x = 0;
                 this.body.velocity.y = 0;
@@ -99,7 +103,7 @@ gameEngine.link_prefab.prototype.update = function(){
             if(InputManager.B.isDown){
                 this.animations.play("collect");
             }
-            
+
         } else {
             if(this.attackTimeCounter > this.attackTime){
                 this.attacking = false;

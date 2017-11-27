@@ -29,10 +29,12 @@ gameEngine.loading_scene ={
         this.load.image('hitbox', 'img/collider.png', 32, 32);
         this.load.image('black', 'img/black.png', 32, 32);
         
-        //Main menu image loading
+        //Main menu image and button image loading
         this.load.image('mainMenu', 'img/mainMenu.jpg');
         this.load.image('playButton', 'img/play_button.png');
         this.load.image('creditsButton', 'img/credits_button.png');
+        this.load.image('resumeButton', 'img/resume_button.png');
+        this.load.image('exitButton', 'img/exit_button.png');
         this.load.image('loginButton', 'img/login_button.png');
         this.load.image('backButton', 'img/back_button.png');
         
