@@ -20,7 +20,8 @@ var InputManager = {
 var SYSTEM_CONSTANTS = {
     ENEMY_TYPES: {
         OCTOROK: 0,
-        ZORA: 1
+        ZORA: 1,
+        TEKTITE: 2
     },
     PROJECTILE_TYPES: {
         ROCK: 0,

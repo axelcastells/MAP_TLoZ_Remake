@@ -19,12 +19,14 @@ gameEngine.link_prefab = function(game, pos_x, pos_y, level){
     this.animations.add("collect", [12, 13], 2, false);
         
     this.level = level;
+    this.game = game;
     this.life = 6;
     this.level;
     this.facingDirection = "down";
     this.attacking = false;
     this.attackTime = 0.4; // in seconds
     this.attackTimeCounter = 0;
+    this.attackPower = 1;
     this.swordThrown = false;
     
     //Load audios
@@ -118,8 +120,32 @@ gameEngine.link_prefab.prototype.update = function(){
                 this.attackTimeCounter = 0;
             } else if (!this.swordThrown && this.attackTimeCounter > this.attackTime / 4) {
                 this.swordThrown = true;
+                this.direction = SYSTEM_CONSTANTS.DIRECTIONS.UP;
+                switch (this.facingDirection){
+                    case "down":
+                        this.direction = SYSTEM_CONSTANTS.DIRECTIONS.DOWN;
+                        break;
+                    case "left":
+                        this.direction = SYSTEM_CONSTANTS.DIRECTIONS.LEFT;
+                        break;
+                    case "right":
+                        this.direction = SYSTEM_CONSTANTS.DIRECTIONS.RIGHT;
+                        break;
+                    default:
+                        break;
+                }
+                this.sword = new gameEngine.projectile_prefab(this.game, SYSTEM_CONSTANTS.PROJECTILE_TYPES.SWORD, this.body.position.x + 8, this.body.position.y + 8, this.direction, this.level);
+                this.game.add.existing(this.sword);
             }
             this.attackTimeCounter += this.level.game.time.physicsElapsed;
         }   
-    
 };
+
+gameEngine.link_prefab.prototype.recieveDamage = function(damage){
+    this.game.camera.flash(0xff0000, 300);
+    this.life -= damage;
+    if(this.life <= 0){
+        this.life = 0;
+        this.game.state.start(this.game.state.current);
+    }
+}
