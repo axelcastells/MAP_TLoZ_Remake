@@ -75,79 +75,80 @@ gameEngine.overworld ={
         
     },
     smoothCamera:function(){
-                
-        if( this.math.difference(this.link.x, this.game.camera.x + this.worldCellSize / 2) > this.worldCellSize / 2 && this.newPositionFound == false){
-            
-            console.log("detected link cell change in X");
-            //console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
-            
-            this.link.body.velocity.x = 0;
-            this.link.body.velocity.y = 0;
-            
-            if (this.link.x - this.game.camera.x < 0){
-                
-                this.newCameraPositionX -= this.worldCellSize;                
-                this.actualCellX -= 1;
-                this.newPositionFound = true;
-                //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
+        if(!this.pause.paused){        
+            if( this.math.difference(this.link.x, this.game.camera.x + this.worldCellSize / 2) > this.worldCellSize / 2 && this.newPositionFound == false){
+
+                console.log("detected link cell change in X");
+                //console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
+
+                this.link.body.velocity.x = 0;
+                this.link.body.velocity.y = 0;
+
+                if (this.link.x - this.game.camera.x < 0){
+
+                    this.newCameraPositionX -= this.worldCellSize;                
+                    this.actualCellX -= 1;
+                    this.newPositionFound = true;
+                    //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
+                }
+
+                else if(this.link.x - this.game.camera.x > this.worldCellSize - 1){
+
+                    this.newCameraPositionX += this.worldCellSize;
+                    this.actualCellX += 1;
+                    this.newPositionFound = true;
+                    //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
+                }
             }
-            
-            else if(this.link.x - this.game.camera.x > this.worldCellSize - 1){
-                
-                this.newCameraPositionX += this.worldCellSize;
-                this.actualCellX += 1;
-                this.newPositionFound = true;
-                //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
+
+            else if( this.math.difference(this.link.y, this.game.camera.y + this.worldCellSize / 2) > this.worldCellSize / 2 && this.newPositionFound == false){
+
+                console.log("detected link cell change in Y");
+                //console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
+
+                this.link.body.velocity.x = 0;
+                this.link.body.velocity.y = 0;
+
+                if (this.link.y - this.game.camera.y < 0){
+
+                    this.newCameraPositionY -= this.worldCellSize;
+                    this.actualCellY -= 1;
+                    this.newPositionFound = true;
+                    //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
+                }
+                else if(this.link.y - this.game.camera.y > this.worldCellSize - 1){
+
+                    this.newCameraPositionY += this.worldCellSize;
+                    this.actualCellY += 1;
+                    this.newPositionFound = true;
+                    //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
+                }
             }
-        }
-        
-        else if( this.math.difference(this.link.y, this.game.camera.y + this.worldCellSize / 2) > this.worldCellSize / 2 && this.newPositionFound == false){
-            
-            console.log("detected link cell change in Y");
-            //console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
-            
-            this.link.body.velocity.x = 0;
-            this.link.body.velocity.y = 0;
-            
-            if (this.link.y - this.game.camera.y < 0){
-                
-                this.newCameraPositionY -= this.worldCellSize;
-                this.actualCellY -= 1;
-                this.newPositionFound = true;
-                //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
+
+            if(this.newPositionFound == true){
+
+                if (this.newCameraPositionX - this.game.camera.x < 0){                
+                    this.game.camera.x -= 8;
+                }
+
+                if(this.newCameraPositionX - this.game.camera.x > 0){                
+                    this.game.camera.x += 8;
+                }
+
+                if (this.newCameraPositionY - this.game.camera.y < 0){                
+                    this.game.camera.y -= 8;
+                }
+                if(this.newCameraPositionY - this.game.camera.y > 0){
+                    this.game.camera.y += 8;
+                }
             }
-            else if(this.link.y - this.game.camera.y > this.worldCellSize - 1){
-                
-                this.newCameraPositionY += this.worldCellSize;
-                this.actualCellY += 1;
-                this.newPositionFound = true;
-                //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
+
+            //console.log("New Position: " + this.newCameraPositionX + " " + this.newCameraPositionY + " Old Position: " + this.game.camera.x + " " + this.game.camera.y);
+
+            if(this.newCameraPositionX == this.game.camera.position.x && this.newCameraPositionY == this.game.camera.position.y){
+                this.newPositionFound = false;
+                //console.log('New Position set to false');
             }
-        }
-        
-        if(this.newPositionFound == true){
-            
-            if (this.newCameraPositionX - this.game.camera.x < 0){                
-                this.game.camera.x -= 8;
-            }
-            
-            if(this.newCameraPositionX - this.game.camera.x > 0){                
-                this.game.camera.x += 8;
-            }
-            
-            if (this.newCameraPositionY - this.game.camera.y < 0){                
-                this.game.camera.y -= 8;
-            }
-            if(this.newCameraPositionY - this.game.camera.y > 0){
-                this.game.camera.y += 8;
-            }
-        }
-        
-        //console.log("New Position: " + this.newCameraPositionX + " " + this.newCameraPositionY + " Old Position: " + this.game.camera.x + " " + this.game.camera.y);
-        
-        if(this.newCameraPositionX == this.game.camera.position.x && this.newCameraPositionY == this.game.camera.position.y){
-            this.newPositionFound = false;
-            //console.log('New Position set to false');
         }
     },
     

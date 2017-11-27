@@ -1,19 +1,14 @@
 var gameEngine = gameEngine || {};
 
-var projectileType;
 
 gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
     
     this.game = game;
-    this.projectileTYpe = type;
-    
-    
-    Phaser.Sprite.call(this,game,x,y,'enemies');
-    
     switch(type)
         {
             case SYSTEM_CONSTANTS.PROJECTILE_TYPES.ROCK:
-            {        
+            {         
+                Phaser.Sprite.call(this,game,x,y,'enemies');
                 this.type = type;
                 this.speed = 500;
                 this.animations.add('shoot',[34],1,true);
@@ -22,29 +17,45 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
             }break;
             case SYSTEM_CONSTANTS.PROJECTILE_TYPES.FIREBALL:
             {
+                Phaser.Sprite.call(this,game,x,y,'enemies');
                 this.type = type;
                 this.speed = 50;
                 this.animations.add('shoot',[32,33],10,true);
                 
                 this.animations.play('shoot');
             }break;
+            case SYSTEM_CONSTANTS.PROJECTILE_TYPES.SWORD:
+            {    
+                Phaser.Sprite.call(this,game,x,y,'sword');
+                this.type = type;
+                this.speed = 150;
+            }break;
             default:
             {
 
             }break;
         }
-
-    
-    this.anchor.setTo(.5);
-
+    this.anchor.setTo(0.5);
+    this.direction = direction;
+    switch (this.direction){
+        case SYSTEM_CONSTANTS.DIRECTIONS.UP:
+            this.angle = 0;
+        break;
+        case SYSTEM_CONSTANTS.DIRECTIONS.DOWN:
+            this.angle = 180;
+        break;
+        case SYSTEM_CONSTANTS.DIRECTIONS.LEFT:
+            this.angle = 270;
+        break;
+        case SYSTEM_CONSTANTS.DIRECTIONS.RIGHT:
+            this.angle = 90;
+        break;
+        default:
+        
+        break;
+    }
     this.level = level;
     this.game.physics.arcade.enable(this);
-    
-    this.body.velocity.x += direction.x * this.speed;
-    this.body.velocity.y += direction.y * this.speed;
-    
-    this.direction = direction;
-    //console.log(this.body.velocity);
 };
 
 gameEngine.projectile_prefab.prototype = Object.create(Phaser.Sprite.prototype);
@@ -68,7 +79,7 @@ gameEngine.projectile_prefab.prototype.update = function(){
             bullet.kill();
     }});
     
-    if(this.projectileType != SYSTEM_CONSTANTS.PROJECTILE_TYPES.SWORD){
+    if(this.type != SYSTEM_CONSTANTS.PROJECTILE_TYPES.SWORD){
         this.game.physics.arcade.collide(this,this.level.link,
         function(bullet,link){
         if(bullet.body.touching){
@@ -86,7 +97,7 @@ gameEngine.projectile_prefab.prototype.update = function(){
                 console.log("bullet blocked left");
             } else {
                 console.log("bullet not blocked");
-                link.life -= 1;
+                link.recieveDamage(1);
                 console.log(link.life);
             }
 
@@ -96,11 +107,13 @@ gameEngine.projectile_prefab.prototype.update = function(){
         this.game.physics.arcade.collide(this,this.level.enemy,
         function(bullet,enemy){
             enemy.reset(550, 800);
+            bullet.kill();
         });
         
         this.game.physics.arcade.collide(this,this.level.enemy2,
         function(bullet,enemy){
             enemy.reset(600, 700);
+            bullet.kill();
         });
     }
     
