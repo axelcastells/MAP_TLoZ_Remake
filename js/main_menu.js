@@ -39,6 +39,9 @@ gameEngine.main_menu ={
             gameEngine.startIntroOnce = true;
         }
         
+        //Audio creation
+        this.buttonClick = this.add.audio('buttonClick');
+        
         
     },
     update:function(){
@@ -46,14 +49,17 @@ gameEngine.main_menu ={
         
     },
     loadGame:function(){
+        this.buttonClick.play();
         this.game.state.start("overworld");
         gameEngine.startIntroOnce = false;
         this.introMusic.stop();
     },
     credits:function(){
+        this.buttonClick.play();
         this.game.state.start("credits");
     },
     login:function(){
+        this.buttonClick.play();
         this.game.state.start("login");
     },
     overFeedback:function(button){

@@ -10,6 +10,9 @@ gameEngine.login ={
         
        // this.load.image('mainMenu', 'img/mainMenu.jpg');
         this.load.image('backButton', 'img/back_button.png');
+        
+        //Audio creation
+        this.buttonClick = this.add.audio('buttonClick');
 
         
 
@@ -83,6 +86,7 @@ gameEngine.login ={
         
     },
     back:function(){
+        this.buttonClick.play();
         this.game.state.start("main_menu");
     },
     login:function(){
@@ -109,11 +113,13 @@ gameEngine.login ={
             this.playButton.scale.setTo(10);
             this.playButton.onInputOver.add(this.overFeedback, this);
             this.playButton.onInputOut.add(this.leaveFeedback, this);
+            this.buttonClick.play();
         }
         
     },
     play:function(){
         this.game.state.start("overworld");
+        this.buttonClick.play();
     },
     overFeedback:function(button){
         button.scale.setTo(12);

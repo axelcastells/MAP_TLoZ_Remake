@@ -41,6 +41,7 @@ gameEngine.link_prefab = function(game, pos_x, pos_y, level){
     //Load audios
     this.linkAttackSound = this.level.add.audio('linkAttack');
     this.linkShieldSound = this.level.add.audio('linkShield');
+    this.linkDamage = this.level.add.audio('linkDamage');
     
     //Items carried
     this.keysCounter = 0;
@@ -159,6 +160,7 @@ gameEngine.link_prefab.prototype.update = function(){
 gameEngine.link_prefab.prototype.recieveDamage = function(damage){
     this.game.camera.flash(0xff0000, 300);
     this.life -= damage;
+    this.linkDamage.play();
     if(this.life <= 0){
         this.life = 0;
         this.game.state.start(this.game.state.current);

@@ -7,6 +7,8 @@ gameEngine.credits ={
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
         
+        //Audio creation
+        this.buttonClick = this.add.audio('buttonClick');
     
 
     },
@@ -54,6 +56,7 @@ gameEngine.credits ={
         
     },
     back:function(){
+        this.buttonClick.play();
         this.game.state.start("main_menu");
     },
     overFeedback:function(button){

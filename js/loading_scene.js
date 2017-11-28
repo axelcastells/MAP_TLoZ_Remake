@@ -72,6 +72,8 @@ gameEngine.loading_scene ={
         this.load.audio('hit', 'audio/enemyHit.wav');
         this.load.audio('enemyShot', 'audio/enemyShot.wav');
         this.load.audio('teleportSound', 'audio/teleport.wav');
+        this.load.audio('linkDamage', 'audio/linkHurt.wav');
+        this.load.audio('buttonClick', 'audio/buttonClick.wav');
         //this.load.audio('explosion','sounds/explosion.wav');
         
     },
