@@ -24,7 +24,6 @@ gameEngine.hitbox_prefab.prototype.update = function(){
         enemy.enemyHitSound.play();
         enemy.reset(550, 800)
     });
-    this.x = this.level.link.x;
-    this.y = this.level.link.y;
-    
+    this.x = this.level.link.body.x + 5;
+    this.y = this.level.link.body.y + 5;
 };

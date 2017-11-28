@@ -42,6 +42,10 @@ var SYSTEM_CONSTANTS = {
         HEART: 2,
         LETTER: 3,
         KEY: 4
+    },
+    MOVABLES:{
+        ROCK: 0,
+        STATUE: 1
     }
 };
 

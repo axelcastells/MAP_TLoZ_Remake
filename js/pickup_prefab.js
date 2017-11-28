@@ -43,7 +43,11 @@ gameEngine.pickup_prefab = function(game,type,pos_x,pos_y,level){
         this.destroy();
         console.log("Destroying");
         this.level.link.canMove = true;
+        this.level.link.frame = 0;
+        if(this.type == SYSTEM_CONSTANTS.PICKUPS.LETTER)
+            this.level.link.lettersCounter++;
         this.timer.stop();
+        
     }, this);
     
     this.type = type;
@@ -59,8 +63,8 @@ gameEngine.pickup_prefab.prototype.update = function(){
             case SYSTEM_CONSTANTS.PICKUPS.SWORD:
             {
                  this.game.physics.arcade.overlap(this, this.level.link, function(sword, link){
-                     sword.x = link.x;
-                     sword.y = link.y - 15;
+                     sword.x = link.body.x + 4;
+                     sword.y = link.body.y - 12;
                      link.frame = 13;
                      link.hasSword = true;
                      link.canMove = false;
@@ -94,9 +98,11 @@ gameEngine.pickup_prefab.prototype.update = function(){
             case SYSTEM_CONSTANTS.PICKUPS.LETTER:
             {
                  this.game.physics.arcade.overlap(this, this.level.link, function(letter, link){
-                     link.lettersCounter++;
-                     letter.kill();
-                     
+                     letter.x = link.x;
+                     letter.y = link.y - 15;
+                     link.frame = 13;
+                     link.canMove = false;
+                     letter.timer.start();
                  });
             }break;
             
