@@ -20,6 +20,9 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
     this.states;
     this.currentState;
 
+
+    this.level = level;
+
     this.GetDMG = function(dmg){
         this.hp -= dmg;
         if(this.hp <= 0)
@@ -27,6 +30,8 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
     }
     
     Phaser.Sprite.call(this,game,x,y,'enemies');
+    this.game.physics.arcade.enable(this);
+
     console.log(this.type);
     switch(type)
         {
@@ -61,6 +66,7 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
                 this.animations.play('hidden');
 
                 this.hp = 1;
+                this.body.moves = false;
             }break;
             case SYSTEM_CONSTANTS.ENEMY_TYPES.TEKTITE:
             {
@@ -81,11 +87,8 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
             }break;
         }
 
-    
     this.anchor.setTo(.5);
 
-    this.level = level;
-    this.game.physics.arcade.enable(this);
     
     //Load audios
     this.enemyHitSound = this.level.add.audio('hit');
@@ -193,8 +196,9 @@ gameEngine.enemy_prefab.prototype.update = function(){
                 {
                     case this.states.INIT:
                     {
-                        this.position.x = this.level.link.position.x + ((Math.random()*100) - 50);
-                        this.position.y = this.level.link.position.y + ((Math.random()*100) - 50);
+                        var tmp = parseInt(Math.random()*this.level.enemySpawnPool.water.length);
+                        this.position.x = this.level.enemySpawnPool.water[tmp].x*16;
+                        this.position.y = this.level.enemySpawnPool.water[tmp].y*16;
 
                         this.currentState = this.states.HIDDEN;
                     }break;

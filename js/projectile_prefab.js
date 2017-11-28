@@ -6,8 +6,6 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
     
     this.type = type;
     this.game = game;
-
-    this.projectileTYpe = type;
         
     this.direction = direction; 
 
@@ -155,11 +153,15 @@ gameEngine.projectile_prefab.prototype.update = function(){
     }
     this.game.physics.arcade.collide(this, this.level.walls, function(bullet,link){
         if(bullet.body.touching){
+            if(this.type == SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG)
+                link.isBoomerangThrown = false;
             bullet.kill();
     }});
     
     this.game.physics.arcade.collide(this, this.level.mapCollisions,  function(bullet,link) {
         if(bullet.body.touching){
+            if(this.type == SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG)
+                link.isBoomerangThrown = false;
             bullet.kill();
     }});
     
