@@ -52,42 +52,59 @@ gameEngine.movable_prefab.prototype.update = function(){
        var distance = 0;
         switch (this.direction){
             case SYSTEM_CONSTANTS.DIRECTIONS.UP:
-                //this.x = this.initialX;
-                if(this.y > this.initialY){
-                    this.y = this.initialY;
-                }
-                else if(this.y <= this.initialY - 16){
-                    this.y = this.initialY - 16;                    
+                if(this.body.touching.down){
+                    this.x = this.initialX;
+                    this.body.moves = true;
+                    if(this.y > this.initialY){
+                        this.y = this.initialY;
+                    }
+                    else if(this.y <= this.initialY - 16){
+                        this.y = this.initialY - 16;                    
+                    }
+                } else {
+                    this.body.moves = false;
                 }
                 distance = this.game.math.difference(this.y, this.initialY);
             break;
             case SYSTEM_CONSTANTS.DIRECTIONS.DOWN:
-                this.x = this.initialX;
-                if(this.y < this.initialY){
-                    this.y = this.initialY;
-                }
-                else if(this.y >= this.initialY + 16){
-                    this.y = this.initialY + 16;                    
+                if(this.body.touching.up){
+                    this.x = this.initialX;
+                    if(this.y < this.initialY){
+                        this.y = this.initialY;
+                    }
+                    else if(this.y >= this.initialY + 16){
+                        this.y = this.initialY + 16;                    
+                    }
+                } else {
+                    this.body.moves = false;
                 }
                 distance = this.game.math.difference(this.y, this.initialY);
             break;
             case SYSTEM_CONSTANTS.DIRECTIONS.RIGHT:
-                this.y = this.initialy;
-                if(this.x < this.initialX){
-                    this.x = this.initialX;
-                }
-                else if(this.x >= this.initialX + 16){
-                    this.x = this.initialX + 16;                    
+                if(this.body.touching.left){
+                    this.y = this.initialY;
+                    if(this.x < this.initialX){
+                        this.x = this.initialX;
+                    }
+                    else if(this.x >= this.initialX + 16){
+                        this.x = this.initialX + 16;                    
+                    }
+                } else {
+                    this.body.moves = false;
                 }
                 distance = this.game.math.difference(this.x, this.initialX);
             break;
             case SYSTEM_CONSTANTS.DIRECTIONS.LEFT:
-                this.y = this.initialy;
-                if(this.x > this.initialX){
-                    this.x = this.initialX;
-                }
-                else if(this.x <= this.initialX - 16){
-                    this.x = this.initialX - 16;                    
+                if(this.body.touching.right){
+                    this.y = this.initialY;
+                    if(this.x > this.initialX){
+                        this.x = this.initialX;
+                    }
+                    else if(this.x <= this.initialX - 16){
+                        this.x = this.initialX - 16;                    
+                    }
+                } else {
+                    this.body.moves = false;
                 }
                 distance = this.game.math.difference(this.x, this.initialX);
             break;
