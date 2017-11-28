@@ -27,7 +27,7 @@ gameEngine.link_prefab = function(game, pos_x, pos_y, level){
     this.life = 6;
     this.level;
     this.facingDirection = "down";
-    this.direction = SYSTEM_CONSTANTS.DIRECTIONS.UP;
+    this.direction = SYSTEM_CONSTANTS.DIRECTIONS.DOWN;
     this.attacking = false;
     this.attackTime = 0.4; // in seconds
     this.attackTimeCounter = 0;

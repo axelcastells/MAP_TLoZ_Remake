@@ -3,6 +3,7 @@ var gameEngine = gameEngine || {};
 
 gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
     
+    this.type = type;
     this.game = game;
 
     this.projectileTYpe = type;
@@ -11,7 +12,7 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
 
     this.enemyShotSound = this.level.add.audio('enemyShot');
     
-    Phaser.Sprite.call(this,game,x,y,'enemies');
+    //Phaser.Sprite.call(this,game,x,y,'enemies');
     
 
     switch(type)
@@ -164,8 +165,13 @@ gameEngine.projectile_prefab.prototype.update = function(){
         function(bullet,link){
         if(bullet.body.touching){
             console.log("Bullet Collision!");
-            
-            if(link.body.touching.down && link.facingDirection == "down" && !link.attacking){
+            console.log(this.type);
+            if(this.type == SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG)
+            {
+                link.isBoomerangThrown = false;
+                console.log("Boomerang Recovered!");
+            }
+            else if(link.body.touching.down && link.facingDirection == "down" && !link.attacking){
                 console.log("bullet blocked down");
                 link.linkShieldSound.play();
             } else if (link.body.touching.up && link.facingDirection == "up" && !link.attacking){
@@ -188,7 +194,8 @@ gameEngine.projectile_prefab.prototype.update = function(){
     } else {
         this.game.physics.arcade.collide(this,this.level.enemies,
         function(bullet,enemy){
-            enemy.reset(550, 800);
+            enemy.destroy();
+            //if(type != SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG)
             bullet.kill();
         });
     }
