@@ -2,7 +2,7 @@ var gameEngine = gameEngine || {};
 
 
 gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
-<<<<<<< HEAD
+
     
     this.type = type;
     this.game = game;
