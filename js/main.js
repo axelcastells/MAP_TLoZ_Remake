@@ -3,7 +3,7 @@ var gameEngine = gameEngine || {};
 var ConfigOptions = {
     screenW:1200,
     screenH:1200,
-    linkSpeed:200
+    linkSpeed:120
 };
 
 var InputManager = {
