@@ -85,6 +85,8 @@ gameEngine.loading_scene ={
         this.BGimage.height = this.game.height;
         this.BGimage.width = this.game.width;
         this.BGimage.smoothed = false;
+
+        //TEXT_RENDERER.create("PACO");
     },
     update:function(){
         this.game.state.start('main_menu');

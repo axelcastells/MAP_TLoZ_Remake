@@ -21,6 +21,7 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
             case SYSTEM_CONSTANTS.PROJECTILE_TYPES.ROCK:
             {         
                 Phaser.Sprite.call(this,game,x,y,'enemies');
+                this.anchor.setTo(0.5);
                 this.type = type;
                 this.speed = 500;
                 this.animations.add('shoot',[34],1,true);
@@ -30,6 +31,7 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
             case SYSTEM_CONSTANTS.PROJECTILE_TYPES.FIREBALL:
             {
                 Phaser.Sprite.call(this,game,x,y,'enemies');
+                this.anchor.setTo(0.5);
                 this.type = type;
                 this.speed = 50;
                 this.animations.add('shoot',[32,33],10,true);
@@ -39,17 +41,20 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
             case SYSTEM_CONSTANTS.PROJECTILE_TYPES.SWORD:
             {    
                 Phaser.Sprite.call(this,game,x,y,'sword');
+                this.anchor.setTo(0.5);
                 this.type = type;
                 this.speed = 250;
             }break;
             case SYSTEM_CONSTANTS.PROJECTILE_TYPES.MASTER_SWORD:
             {    
                 Phaser.Sprite.call(this,game,x,y,'master_sword');
+                this.anchor.setTo(0.5);
                 this.type = type;
                 this.speed = 320;
             }break;
             case SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG:
             {    
+
                 this.updateCounter = function(){
                     if(!level.pause.paused)
                         this.counter-=0.1; 
@@ -61,7 +66,7 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
                 this.offset = 10;
 
                 Phaser.Sprite.call(this,game,x,y,'boomerang');
-
+                this.anchor.setTo(0.5);
                 this.type = type;
                 this.speed = 1;
                 console.log("Created Boomerang!");
@@ -79,9 +84,9 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
         }
 
 
-    this.anchor.setTo(0.5);
+    
 
-    switch (this.direction){
+    switch (direction){
         case SYSTEM_CONSTANTS.DIRECTIONS.UP:
             this.angle = 0;
         break;

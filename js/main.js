@@ -60,3 +60,58 @@ gameEngine.game.state.add('login',gameEngine.login);
 gameEngine.game.state.add('loading_scene',gameEngine.loading_scene);
 gameEngine.game.state.start('loading_scene');
 
+
+
+var TEXT_RENDERER = {
+    content: "",
+    text:"",
+    line: [],
+    wordIndex: 0,
+    lineIndex: 0,
+    wordDelay: 120,
+    lineDelay: 400,
+    create:function(_content){
+        content = _content;
+        this.text = gameEngine.game.add.text(32,32,'',{font: "font_white", fill: "#19de65"});
+        this.nextLine();
+    },
+    nextLine:function(){
+        if (this.lineIndex === this.content.length)
+        {
+            //  We're finished
+            return;
+        }
+
+        //  Split the current line on spaces, so one word per array element
+        this.line = this.content[lineIndex].split(' ');
+
+        //  Reset the word index to zero (the first word in the line)
+        this.wordIndex = 0;
+
+        //  Call the 'nextWord' function once for each word in the line (line.length)
+        gameEngine.game.time.events.repeat(this.wordDelay, this.line.length, this.nextWord, this);
+
+        //  Advance to the next line
+        this.lineIndex++;
+    },
+    nextWord(){
+            //  Add the next word onto the text string, followed by a space
+        this.text.text = text.text.concat(line[wordIndex] + " ");
+
+        //  Advance the word index to the next word in the line
+        this.wordIndex++;
+
+        //  Last word?
+        if (this.wordIndex === this.line.length)
+        {
+            //  Add a carriage return
+            this.text.text = this.text.text.concat("\n");
+
+            //  Get the next line after the lineDelay amount of ms has elapsed
+            gameEngine.game.time.events.add(this.lineDelay, this.nextLine, this);
+        }
+    }
+    
+
+};
+

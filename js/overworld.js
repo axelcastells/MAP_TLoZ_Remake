@@ -140,8 +140,7 @@ gameEngine.overworld ={
         
 
         //ENEMY CREATION
-        this.enemies = this.add.group();
-        this.enemies.enableBody = true;
+        this.loadEnemies();
 
         //Tektites
         for(var i = 0; i < 10; i++)
