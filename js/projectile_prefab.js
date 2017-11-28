@@ -2,12 +2,15 @@ var gameEngine = gameEngine || {};
 
 
 gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
+<<<<<<< HEAD
     
     this.type = type;
     this.game = game;
 
     this.projectileTYpe = type;
-    
+        
+    this.direction = direction; 
+
     this.level = level;
 
     this.enemyShotSound = this.level.add.audio('enemyShot');
@@ -79,7 +82,7 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
 
 
     this.anchor.setTo(0.5);
-    this.direction = direction;
+
     switch (this.direction){
         case SYSTEM_CONSTANTS.DIRECTIONS.UP:
             this.angle = 0;

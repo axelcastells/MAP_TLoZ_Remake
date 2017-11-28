@@ -101,6 +101,9 @@ gameEngine.overworld ={
         
         this.pickup7 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.LETTER, 24 * 16 + 8, 4 * 16 + 8, this);
         this.game.add.existing(this.pickup7);
+        
+        this.movable1 =new gameEngine.movable_prefab(this.game, SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.UP, this.worldCellSize / 2 + this.worldCellSize * this.actualCellX + 40, this.worldCellSize / 2 + this.worldCellSize * this.actualCellY + 40, this);
+        this.game.add.existing(this.movable1);
 
     },
     loadEnemies:function()
