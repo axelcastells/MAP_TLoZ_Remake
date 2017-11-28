@@ -22,8 +22,23 @@ gameEngine.overworld ={
         this.map.setCollisionBetween(1,31,true,'overworld');
                                
         //Teleport creation
-        this.tp = new gameEngine.teleport_prefab(this.game, 27 * 16, 16 * 16, 7 * 16 + 8, 25 * 16 + 8, 1, this);
+        this.tp = new gameEngine.teleport_prefab(this.game, 27 * 16, 16 * 16, 8 * 16, 24 * 16 , 1, this);
         this.game.add.existing(this.tp);
+        
+        this.tp2 = new gameEngine.teleport_prefab(this.game, 7 * 16, 25 * 16, 27 * 16 + 8, 17 * 16 + 8, 0, this);
+        this.game.add.existing(this.tp2);
+        
+        this.tp3 = new gameEngine.teleport_prefab(this.game, 8 * 16, 25 * 16, 27 * 16 + 8, 17 * 16 + 8, 0, this);
+        this.game.add.existing(this.tp3);
+        
+        this.tp4 = new gameEngine.teleport_prefab(this.game, 45 * 16, 3 * 16, 7 * 16 + 8, 43 * 16 + 8, 0, this);
+        this.game.add.existing(this.tp4);
+        
+        this.tp5 = new gameEngine.teleport_prefab(this.game, 7 * 16, 44 * 16, 46 * 16 + 8 , 3 * 16 + 8, 0, this);
+        this.game.add.existing(this.tp5);
+        
+        this.tp6 = new gameEngine.teleport_prefab(this.game, 8 * 16, 44 * 16, 46 * 16 + 8 , 3 * 16 + 8, 0, this);
+        this.game.add.existing(this.tp6);
         
         //Door creation
         this.door = new gameEngine.door_prefab(this.game, 39 * 16, 7 * 16, 'statue', this);
@@ -70,8 +85,20 @@ gameEngine.overworld ={
         this.pickup2 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.SWORD, this.worldCellSize / 2 + this.worldCellSize * this.actualCellX + 70, this.worldCellSize / 2 + this.worldCellSize * this.actualCellY + 70, this);
         this.game.add.existing(this.pickup2);
         
-        this.pickup3 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.MASTER_SWORD, this.worldCellSize / 2 + this.worldCellSize * this.actualCellX - 70, this.worldCellSize / 2 + this.worldCellSize * this.actualCellY + 70, this);
+        this.pickup3 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.MASTER_SWORD, 8 * 16, 36 * 16, this);
         this.game.add.existing(this.pickup3);
+        
+        this.pickup4 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.LETTER, 8 * 16, 21 * 16, this);
+        this.game.add.existing(this.pickup4);
+        
+        this.pickup5 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.LETTER, 56 * 16 + 8, 6 * 16 + 8, this);
+        this.game.add.existing(this.pickup5);
+        
+        this.pickup6 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.LETTER, 55 * 16 + 8, 34 * 16 + 8, this);
+        this.game.add.existing(this.pickup6);
+        
+        this.pickup7 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.LETTER, 24 * 16 + 8, 4 * 16 + 8, this);
+        this.game.add.existing(this.pickup7);
 
     },
     update:function(){

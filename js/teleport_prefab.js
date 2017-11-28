@@ -17,8 +17,8 @@ gameEngine.teleport_prefab = function(game, x,y, _dX, _dY, tpType, level){
     
     this.level = level;
     this.game = game;
-    dX = _dX;
-    dY = _dY;
+    this.dX = _dX;
+    this.dY = _dY;
     
     //Audio creation
     this.teleportSound = this.level.add.audio('teleportSound');
@@ -34,8 +34,8 @@ gameEngine.teleport_prefab.prototype.update = function(){
         teleport.teleportSound.play();
         link.level.camera.fade(0x000000,10);
         this.timer = link.level.game.time.create(true);
-        link.reset(dX, dY);
-        this.timer.add(800,function(){            
+        link.reset(teleport.dX, teleport.dY);
+        this.timer.add(3000,function(){            
             link.level.camera.resetFX();
         }, this);
         this.timer.start();

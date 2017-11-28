@@ -9,16 +9,23 @@ gameEngine.pickup_prefab = function(game,type,pos_x,pos_y,level){
             case SYSTEM_CONSTANTS.PICKUPS.SWORD:
             {
                 Phaser.Sprite.call(this, game, pos_x, pos_y,'sword', 0);
-
             }break;
+                
             case SYSTEM_CONSTANTS.PICKUPS.MASTER_SWORD:
             {
                Phaser.Sprite.call(this, game, pos_x, pos_y,'master_sword', 0);
             }break;
+                
             case SYSTEM_CONSTANTS.PICKUPS.HEART:
             {
                 Phaser.Sprite.call(this, game, pos_x, pos_y,'heart', 0);
             }break;
+                
+            case SYSTEM_CONSTANTS.PICKUPS.LETTER:
+            {
+                Phaser.Sprite.call(this, game, pos_x, pos_y,'letter', 0);
+            }break;
+                
             default:
             {
     
@@ -61,6 +68,7 @@ gameEngine.pickup_prefab.prototype.update = function(){
                  });
 
             }break;
+            
             case SYSTEM_CONSTANTS.PICKUPS.MASTER_SWORD:
             {
                  this.game.physics.arcade.overlap(this, this.level.link, function(master_sword, link){
@@ -73,6 +81,7 @@ gameEngine.pickup_prefab.prototype.update = function(){
                      master_sword.timer.start();
                  });
             }break;
+            
             case SYSTEM_CONSTANTS.PICKUPS.HEART:
             {
                  this.game.physics.arcade.overlap(this, this.level.link, function(heart, link){
@@ -81,6 +90,16 @@ gameEngine.pickup_prefab.prototype.update = function(){
                      
                  });
             }break;
+            
+            case SYSTEM_CONSTANTS.PICKUPS.LETTER:
+            {
+                 this.game.physics.arcade.overlap(this, this.level.link, function(letter, link){
+                     link.lettersCounter++;
+                     letter.kill();
+                     
+                 });
+            }break;
+            
             default:
             {
     

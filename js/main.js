@@ -38,8 +38,9 @@ var SYSTEM_CONSTANTS = {
     PICKUPS:{
         SWORD: 0,
         MASTER_SWORD: 1,
-        HEART: 2, 
-        KEY: 3
+        HEART: 2,
+        LETTER: 3,
+        KEY: 4
     }
 };
 
