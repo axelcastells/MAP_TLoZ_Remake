@@ -27,7 +27,8 @@ var SYSTEM_CONSTANTS = {
         ROCK: 0,
         FIREBALL: 1,
         SWORD: 2,
-        MASTER_SWORD: 3
+        MASTER_SWORD: 3,
+        BOOMERANG: 4
     },
     DIRECTIONS: {
         UP: new Phaser.Point(0,-1),

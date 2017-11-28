@@ -27,6 +27,7 @@ gameEngine.link_prefab = function(game, pos_x, pos_y, level){
     this.life = 6;
     this.level;
     this.facingDirection = "down";
+    this.direction = SYSTEM_CONSTANTS.DIRECTIONS.UP;
     this.attacking = false;
     this.attackTime = 0.4; // in seconds
     this.attackTimeCounter = 0;
@@ -47,6 +48,10 @@ gameEngine.link_prefab = function(game, pos_x, pos_y, level){
     this.keysCounter = 0;
     this.lettersCounter = 0;
     this.hasMasterSword = false;
+
+    //Boomerang
+    this.boomerang;
+    this.isBoomerangThrown = false;
 };
 
 gameEngine.link_prefab.prototype = Object.create(Phaser.Sprite.prototype);
@@ -96,31 +101,39 @@ gameEngine.link_prefab.prototype.update = function(){
                 this.animations.play("move_left");
                 this.body.velocity.y = 0;
                 this.facingDirection = "left";
+                this.direction = SYSTEM_CONSTANTS.DIRECTIONS.LEFT;
             }
             else if(InputManager.keyRight.isDown) {
                 this.body.velocity.x = ConfigOptions.linkSpeed;
                 this.animations.play("move_right");
                 this.body.velocity.y = 0;
                 this.facingDirection = "right";
+                this.direction = SYSTEM_CONSTANTS.DIRECTIONS.RIGHT;
             }
             else if(InputManager.keyDown.isDown) {
                 this.body.velocity.y = ConfigOptions.linkSpeed;
                 this.animations.play("move_down");
                 this.body.velocity.x = 0;
                 this.facingDirection = "down";
+                this.direction = SYSTEM_CONSTANTS.DIRECTIONS.DOWN;
             }
             else if(InputManager.keyUp.isDown) {
                 this.body.velocity.y = - ConfigOptions.linkSpeed;
                 this.animations.play("move_up");
                 this.body.velocity.x = 0;
                 this.facingDirection = "up";
+                this.direction = SYSTEM_CONSTANTS.DIRECTIONS.UP;
             }
             else {
                 this.body.velocity.x = 0;
                 this.body.velocity.y = 0;
                 this.animations.stop();
             }  
-            if(InputManager.B.isDown){
+            if(InputManager.B.isDown && !this.isBoomerangThrown){
+                this.isBoomerangThrown = true;
+                this.boomerang = new gameEngine.projectile_prefab(this.game, SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG, this.body.x + (this.direction.x * 5), this.body.y + (this.direction.y * 5), this.direction, this.level);
+                this.game.add.existing(this.boomerang);
+
                 this.animations.play("collect");
             }
 

@@ -32,6 +32,7 @@ gameEngine.loading_scene ={
         this.load.image('sword', 'img/sword.png', 7, 16);
         this.load.image('master_sword', 'img/master_sword.png', 7, 16);
         this.load.image('heart', 'img/heart.png', 7, 8);
+        this.load.image('boomerang', 'img/zelda-sprites-boomerang.png', 5, 8);
         
         //Main menu image and button image loading
         this.load.image('mainMenu', 'img/mainMenu.jpg');

@@ -8,7 +8,7 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
     this.projectileTYpe = type;
     
     this.level = level;
-    
+
     this.enemyShotSound = this.level.add.audio('enemyShot');
     
     Phaser.Sprite.call(this,game,x,y,'enemies');
@@ -45,6 +45,30 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
                 Phaser.Sprite.call(this,game,x,y,'master_sword');
                 this.type = type;
                 this.speed = 320;
+            }break;
+            case SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG:
+            {    
+                this.updateCounter = function(){
+                    if(!level.pause.paused)
+                        this.counter-=0.1; 
+                }
+                this.timer = this.game.time.create(false);
+                this.timer.loop(100, this.updateCounter, this);
+                this.timer.start();
+                this.counter = 0;
+                this.offset = 10;
+
+                Phaser.Sprite.call(this,game,x,y,'boomerang');
+
+                this.type = type;
+                this.speed = 1;
+                console.log("Created Boomerang!");
+                this.tempInitPosition = {};
+                this.tempInitPosition.x = x;
+                this.tempInitPosition.y = y;
+
+                this.states = {INIT: 0, GO: 1, STAY: 2, BACK: 3}
+                this.currentState = this.states.INIT;
             }break;
             default:
             {
@@ -86,6 +110,44 @@ gameEngine.projectile_prefab.prototype.update = function(){
     } else {
             this.body.velocity.x = this.direction.x * this.speed;
             this.body.velocity.y = this.direction.y * this.speed;
+
+            switch(this.type)
+            {
+                case SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG:
+                {
+                    this.angle += 10;
+                    switch(this.currentState)
+                    {
+                        case this.states.INIT:
+                        {
+                            this.speed = 100;
+                            this.counter = 1;
+                            this.currentState = this.states.GO;
+                        }break;
+                        case this.states.GO:
+                        {
+                            if(this.counter <= 0)
+                            {
+                                this.speed = 0;
+                                this.counter = 0.5;
+                                this.currentState = this.states.STAY;
+                            }
+                        }break;
+                        case this.states.STAY:
+                        {
+                            if(this.counter <= 0)
+                            {
+                                this.speed = -100;
+                                this.currentState = this.states.BACK;
+                            }
+                        }break;
+                        case this.states.BACK:
+                        {
+
+                        }break;
+                    }
+                }break;
+            }
     }
     this.game.physics.arcade.collide(this, this.level.walls, function(bullet,link){
         if(bullet.body.touching){
