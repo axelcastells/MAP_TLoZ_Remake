@@ -131,7 +131,8 @@ gameEngine.link_prefab.prototype.update = function(){
             }  
             if(InputManager.B.isDown && !this.isBoomerangThrown){
                 this.isBoomerangThrown = true;
-                this.boomerang = new gameEngine.projectile_prefab(this.game, SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG, this.body.x + (this.direction.x * 5), this.body.y + (this.direction.y * 5), this.direction, this.level);
+                console.log(this.direction);
+                this.boomerang = new gameEngine.projectile_prefab(this.game, SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG, this.body.x + (this.direction.x * 10), this.body.y + (this.direction.y * 10), this.direction, this.level);
                 this.game.add.existing(this.boomerang);
 
                 this.animations.play("collect");

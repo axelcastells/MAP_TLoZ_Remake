@@ -9,7 +9,8 @@ gameEngine.overworld ={
         this.game.world.setBounds(0, 0, 2000, 2000); 
         this.actualCellX = 2;
         this.actualCellY = 3;
-        this.newPositionFound = false;   
+        this.newPositionFound = false;
+
     },
     create:function(){
         this.game.stage.backgroundColor = "#489ad8";
@@ -64,11 +65,12 @@ gameEngine.overworld ={
         this.newCameraPositionY = this.game.camera.y;
         
         //Enemy creation
+        this.enemies = this.add.group();
+        this.enemies.enableBody = true;
+
+        this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK);
         //this.enemy = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, this.link.position.x + 32, this.link.position.y, this);
         //this.game.add.existing(this.enemy);
-
-        this.enemyTektite = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.TEKTITE, this.link.position.x + 32, this.link.position.y, this);
-        this.game.add.existing(this.enemyTektite);
         
         //Audio creation
         this.backgroundMusic = this.add.audio('overworldMusic', 1, true, true);
@@ -100,6 +102,20 @@ gameEngine.overworld ={
         this.pickup7 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.LETTER, 24 * 16 + 8, 4 * 16 + 8, this);
         this.game.add.existing(this.pickup7);
 
+    },
+    loadEnemies:function()
+    {
+        this.enemies = this.add.group();
+        this.enemies.enableBody = true;
+    },
+    createEnemy:function(type)
+    {
+        var enemy = this.enemies.getFirstExists(false);
+        if(!enemy)
+        {
+            enemy = new gameEngine.enemy_prefab(this.game, type, this.link.body.x+10, this.link.body.y, this);
+            this.enemies.add(enemy);
+        }
     },
     update:function(){
         

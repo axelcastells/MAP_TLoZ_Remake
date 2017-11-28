@@ -186,15 +186,9 @@ gameEngine.projectile_prefab.prototype.update = function(){
             bullet.kill();
         }});
     } else {
-        this.game.physics.arcade.collide(this,this.level.enemy,
+        this.game.physics.arcade.collide(this,this.level.enemies,
         function(bullet,enemy){
             enemy.reset(550, 800);
-            bullet.kill();
-        });
-        
-        this.game.physics.arcade.collide(this,this.level.enemy2,
-        function(bullet,enemy){
-            enemy.reset(600, 700);
             bullet.kill();
         });
     }
