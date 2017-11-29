@@ -6,11 +6,11 @@ var TEXT_RENDERER = {
     lineIndex: 0,
     wordDelay: 120,
     lineDelay: 400,
-    create:function(_content){
+    create:function(_x,_y,_content){
         if(!_content)
             throw 1;
         this.content = _content;
-        this.text = gameEngine.game.add.text(32,32,'',{font: "font_white", fill: "#19de65"});
+        this.text = gameEngine.game.add.text(_x,_y,'',{font: "font_white", fill: "#000000", fontSize: 32});
         this.nextLine();
     },
     nextLine:function(){
@@ -37,6 +37,9 @@ var TEXT_RENDERER = {
             this.text.text = this.text.text.concat("\n");
             gameEngine.game.time.events.add(this.lineDelay, this.nextLine, this);
         }
+    },
+    nextLetter(){
+          
     },
     getUpdatedText()
     {

@@ -42,7 +42,7 @@ gameEngine.main_menu ={
         //Audio creation
         this.buttonClick = this.add.audio('buttonClick');
 
-        TEXT_RENDERER.create(["Edu paga la coca!","Perra!"]);
+        TEXT_RENDERER.create(64,16,["This is a sample text.","So, this is pure shit filling the page :D","Edu, Miquel, pagueu la coca!"]);
         
         
         
