@@ -22,6 +22,7 @@ gameEngine.link_prefab = function(game, pos_x, pos_y, level){
     this.animations.add("master_attack_right", [11, 21], 60, false);
     this.animations.add("collect", [12, 13], 2, false);
         
+    this.isInteracting = false;
     this.level = level;
     this.game = game;
     this.life = 6;

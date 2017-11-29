@@ -99,7 +99,7 @@ gameEngine.enemy_prefab.prototype = Object.create(Phaser.Sprite.prototype);
 gameEngine.enemy_prefab.prototype.constructor = gameEngine.enemy_prefab;
 
 gameEngine.enemy_prefab.prototype.update = function(){
-    if(this.level.pause.paused){
+    if(this.level.pause.paused && !this.level.link.isInteracting){
         this.animations.stop();
         this.body.velocity.x = 0;
         this.body.velocity.y = 0;
