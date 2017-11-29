@@ -41,11 +41,16 @@ gameEngine.main_menu ={
         
         //Audio creation
         this.buttonClick = this.add.audio('buttonClick');
+
+        TEXT_RENDERER.create(["Edu paga la coca!","Perra!"]);
+        
         
         
     },
     update:function(){
-        
+        console.clear();
+        console.log(TEXT_RENDERER.getUpdatedText());
+
         
     },
     loadGame:function(){
