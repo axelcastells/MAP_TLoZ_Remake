@@ -306,6 +306,11 @@ gameEngine.enemy_prefab.prototype.update = function(){
                 enemy.GetDMG(link.attackPower);
                 //enemy.kill();
             } else{
+                if(link.vulnerabilityCounter <= 0)
+                {
+                    link.vulnerabilityCounter = 1;
+                    link.recieveDamage(1);
+                }
                 
                 //enemy.level.hit();
             }

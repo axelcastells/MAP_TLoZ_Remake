@@ -52,6 +52,16 @@ gameEngine.link_prefab = function(game, pos_x, pos_y, level){
     //Boomerang
     this.boomerang;
     this.isBoomerangThrown = false;
+
+    this.vulnerabilityCounter = 0;
+    this.updateCounter = function(){
+        if(!level.pause.paused)
+            this.vulnerabilityCounter-=0.1; 
+    }
+    
+    this.timer = this.game.time.create(false);
+    this.timer.loop(100, this.updateCounter, this);
+    this.timer.start();
 };
 
 gameEngine.link_prefab.prototype = Object.create(Phaser.Sprite.prototype);
