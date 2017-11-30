@@ -34,7 +34,8 @@ var SYSTEM_CONSTANTS = {
         UP: new Phaser.Point(0,-1),
         DOWN: new Phaser.Point(0,1),
         LEFT: new Phaser.Point(-1,0),
-        RIGHT: new Phaser.Point(1,0)
+        RIGHT: new Phaser.Point(1,0),
+        NULL: new Phaser.Point(0, 0)
     },
     PICKUPS:{
         SWORD: 0,

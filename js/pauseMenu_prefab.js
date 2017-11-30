@@ -62,11 +62,11 @@ gameEngine.pauseMenu_prefab.prototype.overFeedback = function(button){
 };
 gameEngine.pauseMenu_prefab.prototype.backToMenu = function(button){
         console.log("back to menu");
-        this.alpha = 0.0;
+        this.alpha = 1.0;
         this.paused = false;
         this.resumeButton.visible = false;
         this.exitButton.visible = false;
-        gameEngine.overworld.backgroundMusic.stop();
+        this.level.backgroundMusic.stop();
         this.game.state.start("main_menu");
 };
 gameEngine.pauseMenu_prefab.prototype.resume = function(button){

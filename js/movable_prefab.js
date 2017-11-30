@@ -1,6 +1,6 @@
 var gameEngine = gameEngine || {};
 
-gameEngine.movable_prefab = function(game, type, direction, pos_x, pos_y, level){
+gameEngine.movable_prefab = function(game, type, direction, locked, pos_x, pos_y, level){
     
     this.game = game;
     this.direction = direction;
@@ -31,13 +31,18 @@ gameEngine.movable_prefab = function(game, type, direction, pos_x, pos_y, level)
         case SYSTEM_CONSTANTS.DIRECTIONS.LEFT:
             this.maxPosition = this.x - 16;
             break;
+        case SYSTEM_CONSTANTS.DIRECTIONS.NULL:
+            this.maxPosition = 0;
+            break;
         default:
             break;
     }
-    
-    this.anchor.setTo(.5);
-    this.locked = false;
+    this.locked = locked;
     this.game.physics.arcade.enable(this);
+    if(this.locked){
+       this.body.moves = false;
+       this.body.ummovable = true;
+    }
     this.initialX = pos_x;
     this.initialY = pos_y;
 };
@@ -47,8 +52,10 @@ gameEngine.movable_prefab.prototype.constructor = gameEngine.movable_prefab;
 
 gameEngine.movable_prefab.prototype.update = function(){
     this.game.physics.arcade.collide(this, this.level.link);
+    this.game.debug.body(this);
     if(!this.locked){
-
+       this.game.physics.arcade.collide(this, this.level.movables);
+       
        var distance = 0;
         switch (this.direction){
             case SYSTEM_CONSTANTS.DIRECTIONS.UP:
@@ -69,6 +76,7 @@ gameEngine.movable_prefab.prototype.update = function(){
             case SYSTEM_CONSTANTS.DIRECTIONS.DOWN:
                 if(this.body.touching.up){
                     this.x = this.initialX;
+                    this.body.moves = true;
                     if(this.y < this.initialY){
                         this.y = this.initialY;
                     }
@@ -83,6 +91,7 @@ gameEngine.movable_prefab.prototype.update = function(){
             case SYSTEM_CONSTANTS.DIRECTIONS.RIGHT:
                 if(this.body.touching.left){
                     this.y = this.initialY;
+                    this.body.moves = true;
                     if(this.x < this.initialX){
                         this.x = this.initialX;
                     }
@@ -97,6 +106,7 @@ gameEngine.movable_prefab.prototype.update = function(){
             case SYSTEM_CONSTANTS.DIRECTIONS.LEFT:
                 if(this.body.touching.right){
                     this.y = this.initialY;
+                    this.body.moves = true;
                     if(this.x > this.initialX){
                         this.x = this.initialX;
                     }
@@ -107,6 +117,17 @@ gameEngine.movable_prefab.prototype.update = function(){
                     this.body.moves = false;
                 }
                 distance = this.game.math.difference(this.x, this.initialX);
+            break;
+            case SYSTEM_CONSTANTS.DIRECTIONS.NULL:
+                if(this.game.math.difference(this.x, this.initialX) + this.game.math.difference(this.y, this.initialY) > 48){
+                    distance = 16;
+                }
+                if(this.game.math.difference(this.x, this.initialX) > 32){
+                    this.x = this.initialX + 32;
+                }/*
+                } else {
+                    this.body.moves = false;
+                }*/
             break;
             default:
             break;
