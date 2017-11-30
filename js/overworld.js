@@ -46,34 +46,11 @@ gameEngine.overworld ={
 
         this.enemySpawnPool.water = [];
         this.enemySpawnPool.water.push(new Phaser.Point(52,43));
-        this.enemySpawnPool.water.push(new Phaser.Point(53,43));
-        this.enemySpawnPool.water.push(new Phaser.Point(54,43));
-        this.enemySpawnPool.water.push(new Phaser.Point(55,43));
-        this.enemySpawnPool.water.push(new Phaser.Point(56,43));
-        this.enemySpawnPool.water.push(new Phaser.Point(57,43));
-        this.enemySpawnPool.water.push(new Phaser.Point(58,43));
-        this.enemySpawnPool.water.push(new Phaser.Point(59,43));
-        this.enemySpawnPool.water.push(new Phaser.Point(52,44));
-        this.enemySpawnPool.water.push(new Phaser.Point(53,44));
-        this.enemySpawnPool.water.push(new Phaser.Point(54,44));
-        this.enemySpawnPool.water.push(new Phaser.Point(55,44));
-        this.enemySpawnPool.water.push(new Phaser.Point(56,44));
-        this.enemySpawnPool.water.push(new Phaser.Point(57,44));
-        this.enemySpawnPool.water.push(new Phaser.Point(58,44));
-        this.enemySpawnPool.water.push(new Phaser.Point(59,44));
-        this.enemySpawnPool.water.push(new Phaser.Point(52,45));
-        this.enemySpawnPool.water.push(new Phaser.Point(53,45));
-        this.enemySpawnPool.water.push(new Phaser.Point(54,45));
-        this.enemySpawnPool.water.push(new Phaser.Point(55,45));
         this.enemySpawnPool.water.push(new Phaser.Point(56,45));
         this.enemySpawnPool.water.push(new Phaser.Point(57,45));
-        this.enemySpawnPool.water.push(new Phaser.Point(58,45));
-        this.enemySpawnPool.water.push(new Phaser.Point(59,45));
 
         this.enemySpawnPool.water.push(new Phaser.Point(41,19));
         this.enemySpawnPool.water.push(new Phaser.Point(42,19));
-        this.enemySpawnPool.water.push(new Phaser.Point(43,19));
-        this.enemySpawnPool.water.push(new Phaser.Point(44,19));
         this.enemySpawnPool.water.push(new Phaser.Point(45,19));
 
         this.enemySpawnPool.water.push(new Phaser.Point(36,20));
@@ -142,28 +119,29 @@ gameEngine.overworld ={
         //ENEMY CREATION
         this.loadEnemies();
 
-        //Tektites
-        for(var i = 0; i < 10; i++)
-        {
-            var temp = parseInt(Math.random()*this.enemySpawnPool.floor.length);
-            console.log(temp);
-            this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.TEKTITE, this.enemySpawnPool.floor[temp].x*16, this.enemySpawnPool.floor[temp].y*16);
-        }
-
+        
         //Octoroks
-        for(var i = 0; i < 10; i++)
+        for(var i = 0; i < this.enemySpawnPool.floor.length; i+=2)
         {
-            var temp = parseInt(Math.random()*this.enemySpawnPool.floor.length);
+            var temp = this.enemySpawnPool.floor[i];
             console.log(temp);
-            this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, this.enemySpawnPool.floor[temp].x*16, this.enemySpawnPool.floor[temp].y*16);
+            this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, temp.x*16, temp.y*16);
+        }
+        
+        //Tektites
+        for(var i = 1; i < this.enemySpawnPool.floor.length; i+=2)
+        {
+            var temp = this.enemySpawnPool.floor[i];
+            console.log(temp);
+            this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.TEKTITE, temp.x*16, temp.y*16);
         }
 
         //Zoras
-        for(var i = 0; i < 10; i++)
+        for(var i = 0; i < this.enemySpawnPool.water.length; i++)
         {
-            var temp = parseInt(Math.random()*this.enemySpawnPool.water.length);
+            var temp = this.enemySpawnPool.water[i];
             console.log(temp);
-            this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA, this.enemySpawnPool.water[temp].x*16, this.enemySpawnPool.water[temp].y*16);
+            this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA, temp.x*16, temp.y*16);
         }
         //-------------------
         
