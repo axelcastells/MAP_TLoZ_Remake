@@ -84,6 +84,7 @@ gameEngine.overworld ={
         this.game.add.existing(this.tp3);
         
         this.tp4 = new gameEngine.teleport_prefab(this.game, 45 * 16, 3 * 16, 7 * 16 + 8, 43 * 16 + 8, 0, this);
+        this.tp4.isActive = false;
         this.game.add.existing(this.tp4);
         
         this.tp5 = new gameEngine.teleport_prefab(this.game, 7 * 16, 44 * 16, 46 * 16 + 8 , 3 * 16 + 8, 0, this);
@@ -149,6 +150,10 @@ gameEngine.overworld ={
         this.backgroundMusic = this.add.audio('overworldMusic', 1, true, true);
         this.backgroundMusic.play();
         
+        //Movables creation and arrangement
+        this.loadMovables();
+        this.createMapMovables();
+        
         //HUD creation
         this.createHud();
         
@@ -175,8 +180,7 @@ gameEngine.overworld ={
         this.pickup7 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.LETTER, 24 * 16 + 8, 4 * 16 + 8, this);
         this.game.add.existing(this.pickup7);
         
-        this.movable1 =new gameEngine.movable_prefab(this.game, SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.UP, this.worldCellSize / 2 + this.worldCellSize * this.actualCellX + 40, this.worldCellSize / 2 + this.worldCellSize * this.actualCellY + 40, this);
-        this.game.add.existing(this.movable1);
+
 
     },
     loadEnemies:function()
@@ -202,7 +206,9 @@ gameEngine.overworld ={
         
         this.smoothCamera();
         
-        
+        if(this.movables.children[2].locked){
+           this.tp4.isActive = true;
+        }
     },
     smoothCamera:function(){
         if(!this.pause.paused){        
@@ -305,6 +311,64 @@ gameEngine.overworld ={
         this.hudHealth = new gameEngine.HUD_health_prefab(this.game, 10, 10, this.link.life,  this);
         this.hudHealth.fixedToCamera = true;
         this.game.add.existing(this.hudHealth);
+    },
+    loadMovables: function(){
+        this.movables = this.add.group();
+        this.movables.enableBody = true;
+    },
+    createMovable: function(type, direction, locked, x, y){
+        var movable = this.movables.getFirstExists(false);
+        if(!movable)
+        {
+            movable = new gameEngine.movable_prefab(this.game, type, direction, locked, x, y, this);
+            this.movables.add(movable);
+        }
+    },
+    createMapMovables: function(){
+        //Top left room movables
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.UP, false, this.worldCellSize + 16 * 7, 16 * 5);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, false, this.worldCellSize + 16 * 8, 16 * 5);
+        
+        //Statue
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.STATUE, SYSTEM_CONSTANTS.DIRECTIONS.NULL, false, this.worldCellSize * 2 + 16 * 13, 16 * 3);
+        
+        //Cave entrance
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.UP, true, this.worldCellSize + 16 * 10, this.worldCellSize + 16);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.LEFT, false, this.worldCellSize + 16 * 11, this.worldCellSize + 16 * 2);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.UP, false, this.worldCellSize + 16 * 12, this.worldCellSize + 16 * 2);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.UP, true, this.worldCellSize + 16 * 13, this.worldCellSize + 16);
+        
+        //Puzzle
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 5, this.worldCellSize * 2 + 16 * 2);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 5, this.worldCellSize * 2 + 16 * 3);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 5, this.worldCellSize * 2 + 16 * 4);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 5, this.worldCellSize * 2 + 16 * 5);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 5, this.worldCellSize * 2 + 16 * 6);
+        
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 6, this.worldCellSize * 2 + 16 * 1);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 6, this.worldCellSize * 2 + 16 * 2);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 6, this.worldCellSize * 2 + 16 * 4);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 6, this.worldCellSize * 2 + 16 * 5);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 6, this.worldCellSize * 2 + 16 * 6);     
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.SPECIAL_ROCK_1, SYSTEM_CONSTANTS.DIRECTIONS.NULL, false, this.worldCellSize * 3 + 16 * 6, this.worldCellSize * 2 + 16 * 7);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 6, this.worldCellSize * 2 + 16 * 8);
+        
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 7, this.worldCellSize * 2 + 16 * 1);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.LEFT, false, this.worldCellSize * 3 + 16 * 7, this.worldCellSize * 2 + 16 * 3);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 7, this.worldCellSize * 2 + 16 * 5);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 7, this.worldCellSize * 2 + 16 * 8);
+        
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 8, this.worldCellSize * 2 + 16 * 1);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.UP, false, this.worldCellSize * 3 + 16 * 8, this.worldCellSize * 2 + 16 * 3);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.LEFT, false, this.worldCellSize * 3 + 16 * 8, this.worldCellSize * 2 + 16 * 4);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 8, this.worldCellSize * 2 + 16 * 5);
+        
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 9, this.worldCellSize * 2 + 16 * 1);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 9, this.worldCellSize * 2 + 16 * 2);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.SPECIAL_ROCK_2, SYSTEM_CONSTANTS.DIRECTIONS.NULL, false, this.worldCellSize * 3 + 16 * 9, this.worldCellSize * 2 + 16 * 6);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, false, this.worldCellSize * 3 + 16 * 9, this.worldCellSize * 2 + 16 * 7);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 9, this.worldCellSize * 2 + 16 * 8);
+        
     }
 
 }

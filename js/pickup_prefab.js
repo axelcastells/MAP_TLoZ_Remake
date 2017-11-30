@@ -3,27 +3,35 @@ var gameEngine = gameEngine || {};
 gameEngine.pickup_prefab = function(game,type,pos_x,pos_y,level){
     
     this.game = game;
-    
+
     switch(type)
         {
             case SYSTEM_CONSTANTS.PICKUPS.SWORD:
             {
                 Phaser.Sprite.call(this, game, pos_x, pos_y,'sword', 0);
+                game.physics.arcade.enable(this);
+                this.body.setSize(5, 15, 1, 1);
             }break;
                 
             case SYSTEM_CONSTANTS.PICKUPS.MASTER_SWORD:
             {
-               Phaser.Sprite.call(this, game, pos_x, pos_y,'master_sword', 0);
+                Phaser.Sprite.call(this, game, pos_x, pos_y,'master_sword', 0);
+                game.physics.arcade.enable(this);
+                this.body.setSize(5, 15, 1, 1);
             }break;
                 
             case SYSTEM_CONSTANTS.PICKUPS.HEART:
             {
                 Phaser.Sprite.call(this, game, pos_x, pos_y,'heart', 0);
+                game.physics.arcade.enable(this);
+                this.body.setSize(8, 8);
             }break;
                 
             case SYSTEM_CONSTANTS.PICKUPS.LETTER:
             {
                 Phaser.Sprite.call(this, game, pos_x, pos_y,'letter', 0);
+                game.physics.arcade.enable(this);
+                this.body.setSize(8, 8);
             }break;
                 
             default:
@@ -34,7 +42,7 @@ gameEngine.pickup_prefab = function(game,type,pos_x,pos_y,level){
 
 
     this.anchor.setTo(.5);
-    game.physics.arcade.enable(this);
+
     this.body.moves = false;
     this.body.ummovable = true;
     
@@ -59,6 +67,7 @@ gameEngine.pickup_prefab.prototype = Object.create(Phaser.Sprite.prototype);
 gameEngine.pickup_prefab.prototype.constructor = gameEngine.pickup_prefab;
 
 gameEngine.pickup_prefab.prototype.update = function(){
+    this.game.debug.body(this);
     switch(this.type){
             case SYSTEM_CONSTANTS.PICKUPS.SWORD:
             {
@@ -89,9 +98,8 @@ gameEngine.pickup_prefab.prototype.update = function(){
             case SYSTEM_CONSTANTS.PICKUPS.HEART:
             {
                  this.game.physics.arcade.overlap(this, this.level.link, function(heart, link){
-                     link.heal(2);
                      heart.kill();
-                     
+                     link.heal(2);
                  });
             }break;
             

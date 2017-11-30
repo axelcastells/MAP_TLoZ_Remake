@@ -22,28 +22,29 @@ gameEngine.teleport_prefab = function(game, x,y, _dX, _dY, tpType, level){
     
     //Audio creation
     this.teleportSound = this.level.add.audio('teleportSound');
-    
+    this.isActive = true;
 };
 
 gameEngine.teleport_prefab.prototype = Object.create(Phaser.Sprite.prototype);
 gameEngine.teleport_prefab.prototype.constructor = gameEngine.teleport_prefab;
 
 gameEngine.teleport_prefab.prototype.update = function(){
-    
-    this.game.physics.arcade.overlap(this, this.level.link, function(teleport, link){
-        teleport.teleportSound.play();
-        link.level.camera.fade(0x000000,10);
-        this.timer = link.level.game.time.create(true);
-        link.reset(teleport.dX, teleport.dY);
-        link.canMove = false;
-        this.timer.add(3000,function(){            
-            link.level.camera.resetFX();
-            link.canMove = true;
-        }, this);
-        this.timer.start();
-        
-        //link.level.camera.onFadeComplete.add(, this);
-            
+    if(this.isActive){
+        this.game.physics.arcade.overlap(this, this.level.link, function(teleport, link){
+            teleport.teleportSound.play();
+            link.level.camera.fade(0x000000,10);
+            this.timer = link.level.game.time.create(true);
+            link.reset(teleport.dX, teleport.dY);
+            link.canMove = false;
+            this.timer.add(3000,function(){            
+                link.level.camera.resetFX();
+                link.canMove = true;
+            }, this);
+            this.timer.start();
 
-    })
+            //link.level.camera.onFadeComplete.add(, this);
+
+
+        })
+    }
 };
