@@ -130,8 +130,8 @@ gameEngine.enemy_prefab.prototype.update = function(){
 
                         }
                         else{
-                            this.direction.x = this.body.velocity.x;
-                            this.direction.y = this.body.velocity.y;
+                            //this.direction.x = this.body.velocity.x;
+                            //this.direction.y = this.body.velocity.y;
                         }
 
                         if(this.body.velocity.x == -1 && this.body.velocity.y == 0)

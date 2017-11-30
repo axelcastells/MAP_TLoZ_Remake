@@ -130,13 +130,14 @@ gameEngine.overworld ={
         }
         
         //Tektites
+        /*
         for(var i = 1; i < this.enemySpawnPool.floor.length; i+=2)
         {
             var temp = this.enemySpawnPool.floor[i];
             console.log(temp);
             this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.TEKTITE, temp.x*16, temp.y*16);
         }
-
+        */
         //Zoras
         for(var i = 0; i < 3; i++)
         {
@@ -330,7 +331,7 @@ gameEngine.overworld ={
         this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, false, this.worldCellSize + 16 * 8, 16 * 5);
         
         //Statue
-        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.STATUE, SYSTEM_CONSTANTS.DIRECTIONS.NULL, false, this.worldCellSize * 2 + 16 * 13, 16 * 3);
+        this.createMovable(SYSTEM_CONSTANTS.MOVABLES.STATUE, SYSTEM_CONSTANTS.DIRECTIONS.UP, false, this.worldCellSize * 2 + 16 * 13, 16 * 3);
         
         //Cave entrance
         this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.UP, true, this.worldCellSize + 16 * 10, this.worldCellSize + 16);
