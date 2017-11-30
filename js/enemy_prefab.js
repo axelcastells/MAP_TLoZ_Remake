@@ -135,13 +135,29 @@ gameEngine.enemy_prefab.prototype.update = function(){
                         }
 
                         if(this.body.velocity.x == -1 && this.body.velocity.y == 0)
-                            this.animations.play("walk_left");
+                            {
+                                this.animations.play("walk_left");
+                                this.direction = SYSTEM_CONSTANTS.DIRECTIONS.LEFT;
+                            }
+                            
                         else if(this.body.velocity.x == 1 && this.body.velocity.y == 0)
-                            this.animations.play("walk_right");
+                            {
+                                this.animations.play("walk_right"); 
+                                this.direction = SYSTEM_CONSTANTS.DIRECTIONS.RIGHT;
+                            }
+                            
                         else if(this.body.velocity.x == 0 && this.body.velocity.y == -1)
-                            this.animations.play("walk_up");
+                            {
+                                this.animations.play("walk_up");
+                                this.direction = SYSTEM_CONSTANTS.DIRECTIONS.UP;
+                            }
+                            
                         else if(this.body.velocity.x == 0 && this.body.velocity.y == 1)
-                            this.animations.play("walk_down");
+                            {
+                                this.animations.play("walk_down");
+                                this.direction = SYSTEM_CONSTANTS.DIRECTIONS.DOWN;
+                            }
+                            
 
                         this.body.velocity.x *= this.speed;
                         this.body.velocity.y *= this.speed;
