@@ -24,6 +24,25 @@ gameEngine.hitbox_prefab.prototype.update = function(){
         enemy.enemyHitSound.play();
         enemy.reset(550, 800)
     });
-    this.body.x = this.level.link.body.x + 5;
-    this.body.y = this.level.link.body.y + 5;
+    
+    switch(this.level.link.facingDirection){
+        case "right":
+            this.body.x = this.level.link.body.x + 6;
+            this.body.y = this.level.link.body.y + 4;
+        break;
+        case "left":
+            this.body.x = this.level.link.body.x - 11;
+            this.body.y = this.level.link.body.y + 4;
+        break;
+        case "up":
+            this.body.x = this.level.link.body.x + 1;
+            this.body.y = this.level.link.body.y - 12;
+        break;
+        case "down":
+            this.body.x = this.level.link.body.x + 3;
+            this.body.y = this.level.link.body.y + 7;
+        break;
+    }
+
+
 };

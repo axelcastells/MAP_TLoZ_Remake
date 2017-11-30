@@ -94,16 +94,16 @@ gameEngine.link_prefab.prototype.update = function(){
                 this.level.hitbox.active = true;
                 switch(this.facingDirection){
                     case "right":
-                            this.level.hitbox.body.setSize(15, 5, 17, 15);
+                            this.level.hitbox.body.setSize(15, 5);
                     break;
                     case "left":
-                            this.level.hitbox.body.setSize(15, 5, -2, 15);
+                            this.level.hitbox.body.setSize(15, 5);
                     break;
                     case "up":
-                            this.level.hitbox.body.setSize(5, 15, 12, 0);
+                            this.level.hitbox.body.setSize(5, 15);
                     break;
                     case "down":
-                            this.level.hitbox.body.setSize(5, 15, 13, 17);
+                            this.level.hitbox.body.setSize(5, 15);
                     break;
                 }
             }
