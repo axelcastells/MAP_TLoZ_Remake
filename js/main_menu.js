@@ -42,14 +42,14 @@ gameEngine.main_menu ={
         //Audio creation
         this.buttonClick = this.add.audio('buttonClick');
         
-        TEXT_RENDERER.create(64,16,["This is a sample text.","So, this is pure shit filling the page :D","Edu, Miquel, pagueu la coca!"]);
+        //TEXT_RENDERER.create(64,16,["This is a sample text.","So, this is pure shit filling the page :D","Edu, Miquel, pagueu la coca!"]);
         
         
         
     },
     update:function(){
-        console.clear();
-        console.log(TEXT_RENDERER.getUpdatedText());
+        //console.clear();
+        //console.log(TEXT_RENDERER.getUpdatedText());
 
         
     },

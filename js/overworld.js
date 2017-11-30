@@ -16,22 +16,16 @@ gameEngine.overworld ={
         this.enemySpawnPool.floor = [];
         this.enemySpawnPool.floor.push(new Phaser.Point(35,50));
         this.enemySpawnPool.floor.push(new Phaser.Point(44,50));
-        this.enemySpawnPool.floor.push(new Phaser.Point(34,34));
-        this.enemySpawnPool.floor.push(new Phaser.Point(45,34));
         this.enemySpawnPool.floor.push(new Phaser.Point(34,45));
         this.enemySpawnPool.floor.push(new Phaser.Point(45,45));
 
         this.enemySpawnPool.floor.push(new Phaser.Point(18,45));
         this.enemySpawnPool.floor.push(new Phaser.Point(29,45));
-        this.enemySpawnPool.floor.push(new Phaser.Point(17,39));
-        this.enemySpawnPool.floor.push(new Phaser.Point(29,34));
         this.enemySpawnPool.floor.push(new Phaser.Point(22,37));
         this.enemySpawnPool.floor.push(new Phaser.Point(22,41));
 
         this.enemySpawnPool.floor.push(new Phaser.Point(18,18));
         this.enemySpawnPool.floor.push(new Phaser.Point(29,18));
-        this.enemySpawnPool.floor.push(new Phaser.Point(18,29));
-        this.enemySpawnPool.floor.push(new Phaser.Point(29,29));
         this.enemySpawnPool.floor.push(new Phaser.Point(21,24));
 
         this.enemySpawnPool.floor.push(new Phaser.Point(34,18));
@@ -39,22 +33,28 @@ gameEngine.overworld ={
 
         this.enemySpawnPool.floor.push(new Phaser.Point(50,34));
         this.enemySpawnPool.floor.push(new Phaser.Point(61,34));
-        this.enemySpawnPool.floor.push(new Phaser.Point(61,45));
         this.enemySpawnPool.floor.push(new Phaser.Point(50,45));
+        
+        this.enemySpawnPool.floor.push(new Phaser.Point(60,29));
+        this.enemySpawnPool.floor.push(new Phaser.Point(50,20));
+        this.enemySpawnPool.floor.push(new Phaser.Point(58,22));
+        
+        this.enemySpawnPool.floor.push(new Phaser.Point(35,12));
+        this.enemySpawnPool.floor.push(new Phaser.Point(44,12));        
+        
+        this.enemySpawnPool.floor.push(new Phaser.Point(21,9));
+        this.enemySpawnPool.floor.push(new Phaser.Point(26,9));
 
 
 
         this.enemySpawnPool.water = [];
         this.enemySpawnPool.water.push(new Phaser.Point(52,43));
-        this.enemySpawnPool.water.push(new Phaser.Point(56,45));
         this.enemySpawnPool.water.push(new Phaser.Point(57,45));
 
         this.enemySpawnPool.water.push(new Phaser.Point(41,19));
-        this.enemySpawnPool.water.push(new Phaser.Point(42,19));
         this.enemySpawnPool.water.push(new Phaser.Point(45,19));
 
         this.enemySpawnPool.water.push(new Phaser.Point(36,20));
-        this.enemySpawnPool.water.push(new Phaser.Point(37,20));
         this.enemySpawnPool.water.push(new Phaser.Point(38,20));
 
         //-----------
@@ -137,11 +137,11 @@ gameEngine.overworld ={
         }
 
         //Zoras
-        for(var i = 0; i < this.enemySpawnPool.water.length; i++)
+        for(var i = 0; i < 3; i++)
         {
-            var temp = this.enemySpawnPool.water[i];
+            var temp = parseInt(Math.random()*this.enemySpawnPool.water.length);
             console.log(temp);
-            this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA, temp.x*16, temp.y*16);
+            this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA, this.enemySpawnPool.water[temp].x*16, this.enemySpawnPool.water[temp].y*16);
         }
         //-------------------
         
