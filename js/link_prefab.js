@@ -188,6 +188,7 @@ gameEngine.link_prefab.prototype.recieveDamage = function(damage){
     this.linkDamage.play();
     if(this.life <= 0){
         this.life = 0;
+        this.level.backgroundMusic.stop();
         this.game.state.start(this.game.state.current);
     }
     
