@@ -21,7 +21,10 @@ var SYSTEM_CONSTANTS = {
     ENEMY_TYPES: {
         OCTOROK: 0,
         ZORA: 1,
-        TEKTITE: 2
+        TEKTITE: 2,
+        KEESE: 3,
+        ROPE: 4,
+        GLEEOK: 5
     },
     PROJECTILE_TYPES: {
         ROCK: 0,

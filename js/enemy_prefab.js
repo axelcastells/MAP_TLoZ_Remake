@@ -81,6 +81,14 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
 
                 this.hp = 1;
             }break;
+            case SYSTEM_CONSTANTS.ENEMY_TYPES.GLEEOK:
+            {
+                this.type = type;
+                console.log("Created Gleeok");
+                
+                this.states = {INIT: 0, CHARGE: 1, ATTACK: 2, DYING: 3, DEAD: 4}
+                this.currentState = this.states.INIT;
+            }break;
             default:
             {
     
