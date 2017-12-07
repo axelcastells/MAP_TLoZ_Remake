@@ -56,6 +56,10 @@ gameEngine.overworld ={
 
         this.enemySpawnPool.water.push(new Phaser.Point(36,20));
         this.enemySpawnPool.water.push(new Phaser.Point(38,20));
+        
+        
+        
+        this.enemySpawnPool.bossSpawn = this.enemySpawnPool.floor[1];
 
         //-----------
         console.log(this.enemySpawnPool);
@@ -145,6 +149,10 @@ gameEngine.overworld ={
             console.log(temp);
             this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA, this.enemySpawnPool.water[temp].x*16, this.enemySpawnPool.water[temp].y*16);
         }
+        
+        //Bos DEBUG Spawn
+        this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.GLEEOK, this.enemySpawnPool.bossSpawn.x*16, this.enemySpawnPool.bossSpawn.y*16);
+        
         //-------------------
         
         //Audio creation

@@ -29,14 +29,17 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
             this.destroy();
     }
     
-    Phaser.Sprite.call(this,game,x,y,'enemies');
-    this.game.physics.arcade.enable(this);
+    
+    
 
     console.log(this.type);
     switch(type)
         {
             case SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK:
             {
+                Phaser.Sprite.call(this,game,x,y,'enemies');
+                this.game.physics.arcade.enable(this);
+                
                 this.type = type;
                 console.log("Created Octorok");
                 this.states = {INIT: 0, WALK: 1, CHARGE: 2, SHOOT: 3};
@@ -53,6 +56,9 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
             }break;
             case SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA:
             {
+                Phaser.Sprite.call(this,game,x,y,'enemies');
+                this.game.physics.arcade.enable(this);
+                
                 this.type = type;
                 console.log("Created Zora");
                 this.states = {INIT: 0, HIDDEN: 1, EMERGING: 2, EMERGED: 3, ATTACK: 4};
@@ -70,6 +76,9 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
             }break;
             case SYSTEM_CONSTANTS.ENEMY_TYPES.TEKTITE:
             {
+                Phaser.Sprite.call(this,game,x,y,'enemies');
+                this.game.physics.arcade.enable(this);
+                
                 this.type = type;
                 console.log("Created Tektite");
                 this.states = {INIT: 0, PREJUMP: 1, JUMP: 2, LANDED: 3};
@@ -83,17 +92,36 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
             }break;
             case SYSTEM_CONSTANTS.ENEMY_TYPES.GLEEOK:
             {
+                Phaser.Sprite.call(this,game,x,y,'boss');
+                this.game.physics.arcade.enable(this);
+                
                 this.type = type;
                 console.log("Created Gleeok");
                 
                 this.states = {INIT: 0, CHARGE: 1, ATTACK: 2, DYING: 3, DEAD: 4}
                 this.currentState = this.states.INIT;
+                
+                this.animations.add('iddle',[0,1,2,1],5,true);
+                this.animations.play('iddle');
+                
+                this.hp = 10;
+                
+                this.heads = [];
+                for(var i = 0; i < 3; i++)
+                {
+                    /*
+                    var head = new Head;
+                    this.heads.push(head);
+                    */
+                }
             }break;
             default:
             {
     
             }break;
         }
+    
+    
 
     this.anchor.setTo(.5);
 

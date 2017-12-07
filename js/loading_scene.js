@@ -26,6 +26,7 @@ gameEngine.loading_scene ={
         //Images loading
         this.load.spritesheet('link', 'img/link_movement.png', 32, 32);
         this.load.spritesheet('enemies','img/enemiesTileset.png', 16, 16);
+        this.load.spritesheet('boss','img/bossTileset.png', 32, 48);
         this.load.spritesheet('teleport','img/teleport_tiles.png',16,16);
         this.load.image('hitbox', 'img/collider.png', 32, 32);
         this.load.image('black', 'img/black.png', 32, 32);
