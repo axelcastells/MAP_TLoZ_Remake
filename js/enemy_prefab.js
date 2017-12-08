@@ -108,16 +108,9 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
                 
                 this.heads = [];
                 
-                this.ConnectHeadToBody = function(_head,neckPointsCount){
-                    for(var i = 0; i < neckPointsCount; i++)
-                    {
-                        //_head.neckPoints.push();
-                    }
-                }
-                
                 for(var i = 0; i < 3; i++)
                 {  
-                    var head = new gameEngine.gleeokHead_prefab(this.game, this.body.x, this.body.y, this.level);
+                    var head = new gameEngine.gleeokHead_prefab(this.game, this, this.body.x, this.body.y, this.level);
                     this.game.add.existing(head);
                     
                     head.neckPoints = [];

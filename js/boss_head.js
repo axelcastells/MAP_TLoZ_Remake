@@ -1,6 +1,6 @@
 var gameEngine = gameEngine || {};
 
-gameEngine.gleeokHead_prefab = function(game,x,y,level){
+gameEngine.gleeokHead_prefab = function(game,gleeok,x,y,level){
     this.game = game;
 
     this.counter = 0;
@@ -13,12 +13,25 @@ gameEngine.gleeokHead_prefab = function(game,x,y,level){
     
     console.log("Created Gleeok");
 
-    this.states = {INIT: 0, LINKED: 1, UNLINKED: 2, DYING: 3, DEAD: 4}
+    this.states = {INIT: 0, LINKED: 1, UNLINKED: 2}
     this.currentState = this.states.INIT;
 
     this.animations.add('linked',[38],1,true);
     this.animations.add('unlinked',[39],1,true);
     this.animations.play('linked');
+    
+    this.neckPoints = [];
+    for(var i = 0; i < 3; i++)
+    {
+        var neckPoint = this.game.add.sprite(x,y,'enemies',35);
+        this.game.physics.arcade.enable(neckPoint);
+
+        neckPoint.update = function(){
+            //this.body.x += 1;
+        }
+        
+        this.neckPoints.push(neckPoint);
+    }
     
     this.updateCounter = function(){
         if(!level.pause.paused)
@@ -67,6 +80,10 @@ gameEngine.gleeokHead_prefab.prototype.update = function(){
     }
     else
     {
+        for(var i = 0; i < this.neckPoints.length; i++)
+        {
+            i.update();
+        }
         //Code Logic Here
         //console.log("Pium!");
         //this.body.y += 1;
