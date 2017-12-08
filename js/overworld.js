@@ -134,14 +134,14 @@ gameEngine.overworld ={
         }
         
         //Tektites
-        /*
+        
         for(var i = 1; i < this.enemySpawnPool.floor.length; i+=2)
         {
             var temp = this.enemySpawnPool.floor[i];
             console.log(temp);
             this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.TEKTITE, temp.x*16, temp.y*16);
         }
-        */
+        
         //Zoras
         for(var i = 0; i < 3; i++)
         {

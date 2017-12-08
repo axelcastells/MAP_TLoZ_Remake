@@ -29,9 +29,6 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
             this.destroy();
     }
     
-    
-    
-
     console.log(this.type);
     switch(type)
         {
@@ -42,7 +39,7 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
                 
                 this.type = type;
                 console.log("Created Octorok");
-                this.states = {INIT: 0, WALK: 1, CHARGE: 2, SHOOT: 3};
+                this.states = {INIT: 0, WALK: 1, CHARGE: 2, SHOOT: 3, STOPPED: 4};
                 this.currentState = this.states.INIT;
                 
                 this.animations.add('walk_down',[2,3],10,true);
@@ -161,6 +158,10 @@ gameEngine.enemy_prefab.prototype.update = function(){
             {
                 this.game.physics.arcade.collide(this, this.level.walls);
                 this.game.physics.arcade.collide(this, this.level.mapCollisions);
+                this.game.physics.arcade.overlap(this, this.level.link.boomerang, function(enemy, boomerang){
+                    enemy.currentState = enemy.states.STOPPED;
+                    enemy.counter = 2;
+                });
 
                 switch(this.currentState)
                 {
@@ -244,15 +245,23 @@ gameEngine.enemy_prefab.prototype.update = function(){
                         this.bullet = new gameEngine.projectile_prefab(this.game, SYSTEM_CONSTANTS.PROJECTILE_TYPES.ROCK, this.position.x + this.direction.x * 8, this.position.y + this.direction.y * 8, this.direction, this.level);
                         this.game.add.existing(this.bullet);
                         this.currentState = this.states.INIT;
-                    }
-                }break;/*
-                case this.states.SHOOT:
-                {
-
-
-                    //this.scale.setTo(1);
-                    this.currentState = this.states.INIT;
-                }break;*/
+                    }break;
+                    case this.states.STOPPED:
+                    {
+                        this.body.velocity.x = 0;
+                        this.body.velocity.y = 0;
+                        this.animations.currentAnim.restart();
+                        this.animations.currentAnim.stop();
+                        
+                    
+                        if(this.counter <= 0)
+                        {
+                            this.currentState = this.states.INIT;
+                        }                    
+                    
+                    }break;
+                }break;
+                
             }break;
             case SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA:
             {
@@ -333,24 +342,23 @@ gameEngine.enemy_prefab.prototype.update = function(){
                     {
                         if(this.counter <= 0)
                         {
-                            this.game.physics.arcade.gravity.y = 9.8;
-                            this.body.velocity.y = -((Math.random()*40)-10);
-                            this.body.velocity.x = ((Math.random()*14)-7);
-                            this.counter = 2;
+                            this.body.velocity.y = ((Math.random()*150)) * Math.round((Math.random()*2)-1);
+                            this.body.velocity.x = ((Math.random()*150)) * Math.round((Math.random()*2)-1);
+                            this.counter = .5;
                             this.currentState = this.states.JUMP;  
                         }
 
                     }break;
                     case this.states.JUMP:
                     {
+                        this.frame = 25;
                         if(this.counter <= 0)
                             this.currentState = this.states.LANDED;
                     }break;
                     case this.states.LANDED:
                     {
-                        this.game.physics.arcade.gravity.y = 0;
                         this.body.velocity.y = 0;
-                            this.body.velocity.x = 0;
+                        this.body.velocity.x = 0;
                         this.currentState = this.states.INIT;
                     }break;
                     
