@@ -2,6 +2,7 @@ var gameEngine = gameEngine || {};
 
 gameEngine.gleeokHead_prefab = function(game,gleeok,x,y,level){
     this.game = game;
+    this.gleeok = gleeok;
 
     this.counter = 0;
     this.speed = 100;
@@ -16,19 +17,16 @@ gameEngine.gleeokHead_prefab = function(game,gleeok,x,y,level){
     this.states = {INIT: 0, LINKED: 1, UNLINKED: 2}
     this.currentState = this.states.INIT;
 
-    this.animations.add('linked',[38],1,true);
-    this.animations.add('unlinked',[39],1,true);
+    this.animations.add('linked',[41],1,true);
+    this.animations.add('unlinked',[42],1,true);
     this.animations.play('linked');
     
     this.neckPoints = [];
-    for(var i = 0; i < 3; i++)
+    for(var i = 0; i < 10; i++)
     {
-        var neckPoint = this.game.add.sprite(x,y,'enemies',35);
+        var neckPoint = this.game.add.sprite(x,y,'enemies',40);
+        neckPoint.anchor.setTo(.5);
         this.game.physics.arcade.enable(neckPoint);
-
-        neckPoint.update = function(){
-            //this.body.x += 1;
-        }
         
         this.neckPoints.push(neckPoint);
     }
@@ -80,9 +78,12 @@ gameEngine.gleeokHead_prefab.prototype.update = function(){
     }
     else
     {
+        this.body.y += 1;
+        
         for(var i = 0; i < this.neckPoints.length; i++)
         {
-            i.update();
+            this.neckPoints[i].body.x = this.gleeok.neck.x + ((this.body.x - this.gleeok.neck.x)*(i/this.neckPoints.length));
+            this.neckPoints[i].body.y = this.gleeok.neck.y + ((this.body.y - this.gleeok.neck.y)*(i/this.neckPoints.length));
         }
         //Code Logic Here
         //console.log("Pium!");

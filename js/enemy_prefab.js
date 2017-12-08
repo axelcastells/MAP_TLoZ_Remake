@@ -101,16 +101,16 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
                 this.animations.add('iddle',[0,1,2,1],5,true);
                 this.animations.play('iddle');
                 
+                this.neck = new Phaser.Point(x,y);
+                
                 this.hp = 10;
                 
                 this.heads = [];
                 
                 for(var i = 0; i < 3; i++)
                 {  
-                    var head = new gameEngine.gleeokHead_prefab(this.game, this, this.body.x, this.body.y, this.level);
+                    var head = new gameEngine.gleeokHead_prefab(this.game, this, this.body.x, this.body.y+40, this.level);
                     this.game.add.existing(head);
-                    
-                    head.neckPoints = [];
                     
                     this.heads.push(head);
                 }
@@ -357,6 +357,11 @@ gameEngine.enemy_prefab.prototype.update = function(){
                     
                 }
 
+            }break;
+            case SYSTEM_CONSTANTS.ENEMY_TYPES.GLEEOK:
+            {
+                this.neck.x = this.body.x+10;
+                this.neck.y = this.body.y+30;
             }break;
             default:
             {
