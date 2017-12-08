@@ -23,7 +23,7 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
                 Phaser.Sprite.call(this,game,x,y,'enemies');
                 this.anchor.setTo(0.5);
                 this.type = type;
-                this.speed = 500;
+                this.speed = 250;
                 this.animations.add('shoot',[34],1,true);
                 //this.enemyShotSound.play();
                 this.animations.play('shoot');
