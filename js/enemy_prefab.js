@@ -108,11 +108,11 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
                 
                 this.heads = [];
                 for(var i = 0; i < 3; i++)
-                {
-                    /*
-                    var head = new Head;
+                {  
+                    var head = new gameEngine.gleeokHead_prefab(this.game, type, x, y, this.level);
+                    //this.enemies.add(enemy);
+                    
                     this.heads.push(head);
-                    */
                 }
             }break;
             default:

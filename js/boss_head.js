@@ -8,6 +8,19 @@ gameEngine.gleeokHead_prefab = function(game,type,x,y,level){
     this.direction = SYSTEM_CONSTANTS.DIRECTIONS.DOWN;
     this.hp = 3;
     
+    Phaser.Sprite.call(this,game,x,y,'enemies');
+    this.game.physics.arcade.enable(this);
+
+    this.type = type;
+    console.log("Created Gleeok");
+
+    this.states = {INIT: 0, LINKED: 1, UNLINKED: 2, DYING: 3, DEAD: 4}
+    this.currentState = this.states.INIT;
+
+    this.animations.add('linked',[38],1,true);
+    this.animations.add('unlinked',[39],1,true);
+    this.animations.play('linked');
+    
     this.updateCounter = function(){
         if(!level.pause.paused)
             this.counter-=0.1; 
@@ -40,7 +53,7 @@ gameEngine.gleeokHead_prefab = function(game,type,x,y,level){
 
     
     //Load audios
-    this.enemyHitSound = this.level.add.audio('hit');
+    //this.enemyHitSound = this.level.add.audio('hit');
     
 };
 
@@ -55,11 +68,12 @@ gameEngine.gleeokHead_prefab.prototype.update = function(){
     }
     else
     {
-        switch(this.type)
-        {
-            
-        }
+        //Code Logic Here
     }
+    
+    this.game.physics.arcade.collide(this, this.level.walls, function(enemy, wall){
+        //Redirect direction on collision normal
+    })
 
     this.game.physics.arcade.overlap(this,this.level.link,
         function(enemy,link){
