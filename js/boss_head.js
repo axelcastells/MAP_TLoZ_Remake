@@ -1,6 +1,6 @@
 var gameEngine = gameEngine || {};
 
-gameEngine.gleeokHead_prefab = function(game,type,x,y,level){
+gameEngine.gleeokHead_prefab = function(game,x,y,level){
     this.game = game;
 
     this.counter = 0;
@@ -10,8 +10,7 @@ gameEngine.gleeokHead_prefab = function(game,type,x,y,level){
     
     Phaser.Sprite.call(this,game,x,y,'enemies');
     this.game.physics.arcade.enable(this);
-
-    this.type = type;
+    
     console.log("Created Gleeok");
 
     this.states = {INIT: 0, LINKED: 1, UNLINKED: 2, DYING: 3, DEAD: 4}
@@ -69,6 +68,8 @@ gameEngine.gleeokHead_prefab.prototype.update = function(){
     else
     {
         //Code Logic Here
+        //console.log("Pium!");
+        //this.body.y += 1;
     }
     
     this.game.physics.arcade.collide(this, this.level.walls, function(enemy, wall){
