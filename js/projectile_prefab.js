@@ -23,7 +23,7 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
                 Phaser.Sprite.call(this,game,x,y,'enemies');
                 this.anchor.setTo(0.5);
                 this.type = type;
-                this.speed = 250;
+                this.speed = 500;
                 this.animations.add('shoot',[34],1,true);
                 //this.enemyShotSound.play();
                 this.animations.play('shoot');
@@ -127,8 +127,8 @@ gameEngine.projectile_prefab.prototype.update = function(){
                     {
                         case this.states.INIT:
                         {
-                            this.speed = 100;
-                            this.counter = 1;
+                            this.speed = 150;
+                            this.counter = 0.7;
                             this.currentState = this.states.GO;
                         }break;
                         case this.states.GO:
@@ -136,7 +136,7 @@ gameEngine.projectile_prefab.prototype.update = function(){
                             if(this.counter <= 0)
                             {
                                 this.speed = 0;
-                                this.counter = 0.5;
+                                this.counter = 0.1;
                                 this.currentState = this.states.STAY;
                             }
                         }break;
@@ -144,7 +144,7 @@ gameEngine.projectile_prefab.prototype.update = function(){
                         {
                             if(this.counter <= 0)
                             {
-                                this.speed = -100;
+                                this.speed = -150;
                                 this.currentState = this.states.BACK;
                             }
                         }break;
@@ -156,27 +156,31 @@ gameEngine.projectile_prefab.prototype.update = function(){
                 }break;
             }
     }
-    this.game.physics.arcade.collide(this, this.level.walls, function(bullet,link){
+    this.game.physics.arcade.collide(this, this.level.walls, function(bullet,walls){
         if(bullet.body.touching){
-            if(this.type == SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG)
-                link.isBoomerangThrown = false;
+            if(this.type == SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG){
+               bullet.level.link.isBoomerangThrown = false;
+            }
+                
             bullet.kill();
     }});
     
-    this.game.physics.arcade.collide(this, this.level.mapCollisions,  function(bullet,link) {
+    this.game.physics.arcade.collide(this, this.level.mapCollisions,  function(bullet,walls) {
         if(bullet.body.touching){
-            if(this.type == SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG)
-                link.isBoomerangThrown = false;
+            if(bullet.type == SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG){
+                console.log("Bullet Collision!");
+                bullet.level.link.isBoomerangThrown = false;
+            }                
             bullet.kill();
     }});
-    
+        
     if(this.type != SYSTEM_CONSTANTS.PROJECTILE_TYPES.SWORD && this.type != SYSTEM_CONSTANTS.PROJECTILE_TYPES.MASTER_SWORD){
         this.game.physics.arcade.collide(this,this.level.link,
         function(bullet,link){
         if(bullet.body.touching){
             console.log("Bullet Collision!");
             console.log(this.type);
-            if(this.type == SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG)
+            if(bullet.type == SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG)
             {
                 link.isBoomerangThrown = false;
                 console.log("Boomerang Recovered!");
