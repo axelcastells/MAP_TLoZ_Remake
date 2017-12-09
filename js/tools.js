@@ -6,11 +6,16 @@ var TEXT_RENDERER = {
     lineIndex: 0,
     wordDelay: 120,
     lineDelay: 400,
-    create:function(_x,_y,_content){
+    potrait: null,
+    create:function(_content){
+        this.potrait = gameEngine.game.add.sprite(256/2, 256 - 50, 'textpotrait');
+        this.potrait.anchor.setTo(.5);
+        this.potrait.fixedToCamera = true;
         if(!_content)
             throw 1;
         this.content = _content;
-        this.text = gameEngine.game.add.text(_x,_y,'',{font: "font_white", fill: "#000000", fontSize: 32});
+        this.text = gameEngine.game.add.text(this.potrait.position.x - this.potrait.width/2 + 10, this.potrait.position.y - this.potrait.height/2 + 10, this.content,{font: "font_white", fill: "#ffffff", wordWrap: true, wordWrapWidth: this.potrait.width-10, wordWrapHeight: this.potrait.height - 10, fontSize: 12});
+        this.text.fixedToCamera = true;
         this.nextLine();
     },
     nextLine:function(){
@@ -44,8 +49,13 @@ var TEXT_RENDERER = {
     getUpdatedText()
     {
         return this.text.text;
+    },
+    reset(){
+        this.content = "";
+        this.text.kill();
+        this.text = "";
+        this.potrait.kill();
+        this.potrait = null;
     }
     
-
 };
-
