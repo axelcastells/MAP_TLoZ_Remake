@@ -97,8 +97,19 @@ gameEngine.overworld ={
         this.tp6 = new gameEngine.teleport_prefab(this.game, 8 * 16, 44 * 16, 46 * 16 + 8 , 3 * 16 + 8, 0, this);
         this.game.add.existing(this.tp6);
         
+        //Interactable
+        this.inter = new gameEngine.interactables_prefab(this.game, 39 * 16, 8 * 16, 2, 0.5, this);
+        this.game.add.existing(this.inter);
+        
+        this.inter2 = new gameEngine.interactables_prefab(this.game, 55 * 16, 7 * 16, 1, 0.5, this);
+        this.game.add.existing(this.inter2);
+        
+        //Yayo
+        this.yayo = new gameEngine.yayo_prefab(this.game, 0, 0, this.inter2, this);
+        this.game.add.existing(this.yayo);
+        
         //Door creation
-        this.door = new gameEngine.door_prefab(this.game, 39 * 16, 7 * 16, 'statue', this);
+        this.door = new gameEngine.door_prefab(this.game, 39 * 16, 7 * 16, 'statue', this.inter, this);
         this.game.add.existing(this.door);
         
         //this.tp2 = new gameEngine.teleport_prefab(this.game, 336, 672, 500, 740, 0, this);
@@ -207,7 +218,7 @@ gameEngine.overworld ={
         }
     },
     update:function(){
-        
+                
         this.game.debug.body(this.link);
         if(this.hitbox.active){
             this.game.debug.body(this.hitbox);

@@ -36,6 +36,7 @@ gameEngine.loading_scene ={
         this.load.image('boomerang', 'img/zelda-sprites-boomerang.png', 5, 8);
         this.load.image('movable_stone', 'img/movable_stone.png', 7, 8);
         this.load.image('movable_statue', 'img/movable_statue.png', 7, 8);
+        this.load.image('textpotrait', 'img/textpotrait.png')
         
         //Main menu image and button image loading
         this.load.image('mainMenu', 'img/mainMenu.jpg');
