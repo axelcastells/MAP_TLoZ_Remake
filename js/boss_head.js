@@ -22,6 +22,7 @@ gameEngine.gleeokHead_prefab = function(game,gleeok,x,y,level){
     this.animations.play('linked');
     
     this.force = new Phaser.Point(0,0);
+    this.unlinkedSpeed = new Phaser.Point(1,1);
     
     this.neckPoints = [];
     for(var i = 0; i < 10; i++)
@@ -104,8 +105,13 @@ gameEngine.gleeokHead_prefab.prototype.update = function(){
                 var currentHeadDistance = Phaser.Math.distance(this.body.x,this.body.y,this.gleeok.neck.x,this.gleeok.neck.y);
                 if(currentHeadDistance > 30)
                 {
-                    this.force.x = -this.force.x;
-                    this.force.y = -this.force.y;
+                    this.force.x = 0;
+                    this.force.y = 0;
+                    var dirToBody = new Phaser.Point(this.gleeok.neck.x - this.body.x,this.gleeok.neck.y - this.body.y);
+                    dirToBody.normalize();
+                    
+                    this.body.x += dirToBody.x * 5;
+                    this.body.y += dirToBody.y * 5;
                 }
 
 
@@ -129,11 +135,23 @@ gameEngine.gleeokHead_prefab.prototype.update = function(){
                         this.neckPoints[i].body.y = 0;
                     }
                     
+                    
                     this.currentState = this.states.UNLINKED;
                 }
             }break;
             case this.states.UNLINKED:
             {
+                this.body.y += this.unlinkedSpeed.y;
+                this.body.x += this.unlinkedSpeed.x;
+                
+                
+                //Collision with walls
+                this.game.physics.arcade.collide(this, this.level.mapCollisions, function(head, wall){
+                    //Redirect direction on collision normal
+                    if(head.body.blocked.down || head.body.blocked.up){head.unlinkedSpeed.y = -head.unlinkedSpeed.y;}
+                    else if(head.body.blocked.left || head.body.blocked.right){head.unlinkedSpeed.x = -head.unlinkedSpeed.x;}
+                })
+                
                 if(this.counter <= 0)
                 {
                     this.currentState = this.states.INIT;
