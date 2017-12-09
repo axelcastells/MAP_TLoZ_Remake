@@ -105,9 +105,10 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
                 
                 this.hp = 10;
                 
+                this.headsCount = 3;
                 this.heads = [];
                 
-                for(var i = 0; i < 3; i++)
+                for(var i = 0; i < this.headsCount; i++)
                 {  
                     var head = new gameEngine.gleeokHead_prefab(this.game, this, this.body.x, this.body.y+40, this.level);
                     this.game.add.existing(head);

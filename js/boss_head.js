@@ -21,6 +21,8 @@ gameEngine.gleeokHead_prefab = function(game,gleeok,x,y,level){
     this.animations.add('unlinked',[42],1,true);
     this.animations.play('linked');
     
+    this.force = new Phaser.Point(0,0);
+    
     this.neckPoints = [];
     for(var i = 0; i < 10; i++)
     {
@@ -61,7 +63,7 @@ gameEngine.gleeokHead_prefab = function(game,gleeok,x,y,level){
 
     this.anchor.setTo(.5);
 
-    
+
     //Load audios
     //this.enemyHitSound = this.level.add.audio('hit');
     
@@ -78,8 +80,30 @@ gameEngine.gleeokHead_prefab.prototype.update = function(){
     }
     else
     {
-        this.body.y += 1;
         
+        
+        var speed = 0.25;
+        var direction = new Phaser.Point((Math.random()*2)-1,(Math.random()*2)-1);
+        this.force.x += direction.x * speed;
+        this.force.y += direction.y * speed;
+        
+        this.force.x = Phaser.Math.clamp(this.force.x,-5,5);
+        this.force.y = Phaser.Math.clamp(this.force.y,-5,5);
+        
+        this.body.x += this.force.x;
+        this.body.y += this.force.y;
+        
+        var maxDistance = 5;
+        var currentHeadDistance = Phaser.Math.distance(this.body.x,this.body.y,this.gleeok.neck.x,this.gleeok.neck.y);
+        if(currentHeadDistance > 30)
+        {
+            this.force.x = 0;
+            this.force.y = 0;
+        }
+        
+        
+        
+        //Reconstruct Neck
         for(var i = 0; i < this.neckPoints.length; i++)
         {
             this.neckPoints[i].body.x = this.gleeok.neck.x + ((this.body.x - this.gleeok.neck.x)*(i/this.neckPoints.length));
