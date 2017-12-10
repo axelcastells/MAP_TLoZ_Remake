@@ -75,6 +75,8 @@ gameEngine.link_prefab.prototype.update = function(){
     //this.game.physics.arcade.collide(this, this.level.walls);
     //this.game.physics.arcade.collide(this, this.level.mapCollisions);
     //this.game.physics.arcade.collide(this, this.level.movables);
+    this.game.physics.arcade.collide(this, this.level.water);
+    
     //Update
      if(this.level.pause.paused || !this.canMove){
         this.body.velocity.x = 0;

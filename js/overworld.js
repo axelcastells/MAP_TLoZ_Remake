@@ -13,56 +13,57 @@ gameEngine.overworld ={
 
         //SPAWN POINTS
         this.enemySpawnPool = {};
-        this.enemySpawnPool.floor = [];
-        this.enemySpawnPool.floor.push(new Phaser.Point(35,50));
-        this.enemySpawnPool.floor.push(new Phaser.Point(44,50));
-        this.enemySpawnPool.floor.push(new Phaser.Point(34,45));
-        this.enemySpawnPool.floor.push(new Phaser.Point(45,45));
+        this.enemySpawnPool.octorok = [];
+        this.enemySpawnPool.tektite = [];
+        this.enemySpawnPool.octorok.push(new Phaser.Point(35,50));
+        this.enemySpawnPool.tektite.push(new Phaser.Point(44,50));
+        this.enemySpawnPool.octorok.push(new Phaser.Point(34,45));
+        this.enemySpawnPool.tektite.push(new Phaser.Point(45,45));
 
-        this.enemySpawnPool.floor.push(new Phaser.Point(18,45));
-        this.enemySpawnPool.floor.push(new Phaser.Point(29,45));
-        this.enemySpawnPool.floor.push(new Phaser.Point(22,37));
-        this.enemySpawnPool.floor.push(new Phaser.Point(22,41));
+        this.enemySpawnPool.octorok.push(new Phaser.Point(18,45));
+        this.enemySpawnPool.tektite.push(new Phaser.Point(29,45));
+        this.enemySpawnPool.octorok.push(new Phaser.Point(22,37));
+        this.enemySpawnPool.tektite.push(new Phaser.Point(22,41));
 
-        this.enemySpawnPool.floor.push(new Phaser.Point(18,18));
-        this.enemySpawnPool.floor.push(new Phaser.Point(29,18));
-        this.enemySpawnPool.floor.push(new Phaser.Point(21,24));
+        this.enemySpawnPool.octorok.push(new Phaser.Point(18,18));
+        this.enemySpawnPool.tektite.push(new Phaser.Point(29,18));
+        this.enemySpawnPool.octorok.push(new Phaser.Point(21,24));
 
-        this.enemySpawnPool.floor.push(new Phaser.Point(34,18));
-        this.enemySpawnPool.floor.push(new Phaser.Point(45,18));
+        this.enemySpawnPool.tektite.push(new Phaser.Point(34,18));
+        this.enemySpawnPool.octorok.push(new Phaser.Point(45,18));
 
-        this.enemySpawnPool.floor.push(new Phaser.Point(50,34));
-        this.enemySpawnPool.floor.push(new Phaser.Point(61,34));
-        this.enemySpawnPool.floor.push(new Phaser.Point(50,45));
+        this.enemySpawnPool.tektite.push(new Phaser.Point(50,34));
+        this.enemySpawnPool.octorok.push(new Phaser.Point(61,34));
+        this.enemySpawnPool.tektite.push(new Phaser.Point(50,45));
         
-        this.enemySpawnPool.floor.push(new Phaser.Point(60,29));
-        this.enemySpawnPool.floor.push(new Phaser.Point(50,20));
-        this.enemySpawnPool.floor.push(new Phaser.Point(58,22));
+        this.enemySpawnPool.octorok.push(new Phaser.Point(60,29));
+        this.enemySpawnPool.tektite.push(new Phaser.Point(50,20));
+        this.enemySpawnPool.octorok.push(new Phaser.Point(58,22));
         
-        this.enemySpawnPool.floor.push(new Phaser.Point(35,12));
-        this.enemySpawnPool.floor.push(new Phaser.Point(44,12));        
+        this.enemySpawnPool.tektite.push(new Phaser.Point(35,12));
+        this.enemySpawnPool.octorok.push(new Phaser.Point(44,12));        
         
-        this.enemySpawnPool.floor.push(new Phaser.Point(21,9));
-        this.enemySpawnPool.floor.push(new Phaser.Point(26,9));
+        this.enemySpawnPool.tektite.push(new Phaser.Point(21,9));
+        this.enemySpawnPool.octorok.push(new Phaser.Point(26,9));
 
 
 
         this.enemySpawnPool.water = [];
-        this.enemySpawnPool.water.push(new Phaser.Point(52,43));
-        this.enemySpawnPool.water.push(new Phaser.Point(57,45));
+        this.enemySpawnPool.water.push(new Phaser.Point(53,44));
+        this.enemySpawnPool.water.push(new Phaser.Point(57,44));
 
-        this.enemySpawnPool.water.push(new Phaser.Point(41,19));
-        this.enemySpawnPool.water.push(new Phaser.Point(45,19));
+        this.enemySpawnPool.water.push(new Phaser.Point(42,20));
+        this.enemySpawnPool.water.push(new Phaser.Point(44,24));
 
-        this.enemySpawnPool.water.push(new Phaser.Point(36,20));
-        this.enemySpawnPool.water.push(new Phaser.Point(38,20));
+        this.enemySpawnPool.water.push(new Phaser.Point(37,21));
+        this.enemySpawnPool.water.push(new Phaser.Point(36,25));
         
         
         
-        this.enemySpawnPool.bossSpawn = this.enemySpawnPool.floor[1];
+        this.enemySpawnPool.bossSpawn = new Phaser.Point(44,50);
 
         //-----------
-        console.log(this.enemySpawnPool);
+        //console.log(this.enemySpawnPool);
 
     },
     create:function(){
@@ -74,8 +75,11 @@ gameEngine.overworld ={
         
         this.map.createLayer('background');
         
+        this.water = this.map.createLayer('water');
+        this.map.setCollisionBetween(20,31,true,'water');
+        
         this.mapCollisions = this.map.createLayer('overworld');
-        this.map.setCollisionBetween(1,31,true,'overworld');
+        this.map.setCollisionBetween(1,26,true,'overworld');
                                
         //Teleport creation
         this.tp = new gameEngine.teleport_prefab(this.game, 27 * 16, 16 * 16, 8 * 16, 24 * 16 , 1, this);
@@ -96,6 +100,12 @@ gameEngine.overworld ={
         
         this.tp6 = new gameEngine.teleport_prefab(this.game, 8 * 16, 44 * 16, 46 * 16 + 8 , 3 * 16 + 8, 0, this);
         this.game.add.existing(this.tp6);
+        
+        //Level change
+        this.lvlC1 = new gameEngine.level_change(this.game, 39 * 16, 3 * 16, this);
+        this.game.add.existing(this.lvlC1);
+        this.lvlC2 = new gameEngine.level_change(this.game, 40 * 16, 3 * 16, this);
+        this.game.add.existing(this.lvlC2);
         
         //Interactable
         this.inter = new gameEngine.interactables_prefab(this.game, 39 * 16, 8 * 16, 2, 0.5, this);
@@ -131,38 +141,9 @@ gameEngine.overworld ={
         this.newCameraPositionX = this.game.camera.x;
         this.newCameraPositionY = this.game.camera.y;
         
-
-        //ENEMY CREATION
         this.loadEnemies();
-
         
-        //Octoroks
-        for(var i = 0; i < this.enemySpawnPool.floor.length; i+=2)
-        {
-            var temp = this.enemySpawnPool.floor[i];
-            console.log(temp);
-            this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, temp.x*16, temp.y*16);
-        }
-        
-        //Tektites
-        
-        for(var i = 1; i < this.enemySpawnPool.floor.length; i+=2)
-        {
-            var temp = this.enemySpawnPool.floor[i];
-            console.log(temp);
-            this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.TEKTITE, temp.x*16, temp.y*16);
-        }
-        
-        //Zoras
-        for(var i = 0; i < 3; i++)
-        {
-            var temp = parseInt(Math.random()*this.enemySpawnPool.water.length);
-            console.log(temp);
-            this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA, this.enemySpawnPool.water[temp].x*16, this.enemySpawnPool.water[temp].y*16);
-        }
-        
-        //Bos DEBUG Spawn
-        this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.GLEEOK, this.enemySpawnPool.bossSpawn.x*16, this.enemySpawnPool.bossSpawn.y*16);
+        this.spawnEnemies();
         
         //-------------------
         
@@ -178,6 +159,8 @@ gameEngine.overworld ={
         this.createHud();
         
         this.pause = new gameEngine.pauseMenu_prefab(this.game, this);
+        
+        //Pickups
         
         this.pickup = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.HEART, this.worldCellSize / 2 + this.worldCellSize * this.actualCellX + 70, this.worldCellSize / 2 + this.worldCellSize * this.actualCellY, this);
         this.game.add.existing(this.pickup);
@@ -211,7 +194,21 @@ gameEngine.overworld ={
     createEnemy:function(type, x, y)
     {
         var enemy = this.enemies.getFirstExists(false);
-        if(!enemy)
+        //Cell positioning
+    
+        this.cell = 0;
+        while(x > (this.cell + 1)* 256){
+            this.cell++;
+        }
+        this.cellX = this.cell;
+
+        this.cell = 0;
+        while(y > (this.cell + 1)* 256){
+            this.cell++;
+        }
+        this.cellY = this.cell;
+        
+        if(!enemy && this.actualCellX == this.cellX && this.actualCellY == this.cellY)
         {
             enemy = new gameEngine.enemy_prefab(this.game, type, x, y, this);
             this.enemies.add(enemy);
@@ -226,16 +223,23 @@ gameEngine.overworld ={
         
         this.smoothCamera();
         
+        if(this.cellChange && !this.newPositionFound){
+            this.spawnEnemies();
+            this.cellChange = false;
+        }
+        
+        
         if(this.movables.children[2].locked){
            this.tp4.isActive = true;
         }
     },
     smoothCamera:function(){
+        //console.log("Current Screen: (X: "+this.actualCellX+" | Y: "+this.actualCellY+" )");
         if(!this.pause.paused){        
             if( this.math.difference(this.link.x, this.game.camera.x + this.worldCellSize / 2) > this.worldCellSize / 2 && this.newPositionFound == false){
 
-                console.log("detected link cell change in X");
-                console.log("Current Screen: (X: "+this.actualCellX+" | Y: "+this.actualCellY+" )");
+                //console.log("detected link cell change in X");
+                //console.log("Current Screen: (X: "+this.actualCellX+" | Y: "+this.actualCellY+" )");
                 //console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
 
                 this.link.body.velocity.x = 0;
@@ -246,6 +250,7 @@ gameEngine.overworld ={
                     this.newCameraPositionX -= this.worldCellSize;                
                     this.actualCellX -= 1;
                     this.newPositionFound = true;
+                    this.cellChange = true;
                     //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
                 }
 
@@ -254,14 +259,15 @@ gameEngine.overworld ={
                     this.newCameraPositionX += this.worldCellSize;
                     this.actualCellX += 1;
                     this.newPositionFound = true;
+                    this.cellChange = true;
                     //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
                 }
             }
 
             else if( this.math.difference(this.link.y, this.game.camera.y + this.worldCellSize / 2) > this.worldCellSize / 2 && this.newPositionFound == false){
 
-                console.log("detected link cell change in Y");
-                console.log("Current Screen: (X: "+this.actualCellX+" | Y: "+this.actualCellY+" )");
+                //console.log("detected link cell change in Y");
+                //console.log("Current Screen: (X: "+this.actualCellX+" | Y: "+this.actualCellY+" )");
                 //console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
 
                 this.link.body.velocity.x = 0;
@@ -272,6 +278,7 @@ gameEngine.overworld ={
                     this.newCameraPositionY -= this.worldCellSize;
                     this.actualCellY -= 1;
                     this.newPositionFound = true;
+                    this.cellChange = true;
                     //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
                 }
                 else if(this.link.y - this.game.camera.y > this.worldCellSize - 1){
@@ -279,6 +286,7 @@ gameEngine.overworld ={
                     this.newCameraPositionY += this.worldCellSize;
                     this.actualCellY += 1;
                     this.newPositionFound = true;
+                    this.cellChange = true;
                     //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
                 }
             }
@@ -389,6 +397,38 @@ gameEngine.overworld ={
         this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, false, this.worldCellSize * 3 + 16 * 9, this.worldCellSize * 2 + 16 * 7);
         this.createMovable(SYSTEM_CONSTANTS.MOVABLES.ROCK, SYSTEM_CONSTANTS.DIRECTIONS.RIGHT, true, this.worldCellSize * 3 + 16 * 9, this.worldCellSize * 2 + 16 * 8);
         
+    },
+    spawnEnemies:function(){
+        //ENEMY CREATION
+        
+        //Octoroks
+        for(var i = 0; i < this.enemySpawnPool.octorok.length; i++)
+        {
+            var temp = this.enemySpawnPool.octorok[i];
+            //console.log(temp);
+            this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, temp.x*16, temp.y*16);
+        }
+        
+        //Tektites
+        
+        for(var i = 0; i < this.enemySpawnPool.tektite.length; i++)
+        {
+            var temp = this.enemySpawnPool.tektite[i];
+            //console.log(temp);
+            this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.TEKTITE, temp.x*16, temp.y*16);
+        }
+        
+        //Zoras
+        for(var i = 0; i < 3; i++)
+        {
+            var temp = parseInt(Math.random()*this.enemySpawnPool.water.length);
+            //console.log(temp);
+            this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA, this.enemySpawnPool.water[temp].x*16, this.enemySpawnPool.water[temp].y*16);
+        }
+        
+        //Boss DEBUG Spawn
+        this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.GLEEOK, this.enemySpawnPool.bossSpawn.x*16, this.enemySpawnPool.bossSpawn.y*16);
     }
 
+    
 }
