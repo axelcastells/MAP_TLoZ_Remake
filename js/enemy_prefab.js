@@ -19,8 +19,7 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
     
     this.states;
     this.currentState;
-
-
+            
     this.level = level;
     
     this.GetDMG = function(dmg){
@@ -39,6 +38,7 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
                 
                 this.type = type;
                 console.log("Created Octorok");
+                console.log("cell x: " + this.cellX + " cell y: " + this.cellY);
                 this.states = {INIT: 0, WALK: 1, CHARGE: 2, SHOOT: 3, STOPPED: 4};
                 this.currentState = this.states.INIT;
                 
@@ -387,23 +387,23 @@ gameEngine.enemy_prefab.prototype.update = function(){
     
     //Bounds check
     
-//    if (this.position.x - gameEngine.game.camera.x < 0){
-//             
-//        this.destroy();
-//    }
-//
-//    else if(this.position.x - gameEngine.game.camera.x > this.level.worldCellSize - 1){
-//
-//        this.destroy();
-//    }
-//    
-//    if (this.position.y - gameEngine.game.camera.y < 0){
-//
-//        this.destroy();
-//    }
-//    else if(this.position.y - gameEngine.game.camera.y > this.level.worldCellSize - 1){
-//
-//        this.destroy();
-//    }
+    if (this.position.x - gameEngine.game.camera.x < 0){
+             
+        this.destroy();
+    }
+
+    else if(this.position.x - gameEngine.game.camera.x > this.level.worldCellSize - 1){
+
+        this.destroy();
+    }
+    
+    if (this.position.y - gameEngine.game.camera.y < 0){
+
+        this.destroy();
+    }
+    else if(this.position.y - gameEngine.game.camera.y > this.level.worldCellSize - 1){
+
+        this.destroy();
+    }
     
 };
