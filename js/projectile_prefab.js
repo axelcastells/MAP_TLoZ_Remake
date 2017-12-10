@@ -112,7 +112,7 @@ gameEngine.projectile_prefab.prototype.constructor = gameEngine.projectile_prefa
 
 gameEngine.projectile_prefab.prototype.update = function(){
     
-    
+    this.game.physics.arcade.collide(this, this.level.movables);
     if(this.level.pause.paused){
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;

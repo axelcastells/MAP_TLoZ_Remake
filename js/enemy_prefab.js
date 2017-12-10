@@ -140,6 +140,7 @@ gameEngine.enemy_prefab.prototype.constructor = gameEngine.enemy_prefab;
 
 gameEngine.enemy_prefab.prototype.update = function(){
         
+    this.game.physics.arcade.collide(this, this.level.movables);
     if(this.level.pause.paused && !this.level.link.isInteracting){
         this.animations.stop();
         this.body.velocity.x = 0;

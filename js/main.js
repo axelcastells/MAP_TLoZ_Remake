@@ -49,9 +49,7 @@ var SYSTEM_CONSTANTS = {
     },
     MOVABLES:{
         ROCK: 0,
-        STATUE: 1,
-        SPECIAL_ROCK_1: 2,
-        SPECIAL_ROCK_2: 3
+        STATUE: 1
     }
 };
 
