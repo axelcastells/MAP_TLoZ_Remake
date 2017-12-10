@@ -101,6 +101,12 @@ gameEngine.overworld ={
         this.tp6 = new gameEngine.teleport_prefab(this.game, 8 * 16, 44 * 16, 46 * 16 + 8 , 3 * 16 + 8, 0, this);
         this.game.add.existing(this.tp6);
         
+        //Level change
+        this.lvlC1 = new gameEngine.level_change(this.game, 39 * 16, 3 * 16, this);
+        this.game.add.existing(this.lvlC1);
+        this.lvlC2 = new gameEngine.level_change(this.game, 40 * 16, 3 * 16, this);
+        this.game.add.existing(this.lvlC2);
+        
         //Interactable
         this.inter = new gameEngine.interactables_prefab(this.game, 39 * 16, 8 * 16, 2, 0.5, this);
         this.game.add.existing(this.inter);
@@ -153,6 +159,8 @@ gameEngine.overworld ={
         this.createHud();
         
         this.pause = new gameEngine.pauseMenu_prefab(this.game, this);
+        
+        //Pickups
         
         this.pickup = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.HEART, this.worldCellSize / 2 + this.worldCellSize * this.actualCellX + 70, this.worldCellSize / 2 + this.worldCellSize * this.actualCellY, this);
         this.game.add.existing(this.pickup);
