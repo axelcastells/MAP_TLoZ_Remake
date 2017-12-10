@@ -22,14 +22,14 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
 
 
     this.level = level;
-
+    
     this.GetDMG = function(dmg){
         this.hp -= dmg;
         if(this.hp <= 0)
             this.destroy();
     }
     
-    console.log(this.type);
+    //console.log(this.type);
     switch(type)
         {
             case SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK:
@@ -139,6 +139,7 @@ gameEngine.enemy_prefab.prototype = Object.create(Phaser.Sprite.prototype);
 gameEngine.enemy_prefab.prototype.constructor = gameEngine.enemy_prefab;
 
 gameEngine.enemy_prefab.prototype.update = function(){
+        
     if(this.level.pause.paused && !this.level.link.isInteracting){
         this.animations.stop();
         this.body.velocity.x = 0;
@@ -152,6 +153,7 @@ gameEngine.enemy_prefab.prototype.update = function(){
             {
                 this.game.physics.arcade.collide(this, this.level.walls);
                 this.game.physics.arcade.collide(this, this.level.mapCollisions);
+                this.game.physics.arcade.collide(this, this.level.water);
                 this.game.physics.arcade.overlap(this, this.level.link.boomerang, function(enemy, boomerang){
                     enemy.currentState = enemy.states.STOPPED;
                     enemy.counter = 2;
@@ -168,15 +170,6 @@ gameEngine.enemy_prefab.prototype.update = function(){
                             this.body.velocity.y = Math.round((Math.random()*2)-1);
                         }
                         else this.body.velocity.y = 0;
-
-                        if(this.body.velocity.x == 0 && this.body.velocity.y == 0)
-                        {
-
-                        }
-                        else{
-                            //this.direction.x = this.body.velocity.x;
-                            //this.direction.y = this.body.velocity.y;
-                        }
 
                         if(this.body.velocity.x == -1 && this.body.velocity.y == 0)
                             {
@@ -212,7 +205,7 @@ gameEngine.enemy_prefab.prototype.update = function(){
                     {                
                         if(this.counter <= 0)
                         {
-                            this.counter = 0.3;
+                            this.counter = 0.5;
 
                             this.animations.currentAnim.restart();
                             this.animations.currentAnim.stop();
@@ -235,10 +228,14 @@ gameEngine.enemy_prefab.prototype.update = function(){
                     }break;
                     case this.states.SHOOT:
                     {
-                        this.animations.currentAnim.restart();
-                        this.bullet = new gameEngine.projectile_prefab(this.game, SYSTEM_CONSTANTS.PROJECTILE_TYPES.ROCK, this.position.x + this.direction.x * 8, this.position.y + this.direction.y * 8, this.direction, this.level);
-                        this.game.add.existing(this.bullet);
-                        this.currentState = this.states.INIT;
+                        if(this.counter <= 0){
+                            this.animations.currentAnim.restart();
+                            this.bullet = new gameEngine.projectile_prefab(this.game, SYSTEM_CONSTANTS.PROJECTILE_TYPES.ROCK, this.position.x + this.direction.x * 8, this.position.y + this.direction.y * 8, this.direction, this.level);
+                            console.log("Octorok attacking")
+                            this.game.add.existing(this.bullet);
+                            this.currentState = this.states.INIT;
+                        }
+                        
                     }break;
                     case this.states.STOPPED:
                     {
@@ -388,5 +385,25 @@ gameEngine.enemy_prefab.prototype.update = function(){
             }
     });
     
-    //console.log(this.counter);
+    //Bounds check
+    
+//    if (this.position.x - gameEngine.game.camera.x < 0){
+//             
+//        this.destroy();
+//    }
+//
+//    else if(this.position.x - gameEngine.game.camera.x > this.level.worldCellSize - 1){
+//
+//        this.destroy();
+//    }
+//    
+//    if (this.position.y - gameEngine.game.camera.y < 0){
+//
+//        this.destroy();
+//    }
+//    else if(this.position.y - gameEngine.game.camera.y > this.level.worldCellSize - 1){
+//
+//        this.destroy();
+//    }
+    
 };

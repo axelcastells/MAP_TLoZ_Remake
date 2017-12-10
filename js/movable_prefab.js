@@ -9,7 +9,7 @@ gameEngine.movable_prefab = function(game, type, direction, locked, pos_x, pos_y
     
     if (this.type == SYSTEM_CONSTANTS.MOVABLES.STATUE){
         Phaser.Sprite.call(this,game,pos_x,pos_y,'movable_statue',0);
-        console.log("created statue");
+        //console.log("created statue");
     } else {
         Phaser.Sprite.call(this,game,pos_x,pos_y,'movable_stone',0);
     }
@@ -123,7 +123,7 @@ gameEngine.movable_prefab.prototype.update = function(){
             break;
                 
             case SYSTEM_CONSTANTS.DIRECTIONS.NULL:
-                console.log(this.direction + " - " + this.type);
+                //console.log(this.direction + " - " + this.type);
                 switch(this.type){
                     case SYSTEM_CONSTANTS.MOVABLES.SPECIAL_ROCK_1:
                         if(!this.lockedX){
@@ -137,7 +137,7 @@ gameEngine.movable_prefab.prototype.update = function(){
                                 else if(this.x >= this.initialX + 32){
                                     this.initialX = this.initialX + 32; 
                                     this.lockedX = true;
-                                    console.log("locked on X");
+                                    //console.log("locked on X");
                                 }
                             } else {
                                 this.body.moves = false;

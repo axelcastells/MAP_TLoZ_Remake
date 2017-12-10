@@ -12,7 +12,7 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
     this.level = level;
 
     this.enemyShotSound = this.level.add.audio('enemyShot');
-    
+            
     //Phaser.Sprite.call(this,game,x,y,'enemies');
     
 
@@ -23,7 +23,7 @@ gameEngine.projectile_prefab = function(game,type,x,y,direction,level){
                 Phaser.Sprite.call(this,game,x,y,'enemies');
                 this.anchor.setTo(0.5);
                 this.type = type;
-                this.speed = 500;
+                this.speed = 250;
                 this.animations.add('shoot',[34],1,true);
                 //this.enemyShotSound.play();
                 this.animations.play('shoot');
@@ -111,13 +111,15 @@ gameEngine.projectile_prefab.prototype = Object.create(Phaser.Sprite.prototype);
 gameEngine.projectile_prefab.prototype.constructor = gameEngine.projectile_prefab;
 
 gameEngine.projectile_prefab.prototype.update = function(){
+    
+    
     if(this.level.pause.paused){
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
     } else {
             this.body.velocity.x = this.direction.x * this.speed;
             this.body.velocity.y = this.direction.y * this.speed;
-
+        
             switch(this.type)
             {
                 case SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG:
@@ -212,7 +214,28 @@ gameEngine.projectile_prefab.prototype.update = function(){
             //if(type != SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG)
             bullet.kill();
         });
+    }    
+    
+    //Bounds check
+    
+    if (this.position.x - gameEngine.game.camera.x < 0){
+             
+        this.destroy();
+    }
+
+    else if(this.position.x - gameEngine.game.camera.x > this.level.worldCellSize - 1){
+
+        this.destroy();
     }
     
+    if (this.position.y - gameEngine.game.camera.y < 0){
 
+        this.destroy();
+    }
+    else if(this.position.y - gameEngine.game.camera.y > this.level.worldCellSize - 1){
+
+        this.destroy();
+    }
+    
+    
 };

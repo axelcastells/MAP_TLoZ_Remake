@@ -48,21 +48,21 @@ gameEngine.overworld ={
 
 
         this.enemySpawnPool.water = [];
-        this.enemySpawnPool.water.push(new Phaser.Point(52,43));
-        this.enemySpawnPool.water.push(new Phaser.Point(57,45));
+        this.enemySpawnPool.water.push(new Phaser.Point(52,44));
+        this.enemySpawnPool.water.push(new Phaser.Point(57,44));
 
-        this.enemySpawnPool.water.push(new Phaser.Point(41,19));
-        this.enemySpawnPool.water.push(new Phaser.Point(45,19));
+        this.enemySpawnPool.water.push(new Phaser.Point(42,20));
+        this.enemySpawnPool.water.push(new Phaser.Point(44,24));
 
-        this.enemySpawnPool.water.push(new Phaser.Point(36,20));
-        this.enemySpawnPool.water.push(new Phaser.Point(38,20));
+        this.enemySpawnPool.water.push(new Phaser.Point(37,21));
+        this.enemySpawnPool.water.push(new Phaser.Point(36,25));
         
         
         
         this.enemySpawnPool.bossSpawn = this.enemySpawnPool.floor[1];
 
         //-----------
-        console.log(this.enemySpawnPool);
+        //console.log(this.enemySpawnPool);
 
     },
     create:function(){
@@ -74,8 +74,11 @@ gameEngine.overworld ={
         
         this.map.createLayer('background');
         
+        this.water = this.map.createLayer('water');
+        this.map.setCollisionBetween(20,31,true,'water');
+        
         this.mapCollisions = this.map.createLayer('overworld');
-        this.map.setCollisionBetween(1,31,true,'overworld');
+        this.map.setCollisionBetween(1,26,true,'overworld');
                                
         //Teleport creation
         this.tp = new gameEngine.teleport_prefab(this.game, 27 * 16, 16 * 16, 8 * 16, 24 * 16 , 1, this);
@@ -140,7 +143,7 @@ gameEngine.overworld ={
         for(var i = 0; i < this.enemySpawnPool.floor.length; i+=2)
         {
             var temp = this.enemySpawnPool.floor[i];
-            console.log(temp);
+            //console.log(temp);
             this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.OCTOROK, temp.x*16, temp.y*16);
         }
         
@@ -149,7 +152,7 @@ gameEngine.overworld ={
         for(var i = 1; i < this.enemySpawnPool.floor.length; i+=2)
         {
             var temp = this.enemySpawnPool.floor[i];
-            console.log(temp);
+            //console.log(temp);
             this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.TEKTITE, temp.x*16, temp.y*16);
         }
         
@@ -157,11 +160,11 @@ gameEngine.overworld ={
         for(var i = 0; i < 3; i++)
         {
             var temp = parseInt(Math.random()*this.enemySpawnPool.water.length);
-            console.log(temp);
+            //console.log(temp);
             this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA, this.enemySpawnPool.water[temp].x*16, this.enemySpawnPool.water[temp].y*16);
         }
         
-        //Bos DEBUG Spawn
+        //Boss DEBUG Spawn
         this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.GLEEOK, this.enemySpawnPool.bossSpawn.x*16, this.enemySpawnPool.bossSpawn.y*16);
         
         //-------------------
@@ -234,7 +237,7 @@ gameEngine.overworld ={
         if(!this.pause.paused){        
             if( this.math.difference(this.link.x, this.game.camera.x + this.worldCellSize / 2) > this.worldCellSize / 2 && this.newPositionFound == false){
 
-                console.log("detected link cell change in X");
+                //console.log("detected link cell change in X");
                 console.log("Current Screen: (X: "+this.actualCellX+" | Y: "+this.actualCellY+" )");
                 //console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
 
@@ -260,7 +263,7 @@ gameEngine.overworld ={
 
             else if( this.math.difference(this.link.y, this.game.camera.y + this.worldCellSize / 2) > this.worldCellSize / 2 && this.newPositionFound == false){
 
-                console.log("detected link cell change in Y");
+                //console.log("detected link cell change in Y");
                 console.log("Current Screen: (X: "+this.actualCellX+" | Y: "+this.actualCellY+" )");
                 //console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
 
