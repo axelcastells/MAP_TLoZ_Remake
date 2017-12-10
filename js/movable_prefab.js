@@ -123,7 +123,7 @@ gameEngine.movable_prefab.prototype.update = function(){
             break;
                 
             case SYSTEM_CONSTANTS.DIRECTIONS.NULL:
-                console.log(this.direction + " - " + this.type);
+                //console.log(this.direction + " - " + this.type);
                 switch(this.type){
                     case SYSTEM_CONSTANTS.MOVABLES.SPECIAL_ROCK_1:
                         if(!this.lockedX){

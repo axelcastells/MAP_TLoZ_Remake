@@ -123,7 +123,28 @@ gameEngine.gleeokHead_prefab.prototype.update = function(){
                     this.neckPoints[i].body.y = this.gleeok.neck.y + ((this.body.y - this.gleeok.neck.y)*(i/this.neckPoints.length));
                 }
                 
+                this.game.physics.arcade.collide(this, this.level.link.sword, function(head, wall){
+                    //Redirect direction on collision normal
+                    console.log("Hit Head!");
+                    
+                    head.counter = 5;
+                    head.animations.play('unlinked');
+                    
+                    for(var i = 0; i < head.neckPoints.length; i++)
+                    {
+                        head.neckPoints[i].body.x = 0;
+                        head.neckPoints[i].body.y = 0;
+                    }
+                    
+                    head.unlinkedSpeed.x = (Math.random()*2)-1;
+                    head.unlinkedSpeed.y = (Math.random()*2)-1;
+                    
+                    head.currentState = head.states.UNLINKED;
+                    //if(head.body.blocked.down || head.body.blocked.up){head.unlinkedSpeed.y = -head.unlinkedSpeed.y;}
+                    //else if(head.body.blocked.left || head.body.blocked.right){head.unlinkedSpeed.x = -head.unlinkedSpeed.x;}
+                })
                 
+                /*
                 if(this.counter <= 0)
                 {
                     this.counter = 5;
@@ -138,6 +159,7 @@ gameEngine.gleeokHead_prefab.prototype.update = function(){
                     
                     this.currentState = this.states.UNLINKED;
                 }
+                */
             }break;
             case this.states.UNLINKED:
             {
