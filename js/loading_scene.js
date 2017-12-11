@@ -73,6 +73,7 @@ gameEngine.loading_scene ={
         gameEngine.startIntroOnce = false;
         this.load.audio('intro','audio/introMusic.mp3');
         this.load.audio('overworldMusic','audio/overworldMusic.mp3');
+        this.load.audio('endMusic','audio/endMusic.mp3');
         this.load.audio('dungeonMusic','audio/dungeonMusic.mp3');
         this.load.audio('linkAttack', 'audio/linkAttack.wav');
         this.load.audio('linkShield', 'audio/linkShield.wav');
