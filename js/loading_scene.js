@@ -33,6 +33,7 @@ gameEngine.loading_scene ={
         this.load.image('sword', 'img/sword.png', 7, 16);
         this.load.image('master_sword', 'img/master_sword.png', 7, 16);
         this.load.image('heart', 'img/heart.png', 7, 8);
+        this.load.image('key', 'img/zelda-sprites-key.png', 16, 16);
         this.load.image('boomerang', 'img/zelda-sprites-boomerang.png', 5, 8);
         this.load.image('movable_stone', 'img/movable_stone.png', 7, 8);
         this.load.image('movable_statue', 'img/movable_statue.png', 7, 8);
@@ -72,6 +73,7 @@ gameEngine.loading_scene ={
         gameEngine.startIntroOnce = false;
         this.load.audio('intro','audio/introMusic.mp3');
         this.load.audio('overworldMusic','audio/overworldMusic.mp3');
+        this.load.audio('dungeonMusic','audio/dungeonMusic.mp3');
         this.load.audio('linkAttack', 'audio/linkAttack.wav');
         this.load.audio('linkShield', 'audio/linkShield.wav');
         this.load.audio('hit', 'audio/enemyHit.wav');
@@ -79,6 +81,9 @@ gameEngine.loading_scene ={
         this.load.audio('teleportSound', 'audio/teleport.wav');
         this.load.audio('linkDamage', 'audio/linkHurt.wav');
         this.load.audio('buttonClick', 'audio/buttonClick.wav');
+        this.load.audio('pickItem', 'audio/pickItem.wav');
+        this.load.audio('pickHeart', 'audio/pickHeart.wav');
+        this.load.audio('pickLMAO', 'audio/lolPickup.mp3');
         //this.load.audio('explosion','sounds/explosion.wav');
         
     },

@@ -53,6 +53,10 @@ gameEngine.dungeon ={
         
         this.pause = new gameEngine.pauseMenu_prefab(this.game, this);
         
+        //Audio creation
+        this.backgroundMusic = this.add.audio('dungeonMusic', 1, true, true);
+        this.backgroundMusic.play();
+        
         //Teleports startup
              
 
