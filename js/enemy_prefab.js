@@ -116,7 +116,7 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
                     this.heads.push(head);
                 }
                 
-
+                this.body.moves = false;
                 
             }break;
             default:

@@ -214,7 +214,7 @@ gameEngine.projectile_prefab.prototype.update = function(){
     } else {
         this.game.physics.arcade.collide(this,this.level.enemies,
         function(bullet,enemy){
-            enemy.destroy();
+            enemy.GetDMG(1);
             //if(type != SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG)
             bullet.kill();
         });
