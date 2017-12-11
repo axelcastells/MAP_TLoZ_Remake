@@ -34,8 +34,8 @@ gameEngine.movable_prefab = function(game, type, directions, pos_x, pos_y, level
     
     this.body.moves = false;
     
-    this.body.onCollide = new Phaser.Signal();
-    this.body.onCollide.add(this.move, this);
+    //this.body.onCollide = new Phaser.Signal();
+    //this.body.onCollide.add(this.move, this);
 };
 
 gameEngine.movable_prefab.prototype = Object.create(Phaser.Sprite.prototype);
@@ -43,31 +43,32 @@ gameEngine.movable_prefab.prototype.constructor = gameEngine.movable_prefab;
 
 gameEngine.movable_prefab.prototype.update = function(){
 
-    this.game.physics.arcade.collide(this, this.level.link);
+    this.game.physics.arcade.collide(this, this.level.link, this.move);
+    this.game.physics.arcade.collide(this, this.level.enemies);
 
 };
-gameEngine.movable_prefab.prototype.move = function(){
+gameEngine.movable_prefab.prototype.move = function(movable, link){
     var touchingFlag = false;
-    switch(this.actualDirection){
+    switch(movable.actualDirection){
         case SYSTEM_CONSTANTS.DIRECTIONS.UP:
-            touchingFlag = this.body.touching.down;
+            touchingFlag = movable.body.touching.down;
             break;
         case SYSTEM_CONSTANTS.DIRECTIONS.DOWN:
-            touchingFlag = this.body.touching.up;
+            touchingFlag = movable.body.touching.up;
             break;
         case SYSTEM_CONSTANTS.DIRECTIONS.RIGHT:
-            touchingFlag = this.body.touching.left;
+            touchingFlag = movable.body.touching.left;
             break;
         case SYSTEM_CONSTANTS.DIRECTIONS.LEFT:
-            touchingFlag = this.body.touching.right;
+            touchingFlag = movable.body.touching.right;
             break;
         default:
             break;
     }
-    if(!this.locked && !this.moving && this.level.link.direction == this.actualDirection && touchingFlag){
-        this.timer.start();
-        this.level.link.canMove = false;
-        this.moving = true;
+    if(!movable.locked && !movable.moving && movable.level.link.direction == movable.actualDirection && touchingFlag){
+        movable.timer.start();
+        link.canMove = false;
+        movable.moving = true;
     }
 };
 gameEngine.movable_prefab.prototype.timerFunction = function(){

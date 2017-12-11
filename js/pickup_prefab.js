@@ -52,8 +52,24 @@ gameEngine.pickup_prefab = function(game,type,pos_x,pos_y,level){
         console.log("Destroying");
         this.level.link.canMove = true;
         this.level.link.frame = 0;
-        if(this.type == SYSTEM_CONSTANTS.PICKUPS.LETTER)
+        if(this.type == SYSTEM_CONSTANTS.PICKUPS.LETTER && this.level.link.lettersCounter < 4){
             this.level.link.lettersCounter++;
+            SYSTEM_CONSTANTS.LINK_DATA.NUMBER_LETTERS = this.level.link.lettersCounter;
+        }
+        if(this.type == SYSTEM_CONSTANTS.PICKUPS.SWORD){
+            SYSTEM_CONSTANTS.LINK_DATA.HAS_SWORD = true;
+        }
+        if(this.type == SYSTEM_CONSTANTS.PICKUPS.MASTER_SWORD){
+            SYSTEM_CONSTANTS.LINK_DATA.HAS_MASTER_SWORD = true;
+        }
+        
+        if (this.level.link.attacking){
+            this.level.link.attacking = false;
+            this.animations.play("move_" + this.facingDirection);
+            this.level.hitbox.active = false;
+            this.swordThrown = false;
+            this.attackTimeCounter = 0;
+        }
         this.timer.stop();
         
     }, this);
@@ -100,6 +116,7 @@ gameEngine.pickup_prefab.prototype.update = function(){
                  this.game.physics.arcade.overlap(this, this.level.link, function(heart, link){
                      heart.kill();
                      link.heal(2);
+                     SYSTEM_CONSTANTS.LINK_DATA.HP = link.life;
                  });
             }break;
             

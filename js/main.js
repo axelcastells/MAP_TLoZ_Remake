@@ -50,6 +50,14 @@ var SYSTEM_CONSTANTS = {
     MOVABLES:{
         ROCK: 0,
         STATUE: 1
+    },
+    LINK_DATA:{
+        HAS_SWORD: false,
+        HAS_MASTER_SWORD: false,
+        NUMBER_LETTERS: 0,
+        NUMBER_KEYS: 0,
+        HP: 6,
+        MAX_HP: 6
     }
 };
 

@@ -25,7 +25,7 @@ gameEngine.link_prefab = function(game, pos_x, pos_y, level){
     this.isInteracting = false;
     this.level = level;
     this.game = game;
-    this.life = 6;
+    this.life = SYSTEM_CONSTANTS.LINK_DATA.HP;
     this.level;
     this.facingDirection = "down";
     this.direction = SYSTEM_CONSTANTS.DIRECTIONS.DOWN;
@@ -34,8 +34,6 @@ gameEngine.link_prefab = function(game, pos_x, pos_y, level){
     this.attackTimeCounter = 0;
     this.attackPower = 1;
     this.swordThrown = false;
-    this.hasSword = false;
-    this.hasMasterSword = false;
     this.counter = 0;
     this.rewardTime = 0;
     this.canMove = true;
@@ -46,9 +44,10 @@ gameEngine.link_prefab = function(game, pos_x, pos_y, level){
     this.linkDamage = this.level.add.audio('linkDamage');
     
     //Items carried
-    this.keysCounter = 0;
-    this.lettersCounter = 0;
-    this.hasMasterSword = false;
+    this.keysCounter = SYSTEM_CONSTANTS.LINK_DATA.NUMBER_KEYS;
+    this.lettersCounter = SYSTEM_CONSTANTS.LINK_DATA.NUMBER_LETTERS;
+    this.hasSword = SYSTEM_CONSTANTS.LINK_DATA.HAS_SWORD;
+    this.hasMasterSword = SYSTEM_CONSTANTS.LINK_DATA.HAS_MASTER_SWORD;
 
     //Boomerang
     this.boomerang;
@@ -194,12 +193,13 @@ gameEngine.link_prefab.prototype.recieveDamage = function(damage){
         this.level.backgroundMusic.stop();
         this.game.state.start(this.game.state.current);
     }
+    SYSTEM_CONSTANTS.LINK_DATA.HP = this.life;
     
 }
 gameEngine.link_prefab.prototype.heal = function(heal){
     this.game.camera.flash(0x00aa00, 100);
     this.life += heal;
-    if(this.life > 6){
-        this.life = 6;
+    if(this.life > SYSTEM_CONSTANTS.LINK_DATA.MAX_HP){
+        this.life = SYSTEM_CONSTANTS.LINK_DATA.MAX_HP;
     }
 }
