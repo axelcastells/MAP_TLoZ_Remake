@@ -26,6 +26,6 @@ gameEngine.level_change.prototype.update = function(){
             teleport.teleportSound.play();
             link.level.camera.fade(0x000000,10);
             gameEngine.game.state.start('dungeon');   
-
+            teleport.level.backgroundMusic.stop();
         })
 };

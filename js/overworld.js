@@ -184,6 +184,9 @@ gameEngine.overworld ={
         this.pickup7 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.LETTER, 24 * 16 + 8, 4 * 16 + 8, this);
         this.game.add.existing(this.pickup7);
         
+        this.pickup7 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.KEY,  this.worldCellSize * 2 + 36, this.worldCellSize * 2 + 36, this);
+        this.game.add.existing(this.pickup7);
+        
 
 
     },
