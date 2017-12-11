@@ -23,6 +23,9 @@ gameEngine.loading_scene ={
         this.load.image('overworld', 'img/overworld.png');
         this.load.image('statue', 'img/statue.png');
         
+        //boss
+        this.load.tilemap('boss_room', 'tilemaps/boss.json',null,Phaser.Tilemap.TILED_JSON);
+        
         //Images loading
         this.load.spritesheet('link', 'img/link_movement.png', 32, 32);
         this.load.spritesheet('enemies','img/enemiesTileset.png', 16, 16);
@@ -79,6 +82,7 @@ gameEngine.loading_scene ={
         this.load.audio('teleportSound', 'audio/teleport.wav');
         this.load.audio('linkDamage', 'audio/linkHurt.wav');
         this.load.audio('buttonClick', 'audio/buttonClick.wav');
+        this.load.audio('bossMusic', 'audio/bossMusic.mp3');
         //this.load.audio('explosion','sounds/explosion.wav');
         
     },

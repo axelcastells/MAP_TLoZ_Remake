@@ -58,6 +58,7 @@ gameEngine.game = new Phaser.Game(ConfigOptions.screenW, ConfigOptions.screenH, 
 //Set up the game scenes
 gameEngine.game.state.add('overworld',gameEngine.overworld);
 gameEngine.game.state.add('dungeon',gameEngine.dungeon);
+gameEngine.game.state.add('boss_room',gameEngine.boss_room);
 gameEngine.game.state.add('main_menu',gameEngine.main_menu);
 gameEngine.game.state.add('credits',gameEngine.credits);
 gameEngine.game.state.add('login',gameEngine.login);
