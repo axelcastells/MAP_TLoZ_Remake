@@ -16,7 +16,7 @@ var TEXT_RENDERER = {
         this.content = _content;
         this.text = gameEngine.game.add.text(this.potrait.position.x - this.potrait.width/2 + 10, this.potrait.position.y - this.potrait.height/2 + 10, this.content,{font: "font_white", fill: "#ffffff", wordWrap: true, wordWrapWidth: this.potrait.width-10, wordWrapHeight: this.potrait.height - 10, fontSize: 12});
         this.text.fixedToCamera = true;
-        this.nextLine();
+        //this.nextLine();
     },
     nextLine:function(){
         if (this.lineIndex === this.content.length)

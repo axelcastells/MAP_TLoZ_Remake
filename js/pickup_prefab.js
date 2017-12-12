@@ -81,7 +81,9 @@ gameEngine.pickup_prefab = function(game,type,pos_x,pos_y,level){
         else if(this.type == SYSTEM_CONSTANTS.PICKUPS.MASTER_SWORD){
             SYSTEM_CONSTANTS.LINK_DATA.HAS_MASTER_SWORD = true;
             this.level.link.hasSword = true;
-            this.link.hasMasterSword = true;
+            this.level.link.hasMasterSword = true;
+            SYSTEM_CONSTANTS.LINK_DATA.HAS_SWORD = true;
+            SYSTEM_CONSTANTS.LINK_DATA.HAS_MASTER_SWORD = true;
             console.log("masterswaord");
         }
         else if(this.type == SYSTEM_CONSTANTS.PICKUPS.KEY){

@@ -1,9 +1,9 @@
 var gameEngine = gameEngine || {}
 
-gameEngine.level_change = function(game, x,y, level){
+gameEngine.level_change = function(game, x,y, newLevel, level){
     
     Phaser.Sprite.call(this,game,x,y,'teleport',1);
-
+    
     //this.anchor.setTo(.5);
     game.physics.arcade.enable(this);
     this.body.moves = false;
@@ -12,6 +12,8 @@ gameEngine.level_change = function(game, x,y, level){
     
     this.level = level;
     this.game = game;
+    
+    this.newLevel = newLevel;
     
     //Audio creation
     this.teleportSound = this.level.add.audio('teleportSound');
@@ -25,7 +27,7 @@ gameEngine.level_change.prototype.update = function(){
         this.game.physics.arcade.overlap(this, this.level.link, function(teleport, link){
             teleport.teleportSound.play();
             link.level.camera.fade(0x000000,10);
-            gameEngine.game.state.start('dungeon');   
+            gameEngine.game.state.start(teleport.newLevel);   
             teleport.level.backgroundMusic.stop();
         })
 };

@@ -11,10 +11,34 @@ gameEngine.dungeon ={
         this.actualCellX = 1;
         this.actualCellY = 2;
         this.newPositionFound = false;    
+        this.createLevelChange = false;
+        this.once = true;
+        
+        //SPAWN POINTS
+        this.enemySpawnPool = {};
+        this.enemySpawnPool.rope = [];
+        this.enemySpawnPool.keese = [];
+        
+        this.enemySpawnPool.rope.push(new Phaser.Point(2,20));
+        this.enemySpawnPool.rope.push(new Phaser.Point(7,21));
+        this.enemySpawnPool.rope.push(new Phaser.Point(9,24));
+        this.enemySpawnPool.rope.push(new Phaser.Point(45,45));
+        this.enemySpawnPool.rope.push(new Phaser.Point(18,45));
+        
+        this.enemySpawnPool.keese.push(new Phaser.Point(3,23));
+        this.enemySpawnPool.keese.push(new Phaser.Point(22,41));
+        this.enemySpawnPool.keese.push(new Phaser.Point(18,18));
+        this.enemySpawnPool.keese.push(new Phaser.Point(29,18));
+        this.enemySpawnPool.keese.push(new Phaser.Point(21,24));
+
+        
     },
     create:function(){
 
-
+        //Link default location
+        this.defaultLocationX = this.worldCellSize / 2 + this.worldCellSize * this.actualCellX;
+        this.defaultLocationY = this.worldCellSize / 2 + this.worldCellSize * this.actualCellY;
+        
         //Map Creation
         this.game.stage.backgroundColor = '#000000';
         this.map = this.game.add.tilemap('dungeon');
@@ -30,7 +54,14 @@ gameEngine.dungeon ={
         this.mapCollisions = this.map.createLayer('collisions');
         this.map.setCollisionBetween(1,178,true,'collisions');
         
+        this.map.createLayer('opened');
+        
         this.map.createLayer('interactables');
+        
+        //Interactable
+        this.inter = new gameEngine.interactables_prefab(this.game, 21 * 16 + 8, 34 * 16 + 8, 2, 1, this);
+        this.game.add.existing(this.inter);
+
         
         //Link creation
         this.link = new gameEngine.link_prefab(this.game, this.worldCellSize / 2 + this.worldCellSize * this.actualCellX  , this.worldCellSize / 2 + this.worldCellSize * this.actualCellY, this);
@@ -58,8 +89,78 @@ gameEngine.dungeon ={
         this.backgroundMusic.play();
         
         //Teleports startup
-             
+        //Teleport creation
+        this.tp = new gameEngine.teleport_prefab(this.game, 17 * 16 + 8, 35 * 16 + 8, 6 * 16, 38 * 16 , 0, this);
+        this.game.add.existing(this.tp);
+        
+        this.tp2 = new gameEngine.teleport_prefab(this.game, 3 * 16 + 8, 35 * 16 + 8, 36 * 16 + 8, 25 * 16 + 8, 0, this);
+        this.game.add.existing(this.tp2);
+        
+        this.tp3 = new gameEngine.teleport_prefab(this.game, 10 * 16 + 8, 35 * 16 + 8, this.defaultLocationX, this.defaultLocationY, 0, this);
+        this.game.add.existing(this.tp3);
+        
+        this.tp4 = new gameEngine.teleport_prefab(this.game, 36 * 16 + 8, 19 * 16 + 8, 37 * 16, 10 * 16, 0, this);
+        this.game.add.existing(this.tp4);
+        
+        this.tp5 = new gameEngine.teleport_prefab(this.game, 42 * 16 + 8, 4 * 16 + 8, this.defaultLocationX, this.defaultLocationY, 0, this);
+        this.game.add.existing(this.tp5);
+        
+        this.tp6 = new gameEngine.teleport_prefab(this.game, 31 * 16 + 8, 4 * 16 + 8, 6 * 16 , 25 * 16, 0, this);
+        this.game.add.existing(this.tp6);
+        
+        this.tp7 = new gameEngine.teleport_prefab(this.game, 7 * 16 + 8, 19 * 16 + 8, 7 * 16 , 11 * 16, 0, this);
+        this.game.add.existing(this.tp7);
+        
+        this.tp8 = new gameEngine.teleport_prefab(this.game, 5 * 16 + 8, 10 * 16 + 8, this.defaultLocationX, this.defaultLocationY, 0, this);
+        this.game.add.existing(this.tp8);
+        
+        this.tp9 = new gameEngine.teleport_prefab(this.game, 8 * 16 + 8, 10 * 16 + 8, 36 * 16 , 40 * 16, 0, this);
+        this.game.add.existing(this.tp9);
+        
+        this.tp10 = new gameEngine.teleport_prefab(this.game, 32 * 16 + 8, 39 * 16 + 8, this.defaultLocationX, this.defaultLocationY, 0, this);
+        this.game.add.existing(this.tp10);
+        
+        this.tp11 = new gameEngine.teleport_prefab(this.game, 41 * 16 + 8, 39 * 16 + 8, 22 * 16 , 10 * 16, 0, this);
+        this.game.add.existing(this.tp11);
+        
+        this.tp12 = new gameEngine.teleport_prefab(this.game, 25 * 16 + 8, 10 * 16 + 8, this.defaultLocationX, this.defaultLocationY, 0, this);
+        this.game.add.existing(this.tp12);
+        
+        //Pickup
+        this.pickup = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.KEY,  22 * 16 + 8, 6 * 16 + 8, this);
+        this.game.add.existing(this.pickup);
+        
+        //Load enemies
+        this.loadEnemies();
 
+    },
+    loadEnemies:function()
+    {
+        this.enemies = this.add.group();
+        this.enemies.enableBody = true;
+    },
+    createEnemy:function(type, x, y)
+    {
+        var enemy = this.enemies.getFirstExists(false);
+        //Cell positioning
+    
+        this.cell = 0;
+        while(x > (this.cell + 1)* 256){
+            this.cell++;
+        }
+        this.cellX = this.cell;
+
+        this.cell = 0;
+        while(y > (this.cell + 1)* 256){
+            this.cell++;
+        }
+        this.cellY = this.cell;
+        
+        if(!enemy && this.actualCellX == this.cellX && this.actualCellY == this.cellY)
+        {
+            enemy = new gameEngine.enemy_prefab(this.game, type, x, y, this);
+            this.enemies.add(enemy);
+        }
     },
     
     update:function(){
@@ -67,6 +168,27 @@ gameEngine.dungeon ={
         this.game.debug.body(this.link);
         if(this.hitbox.active){
             this.game.debug.body(this.hitbox);
+        }
+        
+        if(this.inter.activated && this.link.keysCounter > 0){
+            this.createLevelChange = true;
+        }
+        
+        if(this.cellChange && !this.newPositionFound){
+            this.spawnEnemies();
+            this.cellChange = false;
+        }
+        
+        if(this.createLevelChange == true && this.once == true){
+            //Level change
+            this.lvlC = new gameEngine.level_change(this.game, 22 * 16, 33 * 16, 'boss_room', this);
+            this.game.add.existing(this.lvlC);
+            this.map.removeTile( 21, 33,'interactables');
+            this.map.removeTile( 22, 33,'interactables');
+            this.map.removeTile( 21, 34,'interactables');
+            this.map.removeTile( 22, 34,'interactables');
+            this.createLevelChange = false;
+            this.once = false;
         }
         
         this.smoothCamera();    
@@ -179,4 +301,25 @@ gameEngine.dungeon ={
         this.hudHealth.fixedToCamera = true;
         this.game.add.existing(this.hudHealth);
     },
+    spawnEnemies:function(){
+        //ENEMY CREATION
+        
+        //Ropes
+        for(var i = 0; i < this.enemySpawnPool.rope.length; i++)
+        {
+            var temp = this.enemySpawnPool.rope[i];
+            //console.log(temp);
+            this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.ROPE, temp.x*16, temp.y*16);
+        }
+        
+        //Keeses
+        
+        for(var i = 0; i < this.enemySpawnPool.keese.length; i++)
+        {
+            var temp = this.enemySpawnPool.keese[i];
+            //console.log(temp);
+            this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.KEESE, temp.x*16, temp.y*16);
+        }
+        
+    }
 }

@@ -103,9 +103,9 @@ gameEngine.overworld ={
         this.game.add.existing(this.tp6);
         
         //Level change
-        this.lvlC1 = new gameEngine.level_change(this.game, 39 * 16, 3 * 16, this);
+        this.lvlC1 = new gameEngine.level_change(this.game, 39 * 16, 3 * 16, 'dungeon', this);
         this.game.add.existing(this.lvlC1);
-        this.lvlC2 = new gameEngine.level_change(this.game, 40 * 16, 3 * 16, this);
+        this.lvlC2 = new gameEngine.level_change(this.game, 40 * 16, 3 * 16, 'dungeon', this);
         this.game.add.existing(this.lvlC2);
         
         //Interactable
@@ -183,10 +183,7 @@ gameEngine.overworld ={
         
         this.pickup7 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.LETTER, 24 * 16 + 8, 4 * 16 + 8, this);
         this.game.add.existing(this.pickup7);
-        
-        this.pickup7 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.KEY,  this.worldCellSize * 2 + 36, this.worldCellSize * 2 + 36, this);
-        this.game.add.existing(this.pickup7);
-        
+            
 
 
     },

@@ -56,7 +56,7 @@ gameEngine.main_menu ={
     },
     loadGame:function(){
         this.buttonClick.play();
-        this.game.state.start("overworld");
+        this.game.state.start("dungeon");
         gameEngine.startIntroOnce = false;
         this.introMusic.stop();
     },
