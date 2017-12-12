@@ -537,22 +537,34 @@ gameEngine.enemy_prefab.prototype.update = function(){
                     }break;
                     case this.states.CHASE_LEFT:
                     {
+                        this.body.x -= 2;
                         console.log("Chase Left!");
+                        if(this.counter <= 0)
+                            this.currentState = this.states.WANDER_LEFT;
                         
                     }break;
                     case this.states.CHASE_RIGHT:
                     {
-                        
+                        this.body.x += 2;
                         console.log("Chase Right!");
+                        if(this.counter <= 0)
+                            this.currentState = this.states.WANDER_RIGHT;
                     }break;
                 }
                 
                 if(this.facingDirection == 'right')
                     if(Math.abs(this.level.link.body.y - this.body.y) <= 10 && this.level.link.body.x > this.body.x)
+                    {
                         this.currentState = this.states.CHASE_RIGHT;
+                        this.counter = 2;
+                    }
+                        
                 else if(this.facingDirection == 'left')
                     if(Math.abs(this.level.link.body.y - this.body.y) <= 10 && this.level.link.body.x < this.body.x)
-                        this.currentState = this.states.CHASE_RIGHT;
+                    {
+                        this.currentState = this.states.CHASE_LEFT;
+                        this.counter = 2;
+                    }
                 
                 this.game.physics.arcade.collide(this, this.level.walls);
                 this.game.physics.arcade.collide(this, this.level.mapCollisions);
