@@ -24,8 +24,15 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
     
     this.GetDMG = function(dmg){
         this.hp -= dmg;
-        if(this.hp <= 0)
+        if(this.hp <= 0){
             this.destroy();
+            /*var rand = Math.random();
+            console.log(rand);
+            if(rand > 0.10){
+                var heart = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.MASTER_SWORD, this.level.link.x -2, this.level.link.y, this.level);
+                this.game.add.existing(heart); 
+            }*/
+        }
     }
     
     //console.log(this.type);

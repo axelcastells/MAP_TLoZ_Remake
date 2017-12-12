@@ -6,7 +6,7 @@ gameEngine.pickup_prefab = function(game,type,pos_x,pos_y,level){
     
     this.type = type;
     this.level = level;
-    switch(type)
+    switch(this.type)
         {
             case SYSTEM_CONSTANTS.PICKUPS.SWORD:
             {
@@ -14,6 +14,7 @@ gameEngine.pickup_prefab = function(game,type,pos_x,pos_y,level){
                 game.physics.arcade.enable(this);
                 this.body.setSize(5, 15, 1, 1);
                 this.pickUpSound = this.level.add.audio('pickItem');
+                this.type = SYSTEM_CONSTANTS.PICKUPS.SWORD;
             }break;
                 
             case SYSTEM_CONSTANTS.PICKUPS.MASTER_SWORD:
@@ -22,6 +23,7 @@ gameEngine.pickup_prefab = function(game,type,pos_x,pos_y,level){
                 game.physics.arcade.enable(this);
                 this.body.setSize(5, 15, 1, 1);
                 this.pickUpSound = this.level.add.audio('pickItem');
+                this.type = SYSTEM_CONSTANTS.PICKUPS.MASTER_SWORD;
             }break;
                 
             case SYSTEM_CONSTANTS.PICKUPS.HEART:
@@ -30,6 +32,7 @@ gameEngine.pickup_prefab = function(game,type,pos_x,pos_y,level){
                 game.physics.arcade.enable(this);
                 this.body.setSize(8, 8);
                 this.pickUpSound = this.level.add.audio('pickHeart');
+                this.type = SYSTEM_CONSTANTS.PICKUPS.HEART;
             }break;
                 
             case SYSTEM_CONSTANTS.PICKUPS.LETTER:
@@ -38,6 +41,7 @@ gameEngine.pickup_prefab = function(game,type,pos_x,pos_y,level){
                 game.physics.arcade.enable(this);
                 this.body.setSize(8, 8);
                 this.pickUpSound = this.level.add.audio('pickItem');
+                this.type = SYSTEM_CONSTANTS.PICKUPS.LETTER;
             }break;
             
             case SYSTEM_CONSTANTS.PICKUPS.KEY:
@@ -46,6 +50,7 @@ gameEngine.pickup_prefab = function(game,type,pos_x,pos_y,level){
                 game.physics.arcade.enable(this);
                 this.body.setSize(7, 12, 5, 1);
                 this.pickUpSound = this.level.add.audio('pickLMAO');
+                this.type = SYSTEM_CONSTANTS.PICKUPS.KEY;
             }break;
                 
             default:
@@ -62,26 +67,35 @@ gameEngine.pickup_prefab = function(game,type,pos_x,pos_y,level){
     
     this.timer = this.game.time.create(false);
     this.timer.loop(1200, function(){
-        this.destroy();
-        console.log("Destroying");
         this.level.link.canMove = true;
         this.level.link.frame = 0;
         if(this.type == SYSTEM_CONSTANTS.PICKUPS.LETTER && this.level.link.lettersCounter < 4){
             this.level.link.lettersCounter++;
             SYSTEM_CONSTANTS.LINK_DATA.NUMBER_LETTERS = this.level.link.lettersCounter;
-        }
-        if(this.type == SYSTEM_CONSTANTS.PICKUPS.SWORD){
+            console.log("letter");
+        } else if(this.type == SYSTEM_CONSTANTS.PICKUPS.SWORD){
             SYSTEM_CONSTANTS.LINK_DATA.HAS_SWORD = true;
+            this.level.link.hasSword = true;
+            console.log("sword");
         }
-        if(this.type == SYSTEM_CONSTANTS.PICKUPS.MASTER_SWORD){
+        else if(this.type == SYSTEM_CONSTANTS.PICKUPS.MASTER_SWORD){
             SYSTEM_CONSTANTS.LINK_DATA.HAS_MASTER_SWORD = true;
+            this.level.link.hasSword = true;
+            this.link.hasMasterSword = true;
+            console.log("masterswaord");
         }
-        if(this.type == SYSTEM_CONSTANTS.PICKUPS.KEY){
+        else if(this.type == SYSTEM_CONSTANTS.PICKUPS.KEY){
             SYSTEM_CONSTANTS.LINK_DATA.NUMBER_KEYS++;
             this.level.link.keysCounter++;
+            console.log("it's wednesday my dudes");
+        }
+        else if(this.type == SYSTEM_CONSTANTS.PICKUPS.HEART){
+            this.level.link.heal(2);
+            SYSTEM_CONSTANTS.LINK_DATA.HP = this.level.link.life;
+            console.log("heart");
         }
         
-        if (this.level.link.attacking){
+        else if (this.level.link.attacking){
             this.level.link.attacking = false;
             this.animations.play("move_" + this.facingDirection);
             this.level.hitbox.active = false;
@@ -89,7 +103,7 @@ gameEngine.pickup_prefab = function(game,type,pos_x,pos_y,level){
             this.attackTimeCounter = 0;
         }
         this.timer.stop();
-        
+        this.destroy();        
     }, this);
 
     this.game.physics.arcade.enable(this); 
@@ -100,71 +114,13 @@ gameEngine.pickup_prefab.prototype.constructor = gameEngine.pickup_prefab;
 
 gameEngine.pickup_prefab.prototype.update = function(){
     this.game.debug.body(this);
-    switch(this.type){
-            case SYSTEM_CONSTANTS.PICKUPS.SWORD:
-            {
-                 this.game.physics.arcade.overlap(this, this.level.link, function(sword, link){
-                     sword.x = link.body.x + 4;
-                     sword.y = link.body.y - 12;
-                     link.frame = 13;
-                     link.hasSword = true;
-                     link.canMove = false;
-                     sword.timer.start();
-                     sword.pickUpSound.play();
-                 });
 
-            }break;
-            
-            case SYSTEM_CONSTANTS.PICKUPS.MASTER_SWORD:
-            {
-                 this.game.physics.arcade.overlap(this, this.level.link, function(master_sword, link){
-                     master_sword.x = link.x;
-                     master_sword.y = link.y - 15;
-                     link.frame = 13;
-                     link.hasSword = true;
-                     link.hasMasterSword = true;
-                     link.canMove = false;
-                     master_sword.timer.start();
-                     master_sword.pickUpSound.play();
-                 });
-            }break;
-            
-            case SYSTEM_CONSTANTS.PICKUPS.HEART:
-            {
-                 this.game.physics.arcade.overlap(this, this.level.link, function(heart, link){
-                     sword.timer.start();
-                     link.heal(2);
-                     SYSTEM_CONSTANTS.LINK_DATA.HP = link.life;
-                     heart.pickUpSound.play();
-                 });
-            }break;
-            
-            case SYSTEM_CONSTANTS.PICKUPS.LETTER:
-            {
-                 this.game.physics.arcade.overlap(this, this.level.link, function(letter, link){
-                     letter.x = link.x;
-                     letter.y = link.y - 15;
-                     link.frame = 13;
-                     link.canMove = false;
-                     letter.timer.start();
-                     letter.pickUpSound.play();
-                 });
-            }break;
-            
-            case SYSTEM_CONSTANTS.PICKUPS.KEY:
-            {
-                 this.game.physics.arcade.overlap(this, this.level.link, function(key, link){
-                     key.x = link.x;
-                     key.y = link.y - 15;
-                     link.frame = 13;
-                     link.canMove = false;
-                     key.timer.start();
-                     key.pickUpSound.play();
-                 });
-            }break;
-            default:
-            {
-    
-            }break; 
-    }
+    this.game.physics.arcade.overlap(this, this.level.link, function(pickup, link){
+         pickup.x = link.body.x + 4;
+         pickup.y = link.body.y - 12;
+         link.frame = 13;
+         link.canMove = false;
+         pickup.timer.start();
+         pickup.pickUpSound.play();
+    });
 };

@@ -197,7 +197,6 @@ gameEngine.link_prefab.prototype.recieveDamage = function(damage){
     
 }
 gameEngine.link_prefab.prototype.heal = function(heal){
-    this.game.camera.flash(0x00aa00, 100);
     this.life += heal;
     if(this.life > SYSTEM_CONSTANTS.LINK_DATA.MAX_HP){
         this.life = SYSTEM_CONSTANTS.LINK_DATA.MAX_HP;
