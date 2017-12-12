@@ -112,7 +112,11 @@ gameEngine.projectile_prefab.prototype.constructor = gameEngine.projectile_prefa
 
 gameEngine.projectile_prefab.prototype.update = function(){
     
-    this.game.physics.arcade.collide(this, this.level.movables);
+    this.game.physics.arcade.collide(this,this.level.movables,
+        function(bullet,movable){
+            bullet.kill();
+    });
+                
     if(this.level.pause.paused){
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
@@ -210,7 +214,7 @@ gameEngine.projectile_prefab.prototype.update = function(){
     } else {
         this.game.physics.arcade.collide(this,this.level.enemies,
         function(bullet,enemy){
-            enemy.destroy();
+            enemy.GetDMG(1);
             //if(type != SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG)
             bullet.kill();
         });

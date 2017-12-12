@@ -50,6 +50,14 @@ var SYSTEM_CONSTANTS = {
     MOVABLES:{
         ROCK: 0,
         STATUE: 1
+    },
+    LINK_DATA:{
+        HAS_SWORD: false,
+        HAS_MASTER_SWORD: false,
+        NUMBER_LETTERS: 0,
+        NUMBER_KEYS: 0,
+        HP: 6,
+        MAX_HP: 6
     }
 };
 
@@ -63,4 +71,5 @@ gameEngine.game.state.add('main_menu',gameEngine.main_menu);
 gameEngine.game.state.add('credits',gameEngine.credits);
 gameEngine.game.state.add('login',gameEngine.login);
 gameEngine.game.state.add('loading_scene',gameEngine.loading_scene);
+gameEngine.game.state.add('final_credits',gameEngine.final_credits);
 gameEngine.game.state.start('loading_scene');

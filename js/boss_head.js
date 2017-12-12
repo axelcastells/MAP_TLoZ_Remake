@@ -5,6 +5,7 @@ gameEngine.gleeokHead_prefab = function(game,gleeok,x,y,level){
     this.gleeok = gleeok;
 
     this.counter = 0;
+    this.bulletCD = 0;
     this.speed = 100;
     this.direction = SYSTEM_CONSTANTS.DIRECTIONS.DOWN;
     this.hp = 3;
@@ -34,6 +35,11 @@ gameEngine.gleeokHead_prefab = function(game,gleeok,x,y,level){
         this.neckPoints.push(neckPoint);
     }
     
+    this.updateBulletCD = function(){
+        if(!level.pause.paused)
+            this.bulletCD-=0.1;
+    }
+    
     this.updateCounter = function(){
         if(!level.pause.paused)
             this.counter-=0.1; 
@@ -42,6 +48,10 @@ gameEngine.gleeokHead_prefab = function(game,gleeok,x,y,level){
     this.timer = this.game.time.create(false);
     this.timer.loop(100, this.updateCounter, this);
     this.timer.start();
+    
+    this.bulletTimer = this.game.time.create(false);
+    this.bulletTimer.loop(100, this.updateBulletCD, this);
+    this.bulletTimer.start();
     
     this.states;
     this.currentState;
@@ -173,6 +183,17 @@ gameEngine.gleeokHead_prefab.prototype.update = function(){
                     if(head.body.blocked.down || head.body.blocked.up){head.unlinkedSpeed.y = -head.unlinkedSpeed.y;}
                     else if(head.body.blocked.left || head.body.blocked.right){head.unlinkedSpeed.x = -head.unlinkedSpeed.x;}
                 })
+                
+                if(this.bulletCD <= 0)
+                {
+                    this.bulletCD = 2;
+                    
+                    var dir = new Phaser.Point(this.level.link.body.x - this.body.x, this.level.link.body.y - this.body.y);
+                    dir.normalize();
+                    
+                    var bullet = new gameEngine.projectile_prefab(this.game, SYSTEM_CONSTANTS.PROJECTILE_TYPES.FIREBALL, this.body.x, this.body.y, dir, this.level);
+                    this.game.add.existing(bullet);
+                }
                 
                 if(this.counter <= 0)
                 {
