@@ -27,6 +27,8 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
     this.GetDMG = function(dmg){
         this.hp -= dmg;
         if(this.hp <= 0){
+            if(this.type == SYSTEM_CONSTANTS.ENEMY_TYPES.GLEEOK)
+                gameEngine.game.state.start('final_credits');
             this.destroy();
             /*var rand = Math.random();
             console.log(rand);
@@ -575,6 +577,7 @@ gameEngine.enemy_prefab.prototype.update = function(){
             {
                 this.neck.x = this.body.x+10;
                 this.neck.y = this.body.y+30;
+            
             }break;
             default:
             {
