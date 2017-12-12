@@ -54,7 +54,12 @@ gameEngine.boss_room ={
         //Audio creation
         this.backgroundMusic = this.add.audio('bossMusic', 1, true, true);
         this.backgroundMusic.play();
-
+        
+        //Boss
+        this.boss = this.add.group();
+        var tmp = new gameEngine.enemy_prefab(this.game, SYSTEM_CONSTANTS.ENEMY_TYPES.GLEEOK, 8*16, 4*16, this);
+        this.boss.add(tmp);
+        //this.game.add.existing(this.boss);
     },
     
     update:function(){
