@@ -433,7 +433,7 @@ gameEngine.overworld ={
         }
         
         //Boss DEBUG Spawn
-        this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.GLEEOK, this.enemySpawnPool.bossSpawn.x*16, this.enemySpawnPool.bossSpawn.y*16);
+        this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.ROPE, this.enemySpawnPool.bossSpawn.x*16, this.enemySpawnPool.bossSpawn.y*16);
     }
 
     

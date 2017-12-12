@@ -7,6 +7,8 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
     this.speed = 100;
     this.direction = SYSTEM_CONSTANTS.DIRECTIONS.DOWN;
     this.hp;
+    this.force = new Phaser.Point(0,0);
+    this.tempCtr = 0;
     
     this.updateCounter = function(){
         if(!level.pause.paused)
@@ -85,6 +87,39 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
                 
                 this.animations.play('iddle');
 
+                this.hp = 1;
+            }break;
+            case SYSTEM_CONSTANTS.ENEMY_TYPES.KEESE:
+            {
+                Phaser.Sprite.call(this,game,x,y,'enemies');
+                this.game.physics.arcade.enable(this);
+                
+                this.type = type;
+                console.log("Created Kease");
+                
+                this.states = {INIT: 0, IDDLE:1, SPEED_UP: 2, SPEED_DOWN: 3}
+                this.currentState = this.states.INIT;
+                
+                this.animations.add('main',[20,21],5,true);
+                this.animations.play('main');
+                
+                this.hp = 1;
+            }break;
+            case SYSTEM_CONSTANTS.ENEMY_TYPES.ROPE:
+            {
+                Phaser.Sprite.call(this,game,x,y,'enemies');
+                this.game.physics.arcade.enable(this);
+                
+                this.type = type;
+                console.log("Created Rope");
+                
+                this.states = {INIT: 0, WANDER_LEFT:1, WANDER_RIGHT: 2, WANDER_UP: 3, WANDER_DOWN: 4, CHASE_LEFT: 5, CHASE_RIGHT: 6}
+                this.currentState = this.states.INIT;
+                
+                this.animations.add('right'[30,31],5,true);
+                this.animations.add('left',[28,29],5,true);
+                //this.animations.play('left');
+                
                 this.hp = 1;
             }break;
             case SYSTEM_CONSTANTS.ENEMY_TYPES.GLEEOK:
@@ -354,6 +389,150 @@ gameEngine.enemy_prefab.prototype.update = function(){
                         this.currentState = this.states.INIT;
                     }break;
                     
+                }
+
+            }break;
+            case SYSTEM_CONSTANTS.ENEMY_TYPES.KEESE:
+            {
+                this.body.x += this.force.x;
+                this.body.y += this.force.y;
+                //console.log(this.currentState);
+                switch(this.currentState)
+                {
+                    case this.states.INIT:
+                    {
+                        this.counter = 1;
+                        this.frame = 20;
+                        this.currentState = this.states.IDDLE;
+                    }break;
+                    case this.states.IDDLE:
+                    {
+                        if(this.counter <= 0)
+                        {
+                            this.counter = 1;
+                            this.animations.play('main');
+                            
+                            this.direction.x = (Math.random()*2)-1;
+                            this.direction.y = (Math.random()*2)-1;
+                            this.direction.normalize();
+                            this.tempCtr = this.counter;
+                            
+                            this.currentState = this.states.SPEED_UP;
+                        }
+
+                    }break;
+                    case this.states.SPEED_UP:
+                    {
+                        
+                        this.force.x = this.direction.x*(this.tempCtr-this.counter);
+                        this.force.y = this.direction.y*(this.tempCtr-this.counter);
+                        if(this.counter <= 0)
+                        {
+                            this.counter = 1;
+                            this.tempCtr = this.counter;
+                            this.currentState = this.states.SPEED_DOWN;
+                        }
+                            
+                    }break;
+                    case this.states.SPEED_DOWN:
+                    {
+                        this.force.x = this.direction.x*(this.counter);
+                        this.force.y = this.direction.y*(this.counter);
+                        if(this.counter <= 0)
+                        {
+                            this.currentState = this.states.INIT;
+                        }
+                        
+                    }break;
+                    
+                }
+
+            }break;
+            case SYSTEM_CONSTANTS.ENEMY_TYPES.ROPE:
+            {
+                
+                this.randomizeNextRopeState = function()
+                {
+                    var rand = Math.random();
+                    console.log("New State Random: "+rand);
+                    if(rand <= 0.25){
+                        this.currentState = this.states.WANDER_LEFT;
+                        this.animations.play('left');
+                        this.facingDirection = 'left';
+                        
+                    }
+                    else if(rand <= 0.5){
+                        this.currentState = this.states.WANDER_RIGHT;
+                        this.animations.play('right');
+                        this.facingDirection = 'right';
+                    }
+                    else if(rand <= 0.75){
+                        this.currentState = this.states.WANDER_DOWN;
+                        
+                    }
+                    else if(rand <= 1){
+                        this.currentState = this.states.WANDER_DOWN;
+                    }
+                    
+                }
+                //console.log(this.currentState);
+                switch(this.currentState)
+                {
+                    case this.states.INIT:
+                    {
+                        this.facingDirection = 'left';
+                        this.animations.play('left');
+                        
+                        this.randomizeNextRopeState();
+                        
+                        this.counter = 1;
+                    }break;
+                    case this.states.WANDER_LEFT:
+                    {
+                        this.body.x -= 1;
+                        if(this.counter <= 0)
+                        {
+                            this.counter = 1;
+                            this.randomizeNextRopeState();
+                        }
+                    }break;
+                    case this.states.WANDER_RIGHT:
+                    {     
+                        this.body.x += 1;
+                        if(this.counter <= 0)
+                        {
+                            this.counter = 1;
+                            this.randomizeNextRopeState();
+                        }
+                    }break;
+                    case this.states.WANDER_DOWN:
+                    {
+                        this.body.y += 1;
+                        if(this.counter <= 0)
+                        {
+                            this.counter = 1;
+                            this.randomizeNextRopeState();
+                        }
+                    }break;
+                    case this.states.WANDER_UP:
+                    {
+                        this.body.y -= 1;
+                        if(this.counter <= 0)
+                        {
+                            this.counter = 1;
+                            this.randomizeNextRopeState();
+                        }
+                    }break;
+                    case this.states.CHASE_LEFT:
+                    {
+                        
+                        
+                    }break;
+                    case this.states.CHASE_RIGHT:
+                    {
+                        
+                        
+                    }break;
                 }
 
             }break;
