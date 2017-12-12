@@ -157,7 +157,7 @@ gameEngine.link_prefab.prototype.update = function(){
                 this.level.hitbox.active = false;
                 this.swordThrown = false;
                 this.attackTimeCounter = 0;
-            } else if (!this.swordThrown && this.attackTimeCounter > this.attackTime / 4 && this.life == 6) {
+            } else if (!this.swordThrown && this.attackTimeCounter > this.attackTime / 4/* && this.life == 6*/) {
                 this.swordThrown = true;
                 this.direction = SYSTEM_CONSTANTS.DIRECTIONS.UP;
                 switch (this.facingDirection){
