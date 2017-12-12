@@ -406,6 +406,7 @@ gameEngine.enemy_prefab.prototype.update = function(){
             {
                 this.body.x += this.force.x;
                 this.body.y += this.force.y;
+                this.game.physics.arcade.collide(this, this.level.mapCollisions);
                 //console.log(this.currentState);
                 switch(this.currentState)
                 {

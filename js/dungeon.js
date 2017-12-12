@@ -22,13 +22,13 @@ gameEngine.dungeon ={
         this.enemySpawnPool.rope.push(new Phaser.Point(2,20));
         this.enemySpawnPool.rope.push(new Phaser.Point(7,21));
         this.enemySpawnPool.rope.push(new Phaser.Point(9,24));
-        this.enemySpawnPool.rope.push(new Phaser.Point(45,45));
-        this.enemySpawnPool.rope.push(new Phaser.Point(18,45));
+        this.enemySpawnPool.rope.push(new Phaser.Point(32,20));
+        this.enemySpawnPool.rope.push(new Phaser.Point(37,22));
         
         this.enemySpawnPool.keese.push(new Phaser.Point(3,23));
         this.enemySpawnPool.keese.push(new Phaser.Point(22,41));
-        this.enemySpawnPool.keese.push(new Phaser.Point(18,18));
-        this.enemySpawnPool.keese.push(new Phaser.Point(29,18));
+        this.enemySpawnPool.keese.push(new Phaser.Point(35,21));
+        this.enemySpawnPool.keese.push(new Phaser.Point(31,25));
         this.enemySpawnPool.keese.push(new Phaser.Point(21,24));
 
         
@@ -59,7 +59,7 @@ gameEngine.dungeon ={
         this.map.createLayer('interactables');
         
         //Interactable
-        this.inter = new gameEngine.interactables_prefab(this.game, 21 * 16 + 8, 34 * 16 + 8, 2, 1, this);
+        this.inter = new gameEngine.interactables_prefab(this.game, 21 * 16 + 8, 34 * 16 + 8, 2, 0.5, this);
         this.game.add.existing(this.inter);
 
         
@@ -78,11 +78,6 @@ gameEngine.dungeon ={
         //Camera reference point
         this.newCameraPositionX = this.game.camera.x;
         this.newCameraPositionY = this.game.camera.y;
-        
-        //HUD creation
-        this.createHud();
-        
-        this.pause = new gameEngine.pauseMenu_prefab(this.game, this);
         
         //Audio creation
         this.backgroundMusic = this.add.audio('dungeonMusic', 1, true, true);
@@ -132,6 +127,11 @@ gameEngine.dungeon ={
         
         //Load enemies
         this.loadEnemies();
+        
+        //HUD creation
+        this.createHud();
+        
+        this.pause = new gameEngine.pauseMenu_prefab(this.game, this);
 
     },
     loadEnemies:function()
