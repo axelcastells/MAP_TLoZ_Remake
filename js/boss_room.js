@@ -64,10 +64,10 @@ gameEngine.boss_room ={
     
     update:function(){
                 
-        this.game.debug.body(this.link);
-        if(this.hitbox.active){
-            this.game.debug.body(this.hitbox);
-        }
+//        this.game.debug.body(this.link);
+//        if(this.hitbox.active){
+//            this.game.debug.body(this.hitbox);
+//        }
         
         this.smoothCamera();    
         

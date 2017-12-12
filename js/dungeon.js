@@ -165,10 +165,10 @@ gameEngine.dungeon ={
     
     update:function(){
                 
-        this.game.debug.body(this.link);
-        if(this.hitbox.active){
-            this.game.debug.body(this.hitbox);
-        }
+//        this.game.debug.body(this.link);
+//        if(this.hitbox.active){
+//            this.game.debug.body(this.hitbox);
+//        }
         
         if(this.inter.activated && this.link.keysCounter > 0){
             this.createLevelChange = true;
