@@ -123,8 +123,9 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
                 this.states = {INIT: 0, WANDER_LEFT:1, WANDER_RIGHT: 2, WANDER_UP: 3, WANDER_DOWN: 4, CHASE_LEFT: 5, CHASE_RIGHT: 6}
                 this.currentState = this.states.INIT;
                 
-                this.animations.add('right'[30,31],5,true);
                 this.animations.add('left',[28,29],5,true);
+                this.animations.add('right',[30,31],5,true);
+                
                 //this.animations.play('left');
                 
                 this.hp = 1;
@@ -457,29 +458,34 @@ gameEngine.enemy_prefab.prototype.update = function(){
             }break;
             case SYSTEM_CONSTANTS.ENEMY_TYPES.ROPE:
             {
+
                 
-                this.randomizeNextRopeState = function()
+                this.randomizeNextRopeState = function(enemy)
                 {
                     var rand = Math.random();
                     console.log("New State Random: "+rand);
                     if(rand <= 0.25){
-                        this.currentState = this.states.WANDER_LEFT;
-                        this.animations.play('left');
-                        this.facingDirection = 'left';
+                        enemy.currentState = enemy.states.WANDER_LEFT;
+                        
+                        enemy.facingDirection = 'left';
                         
                     }
                     else if(rand <= 0.5){
-                        this.currentState = this.states.WANDER_RIGHT;
-                        this.animations.play('right');
-                        this.facingDirection = 'right';
+                        enemy.currentState = enemy.states.WANDER_RIGHT;
+
+                        enemy.facingDirection = 'right';
                     }
                     else if(rand <= 0.75){
-                        this.currentState = this.states.WANDER_DOWN;
+                        enemy.currentState = enemy.states.WANDER_UP;
                         
                     }
                     else if(rand <= 1){
-                        this.currentState = this.states.WANDER_DOWN;
+                        enemy.currentState = enemy.states.WANDER_DOWN;
                     }
+                    else{
+                        enemy.currentState = enemy.states.INIT;
+                    }
+                    enemy.animations.play(enemy.facingDirection);
                     
                 }
                 //console.log(this.currentState);
@@ -487,10 +493,9 @@ gameEngine.enemy_prefab.prototype.update = function(){
                 {
                     case this.states.INIT:
                     {
-                        this.facingDirection = 'left';
-                        this.animations.play('left');
+                        this.facingDirection = 'right';
                         
-                        this.randomizeNextRopeState();
+                        this.randomizeNextRopeState(this);
                         
                         this.counter = 1;
                     }break;
@@ -500,7 +505,7 @@ gameEngine.enemy_prefab.prototype.update = function(){
                         if(this.counter <= 0)
                         {
                             this.counter = 1;
-                            this.randomizeNextRopeState();
+                            this.randomizeNextRopeState(this);
                         }
                     }break;
                     case this.states.WANDER_RIGHT:
@@ -509,7 +514,7 @@ gameEngine.enemy_prefab.prototype.update = function(){
                         if(this.counter <= 0)
                         {
                             this.counter = 1;
-                            this.randomizeNextRopeState();
+                            this.randomizeNextRopeState(this);
                         }
                     }break;
                     case this.states.WANDER_DOWN:
@@ -518,7 +523,7 @@ gameEngine.enemy_prefab.prototype.update = function(){
                         if(this.counter <= 0)
                         {
                             this.counter = 1;
-                            this.randomizeNextRopeState();
+                            this.randomizeNextRopeState(this);
                         }
                     }break;
                     case this.states.WANDER_UP:
@@ -527,20 +532,31 @@ gameEngine.enemy_prefab.prototype.update = function(){
                         if(this.counter <= 0)
                         {
                             this.counter = 1;
-                            this.randomizeNextRopeState();
+                            this.randomizeNextRopeState(this);
                         }
                     }break;
                     case this.states.CHASE_LEFT:
                     {
-                        
+                        console.log("Chase Left!");
                         
                     }break;
                     case this.states.CHASE_RIGHT:
                     {
                         
-                        
+                        console.log("Chase Right!");
                     }break;
                 }
+                
+                if(this.facingDirection == 'right')
+                    if(Math.abs(this.level.link.body.y - this.body.y) <= 10 && this.level.link.body.x > this.body.x)
+                        this.currentState = this.states.CHASE_RIGHT;
+                else if(this.facingDirection == 'left')
+                    if(Math.abs(this.level.link.body.y - this.body.y) <= 10 && this.level.link.body.x < this.body.x)
+                        this.currentState = this.states.CHASE_RIGHT;
+                
+                this.game.physics.arcade.collide(this, this.level.walls);
+                this.game.physics.arcade.collide(this, this.level.mapCollisions);
+                this.game.physics.arcade.collide(this, this.level.water);
 
             }break;
             case SYSTEM_CONSTANTS.ENEMY_TYPES.GLEEOK:
