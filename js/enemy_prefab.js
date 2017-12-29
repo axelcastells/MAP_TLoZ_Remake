@@ -27,8 +27,10 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
     this.GetDMG = function(dmg){
         this.hp -= dmg;
         if(this.hp <= 0){
-            if(this.type == SYSTEM_CONSTANTS.ENEMY_TYPES.GLEEOK)
+            if(this.type == SYSTEM_CONSTANTS.ENEMY_TYPES.GLEEOK){
                 gameEngine.game.state.start('final_credits');
+                this.level.backgroundMusic.stop();
+            }                
             this.destroy();
             /*var rand = Math.random();
             console.log(rand);
@@ -446,7 +448,7 @@ gameEngine.enemy_prefab.prototype.update = function(){
                 });
                 this.body.x += this.force.x;
                 this.body.y += this.force.y;
-                this.game.physics.arcade.collide(this, this.level.mapCollisions);
+                this.game.physics.arcade.collide(this, this.level.walls);
                 //console.log(this.currentState);
                 switch(this.currentState)
                 {

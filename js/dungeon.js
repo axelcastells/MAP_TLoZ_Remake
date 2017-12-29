@@ -195,13 +195,8 @@ gameEngine.dungeon ={
         
     },
     smoothCamera:function(){
-        //console.log("Current Screen: (X: "+this.actualCellX+" | Y: "+this.actualCellY+" )");
         if(!this.pause.paused){        
             if( this.math.difference(this.link.x, this.game.camera.x + this.worldCellSize / 2) > this.worldCellSize / 2 && this.newPositionFound == false){
-
-                //console.log("detected link cell change in X");
-                //console.log("Current Screen: (X: "+this.actualCellX+" | Y: "+this.actualCellY+" )");
-                //console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
 
                 this.link.body.velocity.x = 0;
                 this.link.body.velocity.y = 0;
@@ -212,7 +207,7 @@ gameEngine.dungeon ={
                     this.actualCellX -= 1;
                     this.newPositionFound = true;
                     this.cellChange = true;
-                    //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
+
                 }
 
                 else if(this.link.x - this.game.camera.x > this.worldCellSize - 1){
@@ -221,15 +216,10 @@ gameEngine.dungeon ={
                     this.actualCellX += 1;
                     this.newPositionFound = true;
                     this.cellChange = true;
-                    //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
                 }
             }
 
             else if( this.math.difference(this.link.y, this.game.camera.y + this.worldCellSize / 2) > this.worldCellSize / 2 && this.newPositionFound == false){
-
-                //console.log("detected link cell change in Y");
-                //console.log("Current Screen: (X: "+this.actualCellX+" | Y: "+this.actualCellY+" )");
-                //console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
 
                 this.link.body.velocity.x = 0;
                 this.link.body.velocity.y = 0;
@@ -240,7 +230,6 @@ gameEngine.dungeon ={
                     this.actualCellY -= 1;
                     this.newPositionFound = true;
                     this.cellChange = true;
-                    //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
                 }
                 else if(this.link.y - this.game.camera.y > this.worldCellSize - 1){
 
@@ -248,7 +237,6 @@ gameEngine.dungeon ={
                     this.actualCellY += 1;
                     this.newPositionFound = true;
                     this.cellChange = true;
-                    //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
                 }
             }
 
@@ -270,11 +258,9 @@ gameEngine.dungeon ={
                 }
             }
 
-            //console.log("New Position: " + this.newCameraPositionX + " " + this.newCameraPositionY + " Old Position: " + this.game.camera.x + " " + this.game.camera.y);
 
             if(this.newCameraPositionX == this.game.camera.position.x && this.newCameraPositionY == this.game.camera.position.y){
                 this.newPositionFound = false;
-                //console.log('New Position set to false');
             }
         }
     },

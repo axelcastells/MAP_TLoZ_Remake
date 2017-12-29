@@ -6,7 +6,9 @@ gameEngine.final_credits ={
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;  
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
+        this.scale.setGameSize(ConfigOptions.screenW, ConfigOptions.screenH);
         this.game.world.setBounds(0, 0, 2000, 2500);
+        
         //this.buttonClick = this.add.audio('buttonClick');
         
     },
@@ -62,7 +64,7 @@ gameEngine.final_credits ={
     back:function(){
         this.buttonClick.play();
         this.backgroundMusic.stop();
-        this.game.state.start("main_menu");
+        this.game.state.start("loading_scene");
     },
     overFeedback:function(button){
         button.scale.setTo(12);

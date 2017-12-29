@@ -218,10 +218,10 @@ gameEngine.overworld ={
     },
     update:function(){
                 
-        this.game.debug.body(this.link);
-        if(this.hitbox.active){
-            this.game.debug.body(this.hitbox);
-        }
+        //this.game.debug.body(this.link);
+        //if(this.hitbox.active){
+        //    this.game.debug.body(this.hitbox);
+        //}
         //this.game.debug.body(this.tp4);
         
         this.smoothCamera();
@@ -241,10 +241,6 @@ gameEngine.overworld ={
         if(!this.pause.paused){        
             if( this.math.difference(this.link.x, this.game.camera.x + this.worldCellSize / 2) > this.worldCellSize / 2 && this.newPositionFound == false){
 
-                //console.log("detected link cell change in X");
-                //console.log("Current Screen: (X: "+this.actualCellX+" | Y: "+this.actualCellY+" )");
-                //console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
-
                 this.link.body.velocity.x = 0;
                 this.link.body.velocity.y = 0;
 
@@ -254,7 +250,7 @@ gameEngine.overworld ={
                     this.actualCellX -= 1;
                     this.newPositionFound = true;
                     this.cellChange = true;
-                    //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
+
                 }
 
                 else if(this.link.x - this.game.camera.x > this.worldCellSize - 1){
@@ -263,15 +259,11 @@ gameEngine.overworld ={
                     this.actualCellX += 1;
                     this.newPositionFound = true;
                     this.cellChange = true;
-                    //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
+
                 }
             }
 
             else if( this.math.difference(this.link.y, this.game.camera.y + this.worldCellSize / 2) > this.worldCellSize / 2 && this.newPositionFound == false){
-
-                //console.log("detected link cell change in Y");
-                //console.log("Current Screen: (X: "+this.actualCellX+" | Y: "+this.actualCellY+" )");
-                //console.log("Camera position: " + this.game.camera.x + " " + this.game.camera.y);
 
                 this.link.body.velocity.x = 0;
                 this.link.body.velocity.y = 0;
@@ -282,7 +274,7 @@ gameEngine.overworld ={
                     this.actualCellY -= 1;
                     this.newPositionFound = true;
                     this.cellChange = true;
-                    //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
+
                 }
                 else if(this.link.y - this.game.camera.y > this.worldCellSize - 1){
 
@@ -290,7 +282,7 @@ gameEngine.overworld ={
                     this.actualCellY += 1;
                     this.newPositionFound = true;
                     this.cellChange = true;
-                    //console.log("New camera position: " + this.newCameraPositionX + " " + this.newCameraPositionY);
+
                 }
             }
 

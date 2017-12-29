@@ -24,7 +24,6 @@ gameEngine.hitbox_prefab.prototype.update = function(){
         this.game.physics.arcade.collide(this, this.level.enemies, function(hibox,enemy){
             enemy.enemyHitSound.play();
             enemy.GetDMG(1);
-            console.log("OMAE WA MOU SHINDEIRU");
         });
     }    
     
