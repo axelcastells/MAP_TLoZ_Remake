@@ -157,10 +157,12 @@ gameEngine.link_prefab.prototype.update = function(){
                 this.level.hitbox.active = false;
                 this.swordThrown = false;
                 this.attackTimeCounter = 0;
-            } else if (!this.swordThrown && this.attackTimeCounter > this.attackTime / 4/* && this.life == 6*/) {
+            } else if (!this.swordThrown && this.attackTimeCounter > this.attackTime / 4 && this.life == SYSTEM_CONSTANTS.LINK_DATA.MAX_HP) {
                 this.swordThrown = true;
-                this.direction = SYSTEM_CONSTANTS.DIRECTIONS.UP;
                 switch (this.facingDirection){
+                    case "up":
+                        this.direction = SYSTEM_CONSTANTS.DIRECTIONS.UP;
+                        break;
                     case "down":
                         this.direction = SYSTEM_CONSTANTS.DIRECTIONS.DOWN;
                         break;
@@ -187,12 +189,14 @@ gameEngine.link_prefab.prototype.recieveDamage = function(damage){
     this.game.camera.flash(0xff0000, 300);
     this.life -= damage;
     this.linkDamage.play();
+    SYSTEM_CONSTANTS.LINK_DATA.HP = this.life;
     if(this.life <= 0){
         this.life = 0;
         this.level.backgroundMusic.stop();
+        SYSTEM_CONSTANTS.LINK_DATA.HP = SYSTEM_CONSTANTS.LINK_DATA.MAX_HP;
         this.game.state.start(this.game.state.current);
     }
-    SYSTEM_CONSTANTS.LINK_DATA.HP = this.life;
+    
     
 }
 gameEngine.link_prefab.prototype.heal = function(heal){

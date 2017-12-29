@@ -1,7 +1,8 @@
 var gameEngine = gameEngine || {};
 
 gameEngine.interactables_prefab = function(game, pos_x, pos_y, scaleX, scaleY, level){    
-    Phaser.Sprite.call(this, game, pos_x, pos_y,'', 1);
+    Phaser.Sprite.call(this, game, pos_x, pos_y,'teleport', 1);
+    this.alpha = 0;
     this.scale.setTo(scaleX, scaleY);
     this.activated = false;
     this.x = pos_x;

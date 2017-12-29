@@ -20,10 +20,13 @@ gameEngine.hitbox_prefab.prototype.constructor = gameEngine.hitbox_prefab;
 
 gameEngine.hitbox_prefab.prototype.update = function(){
     //Set enemy colliding functions here
-    this.game.physics.arcade.collide(this, this.level.enemy, function(hibox,enemy){
-        enemy.enemyHitSound.play();
-        //enemy.reset(550, 800)
-    });
+    if(this.active){
+        this.game.physics.arcade.collide(this, this.level.enemies, function(hibox,enemy){
+            enemy.enemyHitSound.play();
+            enemy.GetDMG(1);
+            console.log("OMAE WA MOU SHINDEIRU");
+        });
+    }    
     
     switch(this.level.link.facingDirection){
         case "right":

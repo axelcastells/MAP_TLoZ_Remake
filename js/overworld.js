@@ -10,6 +10,7 @@ gameEngine.overworld ={
         this.actualCellX = 2;
         this.actualCellY = 3;
         this.newPositionFound = false;
+        this.movables = null;
 
         //SPAWN POINTS
         this.enemySpawnPool = {};
@@ -26,7 +27,7 @@ gameEngine.overworld ={
         this.enemySpawnPool.tektite.push(new Phaser.Point(22,41));
 
         this.enemySpawnPool.octorok.push(new Phaser.Point(18,18));
-        this.enemySpawnPool.tektite.push(new Phaser.Point(29,18));
+        this.enemySpawnPool.tektite.push(new Phaser.Point(29,22));
         this.enemySpawnPool.octorok.push(new Phaser.Point(21,24));
 
         this.enemySpawnPool.tektite.push(new Phaser.Point(34,18));
@@ -217,10 +218,10 @@ gameEngine.overworld ={
     },
     update:function(){
                 
-        //this.game.debug.body(this.link);
-        //if(this.hitbox.active){
-            //this.game.debug.body(this.hitbox);
-        //}
+        this.game.debug.body(this.link);
+        if(this.hitbox.active){
+            this.game.debug.body(this.hitbox);
+        }
         //this.game.debug.body(this.tp4);
         
         this.smoothCamera();
@@ -311,11 +312,8 @@ gameEngine.overworld ={
                 }
             }
 
-            //console.log("New Position: " + this.newCameraPositionX + " " + this.newCameraPositionY + " Old Position: " + this.game.camera.x + " " + this.game.camera.y);
-
             if(this.newCameraPositionX == this.game.camera.position.x && this.newCameraPositionY == this.game.camera.position.y){
                 this.newPositionFound = false;
-                //console.log('New Position set to false');
             }
         }
     },
@@ -430,7 +428,7 @@ gameEngine.overworld ={
         }
         
         //Boss DEBUG Spawn
-        this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.ROPE, this.enemySpawnPool.bossSpawn.x*16, this.enemySpawnPool.bossSpawn.y*16);
+        //this.createEnemy(SYSTEM_CONSTANTS.ENEMY_TYPES.ROPE, this.enemySpawnPool.bossSpawn.x*16, this.enemySpawnPool.bossSpawn.y*16);
     }
 
     

@@ -114,6 +114,10 @@ gameEngine.projectile_prefab.prototype.update = function(){
     
     this.game.physics.arcade.collide(this,this.level.movables,
         function(bullet,movable){
+        if(bullet.type == SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG){
+                console.log("Bullet Collision!");
+                bullet.level.link.isBoomerangThrown = false;
+            }    
             bullet.kill();
     });
                 
@@ -179,6 +183,7 @@ gameEngine.projectile_prefab.prototype.update = function(){
             }                
             bullet.kill();
     }});
+    
         
     if(this.type != SYSTEM_CONSTANTS.PROJECTILE_TYPES.SWORD && this.type != SYSTEM_CONSTANTS.PROJECTILE_TYPES.MASTER_SWORD){
         this.game.physics.arcade.collide(this,this.level.link,
@@ -215,7 +220,6 @@ gameEngine.projectile_prefab.prototype.update = function(){
         this.game.physics.arcade.collide(this,this.level.enemies,
         function(bullet,enemy){
             enemy.GetDMG(1);
-            //if(type != SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG)
             bullet.kill();
         });
     }    
@@ -223,21 +227,37 @@ gameEngine.projectile_prefab.prototype.update = function(){
     //Bounds check
     
     if (this.position.x - gameEngine.game.camera.x < 0){
-             
+        if(this.type == SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG)
+        {
+            this.level.link.isBoomerangThrown = false;
+            console.log("Boomerang Recovered!");
+        }     
         this.destroy();
     }
 
     else if(this.position.x - gameEngine.game.camera.x > this.level.worldCellSize - 1){
-
+        if(this.type == SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG)
+        {
+            this.level.link.isBoomerangThrown = false;
+            console.log("Boomerang Recovered!");
+        }    
         this.destroy();
     }
     
     if (this.position.y - gameEngine.game.camera.y < 0){
-
+        if(this.type == SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG)
+        {
+            this.level.link.isBoomerangThrown = false;
+            console.log("Boomerang Recovered!");
+        }    
         this.destroy();
     }
     else if(this.position.y - gameEngine.game.camera.y > this.level.worldCellSize - 1){
-
+        if(this.type == SYSTEM_CONSTANTS.PROJECTILE_TYPES.BOOMERANG)
+        {
+            this.level.link.isBoomerangThrown = false;
+            console.log("Boomerang Recovered!");
+        }    
         this.destroy();
     }
     

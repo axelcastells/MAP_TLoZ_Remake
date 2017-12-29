@@ -36,7 +36,7 @@ gameEngine.teleport_prefab.prototype.update = function(){
             this.timer = link.level.game.time.create(true);
             link.reset(teleport.dX, teleport.dY);
             link.canMove = false;
-            this.timer.add(3000,function(){            
+            this.timer.add(2000,function(){            
                 link.level.camera.resetFX();
                 link.canMove = true;
             }, this);

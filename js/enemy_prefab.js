@@ -69,7 +69,7 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
                 
                 this.type = type;
                 console.log("Created Zora");
-                this.states = {INIT: 0, HIDDEN: 1, EMERGING: 2, EMERGED: 3, ATTACK: 4};
+                this.states = {INIT: 0, HIDDEN: 1, EMERGING: 2, EMERGED: 3, ATTACK: 4, STOPPED: 5};
                 this.currentState = this.states.INIT;
                 
                 this.animations.add('hidden',[22],1,true);
@@ -89,7 +89,7 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
                 
                 this.type = type;
                 console.log("Created Tektite");
-                this.states = {INIT: 0, PREJUMP: 1, JUMP: 2, LANDED: 3};
+                this.states = {INIT: 0, PREJUMP: 1, JUMP: 2, LANDED: 3, STOPPED: 4};
                 this.currentState = this.states.INIT;
                 
                 this.animations.add('iddle',[24,25],1,true);
@@ -106,7 +106,7 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
                 this.type = type;
                 console.log("Created Kease");
                 
-                this.states = {INIT: 0, IDDLE:1, SPEED_UP: 2, SPEED_DOWN: 3}
+                this.states = {INIT: 0, IDDLE:1, SPEED_UP: 2, SPEED_DOWN: 3, STOPPED: 4}
                 this.currentState = this.states.INIT;
                 
                 this.animations.add('main',[20,21],5,true);
@@ -122,7 +122,7 @@ gameEngine.enemy_prefab = function(game,type,x,y,level){
                 this.type = type;
                 console.log("Created Rope");
                 
-                this.states = {INIT: 0, WANDER_LEFT:1, WANDER_RIGHT: 2, WANDER_UP: 3, WANDER_DOWN: 4, CHASE_LEFT: 5, CHASE_RIGHT: 6}
+                this.states = {INIT: 0, WANDER_LEFT:1, WANDER_RIGHT: 2, WANDER_UP: 3, WANDER_DOWN: 4, CHASE_LEFT: 5, CHASE_RIGHT: 6, STOPPED: 7}
                 this.currentState = this.states.INIT;
                 
                 this.animations.add('left',[28,29],5,true);
@@ -302,6 +302,10 @@ gameEngine.enemy_prefab.prototype.update = function(){
             }break;
             case SYSTEM_CONSTANTS.ENEMY_TYPES.ZORA:
             {
+                this.game.physics.arcade.overlap(this, this.level.link.boomerang, function(enemy, boomerang){
+                    enemy.currentState = enemy.states.STOPPED;
+                    enemy.counter = 2;
+                });
                 //console.log(this.currentState);
                 switch(this.currentState)
                 {
@@ -363,10 +367,28 @@ gameEngine.enemy_prefab.prototype.update = function(){
                             this.currentState = this.states.INIT;
                         }
                     }break;
+                    case this.states.STOPPED:
+                    {
+                        this.body.velocity.x = 0;
+                        this.body.velocity.y = 0;
+                        this.animations.currentAnim.restart();
+                        this.animations.currentAnim.stop();
+                        
+                    
+                        if(this.counter <= 0)
+                        {
+                            this.currentState = this.states.INIT;
+                        }                    
+                    
+                    }break;
                 }
             }break;
             case SYSTEM_CONSTANTS.ENEMY_TYPES.TEKTITE:
             {
+                this.game.physics.arcade.overlap(this, this.level.link.boomerang, function(enemy, boomerang){
+                    enemy.currentState = enemy.states.STOPPED;
+                    enemy.counter = 2;
+                });
                 //console.log(this.currentState);
                 switch(this.currentState)
                 {
@@ -398,12 +420,30 @@ gameEngine.enemy_prefab.prototype.update = function(){
                         this.body.velocity.x = 0;
                         this.currentState = this.states.INIT;
                     }break;
+                    case this.states.STOPPED:
+                    {
+                        this.body.velocity.x = 0;
+                        this.body.velocity.y = 0;
+                        this.animations.currentAnim.restart();
+                        this.animations.currentAnim.stop();
+                        
+                    
+                        if(this.counter <= 0)
+                        {
+                            this.currentState = this.states.INIT;
+                        }                    
+                    
+                    }break;
                     
                 }
 
             }break;
             case SYSTEM_CONSTANTS.ENEMY_TYPES.KEESE:
             {
+                this.game.physics.arcade.overlap(this, this.level.link.boomerang, function(enemy, boomerang){
+                    enemy.currentState = enemy.states.STOPPED;
+                    enemy.counter = 2;
+                });
                 this.body.x += this.force.x;
                 this.body.y += this.force.y;
                 this.game.physics.arcade.collide(this, this.level.mapCollisions);
@@ -455,13 +495,30 @@ gameEngine.enemy_prefab.prototype.update = function(){
                         }
                         
                     }break;
+                    case this.states.STOPPED:
+                    {
+                        this.body.velocity.x = 0;
+                        this.body.velocity.y = 0;
+                        this.animations.currentAnim.restart();
+                        this.animations.currentAnim.stop();
+                        
+                    
+                        if(this.counter <= 0)
+                        {
+                            this.currentState = this.states.INIT;
+                        }                    
+                    
+                    }break;
                     
                 }
 
             }break;
             case SYSTEM_CONSTANTS.ENEMY_TYPES.ROPE:
             {
-
+                this.game.physics.arcade.overlap(this, this.level.link.boomerang, function(enemy, boomerang){
+                    enemy.currentState = enemy.states.STOPPED;
+                    enemy.counter = 2;
+                });
                 
                 this.randomizeNextRopeState = function(enemy)
                 {
@@ -553,6 +610,21 @@ gameEngine.enemy_prefab.prototype.update = function(){
                         if(this.counter <= 0)
                             this.currentState = this.states.WANDER_RIGHT;
                     }break;
+                    case this.states.STOPPED:
+                    {
+                        this.body.velocity.x = 0;
+                        this.body.velocity.y = 0;
+                        this.animations.currentAnim.restart();
+                        this.animations.currentAnim.stop();
+                        
+                    
+                        if(this.counter <= 0)
+                        {
+                            this.currentState = this.states.INIT;
+                        }                    
+                    
+                    }break;    
+                        
                 }
                 
                 if(this.facingDirection == 'right')

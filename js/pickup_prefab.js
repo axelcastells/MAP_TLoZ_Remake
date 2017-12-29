@@ -115,7 +115,7 @@ gameEngine.pickup_prefab.prototype = Object.create(Phaser.Sprite.prototype);
 gameEngine.pickup_prefab.prototype.constructor = gameEngine.pickup_prefab;
 
 gameEngine.pickup_prefab.prototype.update = function(){
-    this.game.debug.body(this);
+    //this.game.debug.body(this);
 
     this.game.physics.arcade.overlap(this, this.level.link, function(pickup, link){
          pickup.x = link.body.x + 4;
