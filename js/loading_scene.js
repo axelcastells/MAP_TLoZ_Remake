@@ -50,6 +50,7 @@ gameEngine.loading_scene ={
         this.load.image('exitButton', 'img/exit_button.png');
         this.load.image('loginButton', 'img/login_button.png');
         this.load.image('backButton', 'img/back_button.png');
+        this.load.image('resetButton', 'img/reset_button.png');
         
         //Hud image loading
         this.load.image('letter', 'img/zelda-sprites-letter.png');
@@ -93,7 +94,7 @@ gameEngine.loading_scene ={
         this.load.audio('pickLMAO', 'audio/lolPickup.mp3');
 
         //this.load.audio('explosion','sounds/explosion.wav');
-        
+        gameEngine.resumeGame();
     },
     create:function(){
         this.BGimage = this.game.add.image(0, 0, 'mainMenu');

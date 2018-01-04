@@ -57,7 +57,8 @@ var SYSTEM_CONSTANTS = {
         NUMBER_LETTERS: 0,
         NUMBER_KEYS: 0,
         HP: 6,
-        MAX_HP: 6
+        MAX_HP: 6,
+        ACTUAL_LEVEL: 0
     }
 };
 
@@ -73,3 +74,59 @@ gameEngine.game.state.add('login',gameEngine.login);
 gameEngine.game.state.add('loading_scene',gameEngine.loading_scene);
 gameEngine.game.state.add('final_credits',gameEngine.final_credits);
 gameEngine.game.state.start('loading_scene');
+
+gameEngine.supportsLocalStorage = function(){
+    return ('localStorage' in window) && window['localStorage'] !== null;
+}
+gameEngine.resetGame = function(){
+    SYSTEM_CONSTANTS.LINK_DATA.HAS_SWORD = false;
+    SYSTEM_CONSTANTS.LINK_DATA.HAS_MASTER_SWORD = false;
+    SYSTEM_CONSTANTS.LINK_DATA.NUMBER_LETTERS = 0;
+    SYSTEM_CONSTANTS.LINK_DATA.NUMBER_KEYS = 0;
+    SYSTEM_CONSTANTS.LINK_DATA.HP = 6;
+    SYSTEM_CONSTANTS.LINK_DATA.ACTUAL_LEVEL = 0;
+    this.saveGame();
+}
+gameEngine.saveGame = function(){
+    //Early exit if local storage is not supported
+    if(!this.supportsLocalStorage()){return false;}
+    localStorage["saved"] = true;
+    localStorage["has_sword"] = SYSTEM_CONSTANTS.LINK_DATA.HAS_SWORD;
+    localStorage["has_master_sword"] = SYSTEM_CONSTANTS.LINK_DATA.HAS_MASTER_SWORD;
+    localStorage["hp"] = SYSTEM_CONSTANTS.LINK_DATA.HP;
+    localStorage["actual_level"] = SYSTEM_CONSTANTS.LINK_DATA.ACTUAL_LEVEL;
+}
+gameEngine.resumeGame = function(){
+    if(!this.supportsLocalStorage()){
+    SYSTEM_CONSTANTS.LINK_DATA.HAS_SWORD = false;
+    SYSTEM_CONSTANTS.LINK_DATA.HAS_MASTER_SWORD = false;
+    SYSTEM_CONSTANTS.LINK_DATA.NUMBER_LETTERS = 0;
+    SYSTEM_CONSTANTS.LINK_DATA.NUMBER_KEYS = 0;
+    SYSTEM_CONSTANTS.LINK_DATA.HP = 6;
+    SYSTEM_CONSTANTS.LINK_DATA.ACTUAL_LEVEL = 0;
+        return false;
+    }
+    if(!(localStorage["saved"]=="true")){
+    SYSTEM_CONSTANTS.LINK_DATA.HAS_SWORD = false;
+    SYSTEM_CONSTANTS.LINK_DATA.HAS_MASTER_SWORD = false;
+    SYSTEM_CONSTANTS.LINK_DATA.NUMBER_LETTERS = 0;
+    SYSTEM_CONSTANTS.LINK_DATA.NUMBER_KEYS = 0;
+    SYSTEM_CONSTANTS.LINK_DATA.HP = 6;
+    SYSTEM_CONSTANTS.LINK_DATA.ACTUAL_LEVEL = 0;
+        return false;
+    }
+    if(parseInt(localStorage["has_sword"]) == 0)
+        SYSTEM_CONSTANTS.LINK_DATA.HAS_SWORD = false;
+    else 
+        SYSTEM_CONSTANTS.LINK_DATA.HAS_SWORD = true;
+    
+    if(parseInt(localStorage["has_master_sword"]) == 0)
+        SYSTEM_CONSTANTS.LINK_DATA.HAS_MASTER_SWORD = false;
+    else 
+        SYSTEM_CONSTANTS.LINK_DATA.HAS_MASTER_SWORD = true;
+    SYSTEM_CONSTANTS.LINK_DATA.NUMBER_LETTERS = 0;
+    SYSTEM_CONSTANTS.LINK_DATA.NUMBER_KEYS = 0;
+    SYSTEM_CONSTANTS.LINK_DATA.HP = parseInt(localStorage["hp"]);
+    SYSTEM_CONSTANTS.LINK_DATA.ACTUAL_LEVEL = parseInt(localStorage["actual_level"]);
+    return true;
+}

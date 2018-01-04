@@ -33,6 +33,12 @@ gameEngine.main_menu ={
         this.loginButton.onInputOver.add(this.overFeedback, this);
         this.loginButton.onInputOut.add(this.leaveFeedback, this);
         
+        this.startButton = this.game.add.button(ConfigOptions.screenW / 2, ConfigOptions.screenH / 2 + 400, 'resetButton', this.reset, this, 2, 1, 0);
+        this.startButton.anchor.setTo(0.5);
+        this.startButton.scale.setTo(10);
+        this.startButton.onInputOver.add(this.overFeedback, this);
+        this.startButton.onInputOut.add(this.leaveFeedback, this);
+        
         //Intro music
         if(gameEngine.startIntroOnce == false){
             this.introMusic = this.add.audio('intro', 1, true, true);
@@ -56,7 +62,12 @@ gameEngine.main_menu ={
     },
     loadGame:function(){
         this.buttonClick.play();
-        this.game.state.start("overworld");
+        console.log(SYSTEM_CONSTANTS.LINK_DATA.ACTUAL_LEVEL);
+        if(SYSTEM_CONSTANTS.LINK_DATA.ACTUAL_LEVEL == 0)
+            this.game.state.start("overworld");
+        else 
+            this.game.state.start("dungeon");
+        
         gameEngine.startIntroOnce = false;
         this.introMusic.stop();
     },
@@ -67,6 +78,10 @@ gameEngine.main_menu ={
     login:function(){
         this.buttonClick.play();
         this.game.state.start("login");
+    },
+    reset:function(){
+        this.buttonClick.play();
+        gameEngine.resetGame();
     },
     overFeedback:function(button){
         button.scale.setTo(12);

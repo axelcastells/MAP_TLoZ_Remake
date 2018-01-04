@@ -77,6 +77,7 @@ gameEngine.pickup_prefab = function(game,type,pos_x,pos_y,level){
             SYSTEM_CONSTANTS.LINK_DATA.HAS_SWORD = true;
             this.level.link.hasSword = true;
             console.log("sword");
+            gameEngine.saveGame();
         }
         else if(this.type == SYSTEM_CONSTANTS.PICKUPS.MASTER_SWORD){
             SYSTEM_CONSTANTS.LINK_DATA.HAS_MASTER_SWORD = true;
@@ -84,7 +85,8 @@ gameEngine.pickup_prefab = function(game,type,pos_x,pos_y,level){
             this.level.link.hasMasterSword = true;
             SYSTEM_CONSTANTS.LINK_DATA.HAS_SWORD = true;
             SYSTEM_CONSTANTS.LINK_DATA.HAS_MASTER_SWORD = true;
-            console.log("masterswaord");
+            console.log("mastersword");
+            gameEngine.saveGame();
         }
         else if(this.type == SYSTEM_CONSTANTS.PICKUPS.KEY){
             SYSTEM_CONSTANTS.LINK_DATA.NUMBER_KEYS++;

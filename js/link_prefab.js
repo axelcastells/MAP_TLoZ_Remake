@@ -190,6 +190,7 @@ gameEngine.link_prefab.prototype.recieveDamage = function(damage){
     this.life -= damage;
     this.linkDamage.play();
     SYSTEM_CONSTANTS.LINK_DATA.HP = this.life;
+    gameEngine.saveGame();
     if(this.life <= 0){
         this.life = 0;
         this.level.backgroundMusic.stop();

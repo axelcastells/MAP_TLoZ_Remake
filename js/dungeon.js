@@ -31,10 +31,11 @@ gameEngine.dungeon ={
         this.enemySpawnPool.keese.push(new Phaser.Point(31,25));
         this.enemySpawnPool.keese.push(new Phaser.Point(21,24));
 
-        
+
     },
     create:function(){
-
+        SYSTEM_CONSTANTS.LINK_DATA.ACTUAL_LEVEL = 1;
+        gameEngine.saveGame();
         //Link default location
         this.defaultLocationX = this.worldCellSize / 2 + this.worldCellSize * this.actualCellX;
         this.defaultLocationY = this.worldCellSize / 2 + this.worldCellSize * this.actualCellY;

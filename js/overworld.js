@@ -68,7 +68,8 @@ gameEngine.overworld ={
 
     },
     create:function(){
-
+        SYSTEM_CONSTANTS.LINK_DATA.ACTUAL_LEVEL = 0;
+        gameEngine.saveGame();
 
         this.game.stage.backgroundColor = "#489ad8";
         this.map = this.game.add.tilemap('overworld');
@@ -167,11 +168,14 @@ gameEngine.overworld ={
         this.pickup = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.HEART, this.worldCellSize / 2 + this.worldCellSize * this.actualCellX + 70, this.worldCellSize / 2 + this.worldCellSize * this.actualCellY, this);
         this.game.add.existing(this.pickup);
         
-        this.pickup2 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.SWORD, this.worldCellSize / 2 + this.worldCellSize * this.actualCellX + 70, this.worldCellSize / 2 + this.worldCellSize * this.actualCellY + 70, this);
-        this.game.add.existing(this.pickup2);
-        
-        this.pickup3 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.MASTER_SWORD, 8 * 16, 36 * 16, this);
-        this.game.add.existing(this.pickup3);
+        if(SYSTEM_CONSTANTS.LINK_DATA.HAS_SWORD == false){
+            this.pickup2 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.SWORD, this.worldCellSize / 2 + this.worldCellSize * this.actualCellX + 70, this.worldCellSize / 2 + this.worldCellSize * this.actualCellY + 70, this);
+            this.game.add.existing(this.pickup2);
+        }
+        if(SYSTEM_CONSTANTS.LINK_DATA.HAS_MASTER_SWORD == false){
+            this.pickup3 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.MASTER_SWORD, 8 * 16, 36 * 16, this);
+            this.game.add.existing(this.pickup3);
+        }
         
         this.pickup4 = new gameEngine.pickup_prefab(this.game, SYSTEM_CONSTANTS.PICKUPS.LETTER, 8 * 16, 21 * 16, this);
         this.game.add.existing(this.pickup4);

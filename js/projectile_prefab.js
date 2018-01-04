@@ -219,6 +219,7 @@ gameEngine.projectile_prefab.prototype.update = function(){
     } else {
         this.game.physics.arcade.collide(this,this.level.enemies,
         function(bullet,enemy){
+            enemy.enemyHitSound.play();
             enemy.GetDMG(1);
             bullet.kill();
         });

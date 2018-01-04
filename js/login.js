@@ -118,7 +118,10 @@ gameEngine.login ={
         
     },
     play:function(){
-        this.game.state.start("overworld");
+        if(SYSTEM_CONSTANTS.LINK_DATA.ACTUAL_LEVEL == 0)
+            this.game.state.start("overworld");
+        else 
+            this.game.state.start("dungeon");
         this.buttonClick.play();
     },
     overFeedback:function(button){
